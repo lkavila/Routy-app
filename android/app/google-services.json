@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "355399886467",
+    "project_id": "approute40-movil",
+    "storage_bucket": "approute40-movil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355399886467:android:f6e90ca63d3245fd281db6",
+        "android_client_info": {
+          "package_name": "com.koka.routy_app_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355399886467-pu4o84f2v67gphrhr9140tvqs1emgq8k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.koka.routy_app_v1",
+            "certificate_hash": "f36c3d6b786a5b2bf52e38ebcb58eb3ff4ab1a9a"
+          }
+        },
+        {
+          "client_id": "355399886467-ltnj8g0pb5bv4kqb0g8e3rrl4c3m0ibp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWiOzMa6XAW9sVCQg7hJPD-YpInHbXLvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355399886467-ltnj8g0pb5bv4kqb0g8e3rrl4c3m0ibp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
