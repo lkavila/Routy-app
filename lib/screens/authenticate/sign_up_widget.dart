@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:routy_app_v102/widget/google_signup_button_widget.dart';
+import 'package:routy_app_v102/widget/signup_buttons_widget.dart';
 
 class SignUpWidget extends StatelessWidget {
 
@@ -45,7 +45,7 @@ class SignUpWidget extends StatelessWidget {
             ),
           ),
           Spacer(),
-          GoogleSignupButtonWidget(),
+          SignupButtonsWidget(),
           SizedBox(height: 12),
           Text(
             'Login to continue',

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:routy_app_v102/provider/google_sign_in.dart';
+import 'package:routy_app_v102/provider/sign_in.dart';
 import 'package:provider/provider.dart';
 
-class GoogleSignupButtonWidget extends StatelessWidget {
+class SignupButtonsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.all(4),
@@ -19,8 +19,8 @@ class GoogleSignupButtonWidget extends StatelessWidget {
               style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: Size(260, 40)),
               onPressed: () {
                 final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
-                provider.login();
+                    Provider.of<SignInProvider>(context, listen: false);
+                provider.loginWithGoogle();
               },
             ),
             ElevatedButton.icon(
@@ -32,8 +32,8 @@ class GoogleSignupButtonWidget extends StatelessWidget {
               style: ElevatedButton.styleFrom(primary: Colors.blue, minimumSize: Size(260, 40)),
               onPressed: () {
                 final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
-                provider.login();
+                    Provider.of<SignInProvider>(context, listen: false);
+                provider.loginWithFacebook();
               },
             ),
           ])

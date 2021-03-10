@@ -1,13 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:routy_app_v102/provider/google_sign_in.dart';
+import 'package:routy_app_v102/provider/sign_in.dart';
 import 'package:provider/provider.dart';
 
 class LoggedInWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-
+    final provider = Provider.of<SignInProvider>(context, listen: false);
+     String image="";
+    if(provider.signinWith=="Google"){
+      image = user.photoURL;
+    }else{
+      image = user.photoURL; //Para obtener imagen de perfil de facebook ahora se requiere un token
+    }
     return Container(
       alignment: Alignment.center,
       color: Colors.blueGrey.shade900,
@@ -37,9 +43,13 @@ class LoggedInWidget extends StatelessWidget {
           SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              provider.logout();
+
+              if (provider.signinWith=="Google"){
+                provider.logoutGoogle();
+              }
+              else {
+                provider.logoutFacebook();
+              }
             },
             child: Text('Logout'),
           )
