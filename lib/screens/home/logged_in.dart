@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:routy_app_v102/models/user.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
 import 'package:routy_app_v102/widget/background_painter.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class LoggedIn extends StatefulWidget {
   LoggedIn({Key key}) : super(key: key);
@@ -17,6 +18,7 @@ class LoggedIn extends StatefulWidget {
 class _LoggedInState extends State<LoggedIn> {
 
     final user = FirebaseAuth.instance.currentUser;
+    firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
     
     MyUser _myUser;
     bool _loading = true;
@@ -25,6 +27,7 @@ class _LoggedInState extends State<LoggedIn> {
       setState(() {
         _myUser = new MyUser.fromData(dc.data());
         _loading = false;
+        print(storage.ref(_myUser.image).toString());
       });
     }
     
@@ -57,7 +60,7 @@ class _LoggedInState extends State<LoggedIn> {
           ),
           SizedBox(height: 8),
           CircleAvatar(
-            maxRadius: 25,
+            maxRadius: 75,
             backgroundImage: NetworkImage(_myUser.image),
           ),
           SizedBox(height: 8),
@@ -72,7 +75,7 @@ class _LoggedInState extends State<LoggedIn> {
           ),
           SizedBox(height: 8),
           Text(
-            'Fecha de creación: ' + _myUser.createdAt.toString(),
+            'Fecha de creación: ' + _myUser.createdAt.toDate().toString(),
             style: TextStyle(color: Colors.white),
           ),
           SizedBox(height: 8),

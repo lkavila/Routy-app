@@ -14,6 +14,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController firstNameInputController;
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
+  final String defualtUrlImage = "https://firebasestorage.googleapis.com/v0/b/approute40-movil.appspot.com/o/users_images%2Fdefault.png?alt=media&token=bbeb9f9d-638f-4b89-ac89-e47c10de8382";
 
   @override
   initState() {
@@ -89,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     onPressed: () {
                       if (_registerFormKey.currentState.validate()) {
                         SignInProvider provider = SignInProvider();
-                        provider.createAccount(emailInputController.text, pwdInputController.text, "defualt.png",Timestamp.now(), firstNameInputController.text);
+                        provider.createAccount(emailInputController.text, pwdInputController.text, defualtUrlImage,Timestamp.now(), firstNameInputController.text);
                         Navigator.pop(context);
                       }
 
