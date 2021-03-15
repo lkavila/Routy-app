@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
-import 'package:routy_app_v102/widget/background_painter.dart';
+import 'package:routy_app_v102/screens/home/logged_in.dart';
 import 'package:routy_app_v102/screens/logged_in_widget.dart';
+import 'package:routy_app_v102/widget/background_painter.dart';
 import 'package:routy_app_v102/screens/authenticate/sign_up_widget.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
+        resizeToAvoidBottomInset: false,
         body: ChangeNotifierProvider(
           create: (context) => SignInProvider(),
           child: StreamBuilder(
@@ -19,7 +21,8 @@ class Wrapper extends StatelessWidget {
               if (provider.isSigningIn) {
                 return buildLoading();
               } else if (snapshot.hasData) {
-                return LoggedInWidget();
+                
+                return LoggedIn();
               } else {
                 return SignUpWidget();
               }
@@ -35,4 +38,5 @@ class Wrapper extends StatelessWidget {
           Center(child: CircularProgressIndicator()),
         ],
       );
+  
 }

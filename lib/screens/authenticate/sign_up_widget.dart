@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:routy_app_v102/widget/email_pass_sign_in.dart';
 import 'package:routy_app_v102/widget/signup_buttons_widget.dart';
 
 class SignUpWidget extends StatelessWidget {
 
  final List<Color> _colors = [Colors.white, Colors.blue];
- final List<double> _stops = [0.4, 0.9];
+ final List<double> _stops = [0.9, 0.2];
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +32,11 @@ class SignUpWidget extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              width: 190,
               child: Text(
                 'Routy',
                 style: TextStyle(
                   color: Colors.blue,
-                  fontSize: 70,
+                  fontSize: 90,
                   fontWeight: FontWeight.normal,
                   fontFamily: 'Pacifico'
                 ),
@@ -45,6 +44,7 @@ class SignUpWidget extends StatelessWidget {
             ),
           ),
           Spacer(),
+          EmailPassSignIn(),
           SignupButtonsWidget(),
           SizedBox(height: 12),
           Text(
