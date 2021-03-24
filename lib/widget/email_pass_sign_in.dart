@@ -53,8 +53,7 @@ class EmailPassSignIn extends StatelessWidget {
                   ),
                 Text("ó"),
                 TextButton(
-                      onPressed:  (){ Navigator.push(
-                                context,
+                      onPressed:  (){ Navigator.push(context,
                                 MaterialPageRoute(builder: (context) => RegisterPage()),
                               );
                           },

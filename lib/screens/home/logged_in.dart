@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:routy_app_v102/models/user.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
+import 'package:routy_app_v102/screens/map.dart';
 import 'package:routy_app_v102/widget/background_painter.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -77,6 +78,14 @@ class _LoggedInState extends State<LoggedIn> {
           Text(
             'Fecha de creación: ' + _myUser.createdAt.toDate().toString(),
             style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context) => MyMap()),);
+              
+            },
+            child: Text('Ir a Mapa'),
           ),
           SizedBox(height: 8),
           ElevatedButton(

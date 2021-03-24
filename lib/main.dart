@@ -15,10 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.blue,
+
         primaryColorDark: Colors.grey,
         primarySwatch: Colors.blue,
         accentColor: Colors.orange,
-        fontFamily: 'Roboto'
+        fontFamily: "OpenSans"
       ),
       home: Wrapper(),
     );

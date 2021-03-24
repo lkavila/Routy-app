@@ -1,5 +1,3 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:routy_app_v102/models/user.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
