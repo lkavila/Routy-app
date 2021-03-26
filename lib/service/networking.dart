@@ -34,8 +34,6 @@ class NetworkHelper{
 */
 
 class OpenRoute{
-  final String apiKey = '5b3ce3597851110001cf6248d4141599836d412aa58e4b7569d36ef5';
-  final String journeyMode = 'driving-car'; // Change it if you want or make it variable
   
   Future getRoute(List<LatLng> lugares) async{
 

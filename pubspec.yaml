@@ -37,7 +37,7 @@ dependencies:
   firebase_storage: ^8.0.0
   google_maps_flutter: ^2.0.1
   http: ^0.13.1
-
+  hidden_drawer_menu: ^2.0.1
   # icon of google
   font_awesome_flutter: ^8.10.0
 
@@ -61,8 +61,8 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   
-  #assets:
-  #  - assets/images/routy_logo.png
+  assets:
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

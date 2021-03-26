@@ -12,27 +12,25 @@ class SignupButtonsWidget extends StatelessWidget {
           children: ([
             ElevatedButton.icon(
               label: Text(
-                'Sign In With Google',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                'Iniciar sesión con Google',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
               ),
               icon: FaIcon(FontAwesomeIcons.google, color: Colors.white),
-              style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: Size(260, 40)),
+              style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: Size(265, 40), elevation: 4.0),
               onPressed: () {
-                final provider =
-                    Provider.of<SignInProvider>(context, listen: false);
+                final provider = Provider.of<SignInProvider>(context, listen: false);
                 provider.loginWithGoogle();
               },
             ),
             ElevatedButton.icon(
               label: Text(
-                'Sign In With Facebook',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                'Iniciar sesión con Facebook',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
               ),
               icon: FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
-              style: ElevatedButton.styleFrom(primary: Colors.blue, minimumSize: Size(260, 40)),
+              style: ElevatedButton.styleFrom(primary: Colors.blue[700], minimumSize: Size(260, 40), elevation: 4.0),
               onPressed: () {
-                final provider =
-                    Provider.of<SignInProvider>(context, listen: false);
+                final provider = Provider.of<SignInProvider>(context, listen: false);
                 provider.loginWithFacebook();
               },
             ),

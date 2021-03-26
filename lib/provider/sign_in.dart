@@ -12,13 +12,25 @@ class SignInProvider extends ChangeNotifier {
   bool _isSigningIn;
   String _signinWith;
   MyUser _myUser;
+  bool fecthingUser;
+
+ bool get getFecthingUser => this.fecthingUser;
+
+ set setFecthingUser(bool fecthingUser) { 
+   this.fecthingUser = fecthingUser;
+   notifyListeners();
+ }
 
  MyUser get myUser => this._myUser;
 
- set myUser(MyUser value) => this._myUser = value;
+ set myUser(MyUser value) { 
+   this._myUser = value;
+   notifyListeners();
+ }
 
   SignInProvider() {
     _isSigningIn = false;
+    fecthingUser = true;
     _signinWith = "";
   }
 
@@ -173,12 +185,12 @@ class SignInProvider extends ChangeNotifier {
 
   Future<MyUser> getUser() async{
       final user = FirebaseAuth.instance.currentUser;
+      fecthingUser = true;
       print("ESto es getuser");
-      MyUser myUser;
       DocumentSnapshot dc = await FirebaseFirestore.instance.collection("users").doc(user.email).get();
-      myUser = new MyUser.fromData(dc.data());
+      this.myUser = new MyUser.fromData(dc.data());
       print(myUser.toJson());
-      
+      fecthingUser = false;
       return myUser;
     }
 

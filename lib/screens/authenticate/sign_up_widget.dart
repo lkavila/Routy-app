@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:routy_app_v102/widget/email_pass_sign_in.dart';
-import 'package:routy_app_v102/widget/signup_buttons_widget.dart';
+import 'package:routy_app_v102/screens/authenticate/email_sign_up.dart';
+import 'package:routy_app_v102/widgets/email_pass_sign_in.dart';
+import 'package:routy_app_v102/widgets/signup_buttons_widget.dart';
 
 class SignUpWidget extends StatelessWidget {
 
  final List<Color> _colors = [Colors.white, Colors.blue];
- final List<double> _stops = [0.9, 0.2];
+ final List<double> _stops = [0.96, 0.04];
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,13 @@ class SignUpWidget extends StatelessWidget {
               )
           ),            
           ),
-          buildSignUp(),
+          buildSignUp(context),
         ],
       );
   }
-  Widget buildSignUp() => Column(
+  Widget buildSignUp(BuildContext context) => Column(
         children: [
-          Spacer(),
+          SizedBox(height: 10),
           Align(
             alignment: Alignment.center,
             child: Container(
@@ -43,14 +44,22 @@ class SignUpWidget extends StatelessWidget {
               ),
             ),
           ),
-          Spacer(),
+          
+
           EmailPassSignIn(),
+
+          Text("ó"),
+          SizedBox(height: 10),
           SignupButtonsWidget(),
-          SizedBox(height: 12),
-          Text(
-            'Login to continue',
-            style: TextStyle(fontSize: 16),
-          ),
+          
+          SizedBox(height: 10),
+          TextButton(
+             onPressed:  (){ Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => RegisterPage()),
+                              );
+                          },
+                        child: Text("¿No tienes cuenta? Registrate aquí", style: TextStyle(color: Colors.blue[700])),
+                      ),
           Spacer(),
         ],
       );

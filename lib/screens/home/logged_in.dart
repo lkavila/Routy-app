@@ -1,15 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:routy_app_v102/models/user.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
 import 'package:routy_app_v102/screens/map.dart';
-import 'package:routy_app_v102/widget/background_painter.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:routy_app_v102/screens/wrapper.dart';
+import 'package:routy_app_v102/widgets/background_painter.dart';
+import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
 
 class LoggedIn extends StatefulWidget {
-  LoggedIn({Key key}) : super(key: key);
+  final SignInProvider provider;
+  LoggedIn(this.provider, {Key key}) : super(key: key);
 
   @override
   _LoggedInState createState() => _LoggedInState();
@@ -17,67 +15,56 @@ class LoggedIn extends StatefulWidget {
 
 
 class _LoggedInState extends State<LoggedIn> {
-
-    final user = FirebaseAuth.instance.currentUser;
-    firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
-    
-    MyUser _myUser;
-    bool _loading = true;
-    getUser() async{
-      DocumentSnapshot dc = await FirebaseFirestore.instance.collection("users").doc(user.email).get();
-      setState(() {
-        _myUser = new MyUser.fromData(dc.data());
-        _loading = false;
-        print(storage.ref(_myUser.image).toString());
-      });
-    }
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
     
 
   @override
   initState() {
     
     super.initState();
-    getUser();
+    print("en loogedIn");
+    print(widget.provider.myUser.toJson());
   }
 
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      drawer: DrawerMenu(widget.provider),
+      body: Stack(
+        children: [
 
-    final provider = Provider.of<SignInProvider>(context, listen: false);
-    
-    return Container(
+        Container(
       alignment: Alignment.center,
       color: Colors.blueGrey.shade900,
-      child: _loading
-      ? buildLoading()
-      :Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             'Logged In',
-            style: TextStyle(color: Colors.white),
+            style: myStyle(),
           ),
           SizedBox(height: 8),
           CircleAvatar(
             maxRadius: 75,
-            backgroundImage: NetworkImage(_myUser.image),
+            backgroundImage: NetworkImage(widget.provider.myUser.image),
           ),
           SizedBox(height: 8),
           Text(
-            'Name: ' + _myUser.fullName,
-            style: TextStyle(color: Colors.white),
+            'Name: ' + widget.provider.myUser.fullName,
+            style: myStyle(),
           ),
           SizedBox(height: 8),
           Text(
-            'Email: ' + _myUser.email,
-            style: TextStyle(color: Colors.white),
+            'Email: ' + widget.provider.myUser.email,
+            style: myStyle(),
           ),
           SizedBox(height: 8),
           Text(
-            'Fecha de creación: ' + _myUser.createdAt.toDate().toString(),
-            style: TextStyle(color: Colors.white),
+            'Fecha de creación: ' + widget.provider.myUser.createdAt.toDate().toString(),
+            style: myStyle(),
           ),
           SizedBox(height: 8),
           ElevatedButton(
@@ -90,17 +77,48 @@ class _LoggedInState extends State<LoggedIn> {
           SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
+                      widget.provider.logOut();
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
+                      },
+            child: Text('Logout', style: myStyle(),),),
 
-              provider.logOut();
-            },
-            child: Text('Logout'),
-          )
         ],
       ),
+    ),
+    Padding(
+      padding: EdgeInsets.fromLTRB(0, 40.0, 0, 0.0),
+      child:  Container(
+          
+          width: 49.0,
+          height: 48.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+              ),
+                image: DecorationImage(
+                  image: AssetImage('assets/images/menuIcon.PNG'),
+                )
+                ),
+                
+            child: Column(
+              children: [
+                IconButton(
+                icon: const Icon(Icons.menu, color: Colors.transparent,),
+                onPressed: () => _scaffoldKey.currentState.openDrawer(),
+              ),
+              ],
+            ),
+        ),
+      ),
+        ],
+      )
     );
+
   }
 }
-
+    TextStyle myStyle(){
+      return TextStyle(color: Colors.white, fontSize: 14);
+    }
     Widget buildLoading() => Stack(
         fit: StackFit.expand,
         children: [

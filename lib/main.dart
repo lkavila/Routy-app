@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routy_app_v102/screens/home/logged_in.dart';
 import 'package:routy_app_v102/screens/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -14,14 +15,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Colors.blue,
-
+        primaryColor: Colors.blue[700],
         primaryColorDark: Colors.grey,
         primarySwatch: Colors.blue,
         accentColor: Colors.orange,
-        fontFamily: "OpenSans"
+        fontFamily: "OpenSans",
       ),
-      home: Wrapper(),
+      initialRoute: "/wrapper",
+      routes: {
+        "/wrapper": (context) => Wrapper(),
+      },
     );
   }
 }

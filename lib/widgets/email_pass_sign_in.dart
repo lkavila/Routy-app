@@ -12,7 +12,7 @@ class EmailPassSignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         width: 270.0,
-        height: 210.0,
+        height: 250.0,
         padding: EdgeInsets.all(4),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -27,6 +27,7 @@ class EmailPassSignIn extends StatelessWidget {
               ),
             ),
 
+
             TextField(
               obscureText: true,
               controller: pwdInputController,
@@ -35,15 +36,21 @@ class EmailPassSignIn extends StatelessWidget {
                 labelText: 'Password',
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-              Builder(
+
+            Align(
+            alignment: Alignment.topRight,
+            child: Text("¿Olvidaste tu contraseña?", style: TextStyle(color: Colors.blue[700])),
+          ),
+
+          
+
+          Builder(
                 // Here the magic happens
                 // this builder function will generate a new BuilContext for you
                 builder: (BuildContext newContext){
-                  return TextButton(
-                    child: Text("Iniciar sesión", style: TextStyle(color: Colors.blue, fontFamily: "Roboto")),
+                  return ElevatedButton(
+                    child: Text("Iniciar sesión", style: TextStyle(fontFamily: "Roboto")),
+                    style: ElevatedButton.styleFrom(primary: Colors.blue[700], elevation: 5, shadowColor: Colors.black),
                     onPressed: () {
                     final provider =  Provider.of<SignInProvider>(newContext, listen: false);
                       provider.loginWithEmail(emailInputController.text, pwdInputController.text);
@@ -51,19 +58,8 @@ class EmailPassSignIn extends StatelessWidget {
                       );
                     }
                   ),
-                Text("ó"),
-                TextButton(
-                      onPressed:  (){ Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => RegisterPage()),
-                              );
-                          },
-                        child: Text("Registrate", style: TextStyle(color: Colors.blue, fontFamily: "Roboto")),
-                      ),
+          
                 
-              ],
-            )
-
-
           ]
         )
         )
