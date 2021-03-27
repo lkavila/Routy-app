@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
-import 'package:routy_app_v102/screens/authenticate/email_sign_up.dart';
 
 class EmailPassSignIn extends StatelessWidget {
 

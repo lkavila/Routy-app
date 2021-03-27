@@ -1,65 +1,100 @@
 import 'package:flutter/material.dart';
-import 'package:routy_app_v102/provider/sign_in.dart';
+import 'package:get/get.dart';
+import 'package:routy_app_v102/GetX/user.dart';
 import 'package:routy_app_v102/screens/wrapper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:routy_app_v102/widgets/logo_widget.dart';
 
 class DrawerMenu extends StatelessWidget {
-  final SignInProvider provider;
-  const DrawerMenu(this.provider, {Key key}) : super(key: key);
-
+  const DrawerMenu({Key key}) : super(key: key);
+  
   TextStyle myStyle(){
-      return TextStyle(color: Colors.white, fontSize: 18);
+      return TextStyle(color: Colors.white, fontSize: 15);
   }
   @override
   Widget build(BuildContext context) {
-
-    return Drawer(
-        child: Container(
-          width: 100,
-          color: Colors.blue[700],
-          child: ListView(
-          children: <Widget>[
-          UserAccountsDrawerHeader(
-              accountName: Text("${provider.myUser.fullName}"),
-              accountEmail: Text("${provider.myUser.email}"),
-              currentAccountPicture: CircleAvatar(backgroundImage: NetworkImage(provider.myUser.image),),
-              decoration: BoxDecoration(
-                color: Colors.red,
+    final UserX userx = Get.find();
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.7, // 75% of screen will be occupied
+        
+        child: Drawer(
+          child: Container(
+            color: Colors.indigo[800],
+            child: ListView(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child:             UserAccountsDrawerHeader(
+                accountName: Text("${userx.myUser.fullName}"),
+                accountEmail: Text("${userx.myUser.email}"),
+                currentAccountPicture: CircleAvatar(backgroundImage: NetworkImage(userx.myUser.image),),
+                decoration: BoxDecoration(
+                  color: Colors.indigo[900],
+                ),
               ),
-            ),
-            
-            ListTile(
-              title: Text('Inicio',style: myStyle(),),
-              leading: FaIcon(FontAwesomeIcons.mapMarkedAlt,color: Colors.white), 
-            ),
-            ListTile(
-              title: Text('Perfil',style: myStyle(),),
-              leading: FaIcon(FontAwesomeIcons.user, color: Colors.white), 
-            ),
-            ListTile(
-              title: Text('Mis rutas',style: myStyle(),),
-              leading: FaIcon(FontAwesomeIcons.route, color: Colors.white), 
-            ),
-            ListTile(
-              title: Text('Mis vehículos', style: myStyle(),),
-              leading: FaIcon(FontAwesomeIcons.car, color: Colors.white,), 
-            ),
-            ListTile(
-              title: Text('Configuración',style: myStyle(),),
-              leading: Icon(Icons.settings, color: Colors.white),
-            ),
-            ListTile(
-              title: Text('Cerrar sesión',style: myStyle(),),
-              leading: Icon(Icons.logout, color: Colors.white),
-              onTap: (){
-                      provider.logOut();
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
-              },
-            ),
-          ],
-        ),
-        ),
+              ),
 
+              
+              ListTile(
+                title: Text('Inicio',style: myStyle(),),
+                leading: FaIcon(FontAwesomeIcons.mapMarkedAlt,color: Colors.white), 
+                onTap: (){
+                  Navigator.pushNamed(context, '/map');
+                },
+              ),
+              ListTile(
+                title: Text('Perfil',style: myStyle(),),
+                leading: FaIcon(FontAwesomeIcons.user, color: Colors.white), 
+                onTap: (){
+                  Navigator.pushNamed(context, '/logged_in');
+                },
+              ),
+              ListTile(
+                title: Text('Mis rutas',style: myStyle(),),
+                leading: FaIcon(FontAwesomeIcons.route, color: Colors.white), 
+                onTap: (){
+                  Navigator.pushNamed(context, '/misRutas');
+                },
+              ),
+              
+              ListTile(
+                title: Text('Mis vehículos', style: myStyle(),),
+                leading: FaIcon(FontAwesomeIcons.car, color: Colors.white,), 
+              ),
+              ListTile(
+                title: Text('Configuración',style: myStyle(),),
+                leading: Icon(Icons.settings, color: Colors.white),
+              ),
+
+              ListTile(
+                title: Text('Cerrar sesión',style: myStyle(),),
+                leading: Icon(Icons.logout, color: Colors.white),
+                onTap: (){
+                        userx.salir();
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
+                },
+
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width * 0.06,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child:  Container(
+                  width: 130,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(100.0),
+                    ),
+                      ),
+                  child: Logo(40),
+                ),
+              ),
+            ],
+          ),
+        ),
+        ),
     );
 
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:routy_app_v102/screens/authenticate/email_sign_up.dart';
 import 'package:routy_app_v102/widgets/email_pass_sign_in.dart';
+import 'package:routy_app_v102/widgets/logo_widget.dart';
 import 'package:routy_app_v102/widgets/signup_buttons_widget.dart';
 
 class SignUpWidget extends StatelessWidget {
@@ -29,22 +30,10 @@ class SignUpWidget extends StatelessWidget {
   }
   Widget buildSignUp(BuildContext context) => Column(
         children: [
-          SizedBox(height: 10),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              child: Text(
-                'Routy',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 90,
-                  fontWeight: FontWeight.normal,
-                  fontFamily: 'Pacifico'
-                ),
-              ),
-            ),
-          ),
           
+          Logo(90),
+
+          SizedBox(height: 10),
 
           EmailPassSignIn(),
 

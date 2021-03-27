@@ -11,26 +11,9 @@ class SignInProvider extends ChangeNotifier {
   final facebookSignIn = FacebookLogin();
   bool _isSigningIn;
   String _signinWith;
-  MyUser _myUser;
-  bool fecthingUser;
-
- bool get getFecthingUser => this.fecthingUser;
-
- set setFecthingUser(bool fecthingUser) { 
-   this.fecthingUser = fecthingUser;
-   notifyListeners();
- }
-
- MyUser get myUser => this._myUser;
-
- set myUser(MyUser value) { 
-   this._myUser = value;
-   notifyListeners();
- }
 
   SignInProvider() {
     _isSigningIn = false;
-    fecthingUser = true;
     _signinWith = "";
   }
 
@@ -64,7 +47,6 @@ class SignInProvider extends ChangeNotifier {
       
       addAccount(currentUser.user, currentUser.user.displayName, currentUser.user.email, Timestamp.now(), currentUser.user.photoURL);
       
-      getUser().then((value) => this._myUser = value);
       _signinWith = "Google";
       isSigningIn = false;
     }
@@ -92,7 +74,6 @@ class SignInProvider extends ChangeNotifier {
 
       addAccount(currentUser.user, currentUser.user.displayName, currentUser.user.email, Timestamp.now(), currentUser.user.photoURL);
 
-      getUser().then((value) => this._myUser = value);
       _signinWith = "Facebook";
       print('${currentUser.user.displayName} is now logged in');
       break;
@@ -144,8 +125,6 @@ class SignInProvider extends ChangeNotifier {
         );
 
         User user = FirebaseAuth.instance.currentUser;
-        getUser().then((value) => this._myUser = value);
-        print(this._myUser.email);
         if (!user.emailVerified) {
           await user.sendEmailVerification();
         }
@@ -170,10 +149,10 @@ class SignInProvider extends ChangeNotifier {
     }
     isSigningIn = false;
    }
-  void addAccount(user, name, email, createdAt, imageUrl) async{
+  void addAccount(User user, name, email, createdAt, imageUrl) async{
     print("Esto es addaccount");
             //creo mi propio usuario y lo guardo en la base de datos cloud firestore
-    DocumentReference document =FirebaseFirestore.instance.collection("users").doc(user.email);
+    DocumentReference document =FirebaseFirestore.instance.collection("users").doc(user.uid);
         //si el documento no esta vacio significa que ya se registro este usuario, si esta vacio, hay que agregarlo
     if ( await document.get().then((value) => value.data()==null)){
         //creo mi propio usuario y lo guardo en la base de datos cloud firestore
@@ -182,17 +161,6 @@ class SignInProvider extends ChangeNotifier {
         print(myuser.toJson());
       }
   }
-
-  Future<MyUser> getUser() async{
-      final user = FirebaseAuth.instance.currentUser;
-      fecthingUser = true;
-      print("ESto es getuser");
-      DocumentSnapshot dc = await FirebaseFirestore.instance.collection("users").doc(user.email).get();
-      this.myUser = new MyUser.fromData(dc.data());
-      print(myUser.toJson());
-      fecthingUser = false;
-      return myUser;
-    }
 
   void logOut() async {
     

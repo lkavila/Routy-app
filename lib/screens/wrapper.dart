@@ -1,19 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:routy_app_v102/models/user.dart';
+import 'package:get/get.dart';
+import 'package:routy_app_v102/GetX/user.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
-import 'package:routy_app_v102/screens/home/logged_in.dart';
 import 'package:routy_app_v102/screens/home/misRutas.dart';
 import 'package:routy_app_v102/widgets/background_painter.dart';
 import 'package:routy_app_v102/screens/authenticate/sign_up_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
 
 class Wrapper extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
- 
+  final userX = Get.put(UserX());
+  
   return Scaffold(
         key: _scaffoldKey,
         drawerEnableOpenDragGesture: true,
@@ -25,23 +25,33 @@ class Wrapper extends StatelessWidget {
             builder: (context, snapshot) {
                final provider = Provider.of<SignInProvider>(context);
 
+
               if (provider.isSigningIn) {
                 return buildLoading();
               } else if (snapshot.hasData) {
-                if(provider.myUser==null){
-                  getActiveUser(provider);
-                  return buildLoading();
 
-                }else  if (provider.myUser!=null){
-                    return MisRutas(provider);
-                }
+                userX.facebookSignIn = provider.facebookSignIn;
+                userX.googleSignIn = provider.googleSignIn;
+                userX.signinWith = provider.signinWith;
+
+                return GetBuilder<UserX>(
+                        builder: (_) { 
+                          if(userX.myUser==null){
+                            userX.getUser();
+                            return buildLoading();
+                          }else {
+                              return MisRutas();
+                          }
+                          }
+                          );
+                      
               } else {
                 return  SignUpWidget();
                 }
-              return SignUpWidget();
             },
           ),
         ),
+
       );
   }
   Widget buildLoading() => Stack(
@@ -52,8 +62,5 @@ class Wrapper extends StatelessWidget {
         ],
       );
 
-   Future<MyUser> getActiveUser(SignInProvider provider) async{
-      return await provider.getUser();
-    }
   
 }

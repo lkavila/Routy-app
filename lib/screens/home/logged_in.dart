@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:routy_app_v102/provider/sign_in.dart';
+import 'package:get/get.dart';
+import 'package:routy_app_v102/GetX/user.dart';
 import 'package:routy_app_v102/screens/map.dart';
 import 'package:routy_app_v102/screens/wrapper.dart';
 import 'package:routy_app_v102/widgets/background_painter.dart';
 import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
+import 'package:routy_app_v102/widgets/menu_widget.dart';
 
 class LoggedIn extends StatefulWidget {
-  final SignInProvider provider;
-  LoggedIn(this.provider, {Key key}) : super(key: key);
+  LoggedIn({Key key}) : super(key: key);
 
   @override
   _LoggedInState createState() => _LoggedInState();
@@ -23,15 +24,16 @@ class _LoggedInState extends State<LoggedIn> {
     
     super.initState();
     print("en loogedIn");
-    print(widget.provider.myUser.toJson());
   }
 
 
   @override
   Widget build(BuildContext context) {
+    final UserX userx = Get.find();
+    print(userx.myUser.toJson());
     return Scaffold(
       key: _scaffoldKey,
-      drawer: DrawerMenu(widget.provider),
+      drawer: DrawerMenu(),
       body: Stack(
         children: [
 
@@ -48,22 +50,22 @@ class _LoggedInState extends State<LoggedIn> {
           ),
           SizedBox(height: 8),
           CircleAvatar(
-            maxRadius: 75,
-            backgroundImage: NetworkImage(widget.provider.myUser.image),
+            maxRadius: 60,
+            backgroundImage: NetworkImage(userx.myUser.image),
           ),
           SizedBox(height: 8),
           Text(
-            'Name: ' + widget.provider.myUser.fullName,
+            'Name: ' + userx.myUser.fullName,
             style: myStyle(),
           ),
           SizedBox(height: 8),
           Text(
-            'Email: ' + widget.provider.myUser.email,
+            'Email: ' + userx.myUser.email,
             style: myStyle(),
           ),
           SizedBox(height: 8),
           Text(
-            'Fecha de creación: ' + widget.provider.myUser.createdAt.toDate().toString(),
+            'Fecha de creación: ' + userx.myUser.createdAt.toDate().toString(),
             style: myStyle(),
           ),
           SizedBox(height: 8),
@@ -77,7 +79,7 @@ class _LoggedInState extends State<LoggedIn> {
           SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-                      widget.provider.logOut();
+                      userx.logOut();
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
                       },
             child: Text('Logout', style: myStyle(),),),
@@ -85,31 +87,9 @@ class _LoggedInState extends State<LoggedIn> {
         ],
       ),
     ),
-    Padding(
-      padding: EdgeInsets.fromLTRB(0, 40.0, 0, 0.0),
-      child:  Container(
-          
-          width: 49.0,
-          height: 48.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-              ),
-                image: DecorationImage(
-                  image: AssetImage('assets/images/menuIcon.PNG'),
-                )
-                ),
-                
-            child: Column(
-              children: [
-                IconButton(
-                icon: const Icon(Icons.menu, color: Colors.transparent,),
-                onPressed: () => _scaffoldKey.currentState.openDrawer(),
-              ),
-              ],
-            ),
-        ),
-      ),
+
+        Menu(_scaffoldKey), //este es el menu que abre el drawer
+
         ],
       )
     );
