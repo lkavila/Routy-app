@@ -60,6 +60,9 @@ class DrawerMenu extends StatelessWidget {
               ListTile(
                 title: Text('Mis vehículos', style: myStyle(),),
                 leading: FaIcon(FontAwesomeIcons.car, color: Colors.white,), 
+                onTap: (){
+                  Navigator.pushNamed(context, '/misVehiculos');
+                },
               ),
               ListTile(
                 title: Text('Configuración',style: myStyle(),),

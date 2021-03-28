@@ -20,6 +20,7 @@ class UserX extends GetxController{
       print("ESto es getuserXXX");
       if(user!=null){
       DocumentSnapshot dc = await FirebaseFirestore.instance.collection("users").doc(user.uid).get();
+      print(dc.data());
       this.myUser = new MyUser.fromData(dc.data());
       print(myUser.toJson());
       update();

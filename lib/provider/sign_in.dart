@@ -156,7 +156,7 @@ class SignInProvider extends ChangeNotifier {
         //si el documento no esta vacio significa que ya se registro este usuario, si esta vacio, hay que agregarlo
     if ( await document.get().then((value) => value.data()==null)){
         //creo mi propio usuario y lo guardo en la base de datos cloud firestore
-        MyUser myuser = new MyUser(user.uid, name, email,createdAt,imageUrl);
+        MyUser myuser = new MyUser(user.uid, name, email,createdAt,imageUrl, []);
         document.set(myuser.toJson());
         print(myuser.toJson());
       }

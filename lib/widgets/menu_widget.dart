@@ -11,11 +11,11 @@ class Menu extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(0, 35.0, 0, 0.0),
       child:  Container(
           
-          width: 49.0,
+          width: 30.0,
           height: 48.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
+                  Radius.circular(25.0),
               ),
                 image: DecorationImage(
                   image: AssetImage('assets/images/menuIcon.PNG'),

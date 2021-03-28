@@ -15,11 +15,15 @@ class Route {
   final Timestamp createdAt;
   
   String tipoCar = "driving-car";
-  
+  bool frecuente=false;
 
- String get getTipoCar => this.tipoCar;
+  bool get getFrecuente => this.frecuente;
 
- set setTipoCar(String tipoCar) => this.tipoCar = tipoCar;
+  set setFrecuente(bool frecuente) => this.frecuente = frecuente;
+
+  String get getTipoCar => this.tipoCar;
+
+  set setTipoCar(String tipoCar) => this.tipoCar = tipoCar;
 
   Route({this.id, this.userId, this.origen, this.destino, this.circular, this.tipoCar, this.distancia, this.duracion, this.puntos, this.polyLines, this.markers, this.createdAt});
 
@@ -32,6 +36,7 @@ class Route {
         circular = data['circular'],
         tipoCar = data['tipoCar'],
         distancia = data['distancia'],
+        frecuente = data['frecuente'],
         duracion = data['duracion'],
         puntos = data['puntos'],
         polyLines = data['polyLines'],
@@ -48,6 +53,7 @@ class Route {
       'circular': circular,
       'distancia': distancia,
       'duracion':duracion,
+      'frecuente':frecuente,
       'puntos':puntos,
       'polyLines':polyLines,
       'markers':markers,
