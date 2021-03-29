@@ -1,10 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:routy_app_v102/service/geocode.dart';
+import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
+import 'package:routy_app_v102/GetX/user.dart';
+import 'package:routy_app_v102/models/route.dart';
+import 'package:routy_app_v102/service/hereGeocode.dart';
 import 'package:routy_app_v102/service/networking.dart';
 import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/widgets/menu_widget.dart';
+import 'package:routy_app_v102/widgets/ruta_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class MyMap extends StatefulWidget {
   @override
@@ -12,6 +19,7 @@ class MyMap extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyMap> {
+  final UserX userx = Get.find();
   GoogleMapController mapController;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final List<LatLng> polyPoints = []; // For holding Co-ordinates as LatLng
@@ -19,6 +27,8 @@ class _MyAppState extends State<MyMap> {
   final Set<Polyline> polyLines = {}; // For holding instance of Polyline
   final Set<Marker> markers = {}; // For holding instance of Marker
   var data;
+  var uuid = Uuid();
+  MyRoute miRuta;
   double onTapLat;
   double onTapLng;
   String distancia="";
@@ -54,34 +64,47 @@ class _MyAppState extends State<MyMap> {
           setPolyLines();
         }
         
-        print(data['features'][0]['properties']['summary']);
-        distancia = (data['features'][0]['properties']['summary']["distance"]/1000).toString().substring(0, 6)+ " km";
-        duracion = (data['features'][0]['properties']['summary']["duration"]/60).toString().substring(0, 6)+ " min";
-        print("la distancia es "+distancia+" y la duracion en vehiculo es "+duracion);
+        distancia = ConvertirTD.convertDistancia(data['features'][0]['properties']['summary']["distance"]);
+        duracion = ConvertirTD.convertirTiempo(data['features'][0]['properties']['summary']["duration"]);
       }
     } catch (e) {
       print(e);
     }
 
-    String dirOrigen = await getDireccion(puntos.first.longitude, puntos.first.latitude);
-    String dirDestino = await getDireccion(puntos.last.longitude, puntos.last.latitude);
+    List<String> dirOrigen = await GeoCodeReverse.fetchGeo(puntos.first.longitude, puntos.first.latitude);
+    List<String> dirDestino = await GeoCodeReverse.fetchGeo(puntos.last.longitude, puntos.last.latitude);
 
     print(dirDestino);
     print(dirOrigen);
-  }
+    if(dirDestino!=null && dirOrigen!=null){
+      String departamentoO = dirOrigen.last;
+      String departamentoD = dirDestino.last;
+      String departamentos;
+      if(departamentoO!=departamentoD){
+        departamentos = departamentoO+" "+departamentoD;
+      }else{
+        departamentos = departamentoD;
+      }
 
-  Future<String> getDireccion(double lon, double lat) async{
-    GeoCodeReverse geo = new GeoCodeReverse(lon: lon, lat: lat);
-
-    var dirOr = await geo.fetchGeo();
-    if(dirOr!=null){
-
-      var pro = dirOr['features'][0]['properties'];
-      String direccion = pro["county"]+", "+pro["name"];
-      return direccion;
+      miRuta = new MyRoute(
+        id: uuid.v1(), 
+        userId: userx.myUser.id,
+        createdAt: Timestamp.now(),
+        origen: dirOrigen.first,
+        destino: dirDestino.first,
+        circular: false,
+        distancia: distancia,
+        duracion: duracion,
+        departamentos: departamentos,
+        polyLines: polyLines,
+        markers: markers,
+        puntos: polyPoints,
+        tipoCar: "driving-car"
+      );
     }
-    return null;
   }
+
+
   
   setPolyLines() {
     Polyline polyline = Polyline(
@@ -141,10 +164,13 @@ class _MyAppState extends State<MyMap> {
             print(data);
             createMarkers(data.latitude, data.longitude);
             if(polyLines.isNotEmpty){
+              setState(() {
                 polyLines.clear();
                 polyPoints.clear();
+                miRuta = null;
                 distancia = "";
                 duracion = "";
+              }); 
             }
             },
           markers: markers,
@@ -171,6 +197,7 @@ class _MyAppState extends State<MyMap> {
                     polyPoints.clear();
                     puntos.clear();
                     markers.clear();
+                    miRuta = null;
                     distancia = "";
                     duracion = "";                 
                   });
@@ -202,6 +229,7 @@ class _MyAppState extends State<MyMap> {
               ),
               child: GestureDetector(
                 onTap: (){
+                  
                   getJsonData();
                 },
                 child: Row(
@@ -216,45 +244,13 @@ class _MyAppState extends State<MyMap> {
           ),
         ),
 
-
-        SafeArea(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white70,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20.0),
-                      ),
-                    ),
-                  child: Text("$distancia", style: TextStyle(
-                            decoration: TextDecoration.none,
-                            fontSize: 25,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w100,
-                            ),),
-                ),
-                Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white54,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20.0),
-                      ),
-                    ),
-                  child: Text("$duracion", style: TextStyle(
-                            decoration: TextDecoration.none,
-                            fontSize: 25,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w100,
-                    ),),
-                ),
-              ],
-            ),
-          )
-          ),
+          Builder(builder: (context){
+            
+            if(miRuta!=null){
+              return Ruta(miRuta);
+            }else{return SizedBox();}
+          }),
+        
           Menu(_scaffoldKey), //este es el menu que abre el drawer
           ]
       ),

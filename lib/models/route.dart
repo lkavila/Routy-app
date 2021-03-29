@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class Route {
+class MyRoute {
   final String id;
   final String origen;
   final String destino;
   final List<LatLng> puntos;
   final Set<Polyline> polyLines; // For holding instance of Polyline
   final Set<Marker> markers; 
-  final double distancia;
-  final double duracion;
+  final String distancia;
+  final String departamentos;
+  final String duracion;
   final bool circular;
   final String userId;
   final Timestamp createdAt;
-  
   String tipoCar = "driving-car";
   bool frecuente=false;
 
@@ -25,14 +25,15 @@ class Route {
 
   set setTipoCar(String tipoCar) => this.tipoCar = tipoCar;
 
-  Route({this.id, this.userId, this.origen, this.destino, this.circular, this.tipoCar, this.distancia, this.duracion, this.puntos, this.polyLines, this.markers, this.createdAt});
+  MyRoute({this.id, this.userId, this.origen, this.destino, this.departamentos, this.circular, this.tipoCar, this.distancia, this.duracion, this.puntos, this.polyLines, this.markers, this.createdAt});
 
-  Route.fromData(Map<String,dynamic> data)
+  MyRoute.fromData(Map<String,dynamic> data)
       : id = data['id'],
         userId = data['userId'],
         createdAt = data['createdAt'],
         origen = data['origen'],
         destino = data['destino'],
+        departamentos = data['departamentos'],
         circular = data['circular'],
         tipoCar = data['tipoCar'],
         distancia = data['distancia'],
@@ -50,6 +51,7 @@ class Route {
       'createdAt': createdAt,
       'origen': origen,
       'destino': destino,
+      'departamentos': departamentos,
       'circular': circular,
       'distancia': distancia,
       'duracion':duracion,
