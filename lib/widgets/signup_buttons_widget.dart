@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
-import 'package:provider/provider.dart';
 
 class SignupButtonsWidget extends StatelessWidget {
+  final SignInProvider provider;
+  const SignupButtonsWidget(this.provider, {Key key}) : super(key: key);
   @override
-  Widget build(BuildContext context) => Container(
+  
+  Widget build(BuildContext context){
+     return Container(
         padding: EdgeInsets.all(4),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -18,7 +21,6 @@ class SignupButtonsWidget extends StatelessWidget {
               icon: FaIcon(FontAwesomeIcons.google, color: Colors.white),
               style: ElevatedButton.styleFrom(primary: Colors.red, minimumSize: Size(265, 40), elevation: 4.0),
               onPressed: () {
-                final provider = Provider.of<SignInProvider>(context, listen: false);
                 provider.loginWithGoogle();
               },
             ),
@@ -30,7 +32,6 @@ class SignupButtonsWidget extends StatelessWidget {
               icon: FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
               style: ElevatedButton.styleFrom(primary: Colors.blue[900], minimumSize: Size(260, 40), elevation: 4.0),
               onPressed: () {
-                final provider = Provider.of<SignInProvider>(context, listen: false);
                 provider.loginWithFacebook();
               },
             ),
@@ -38,4 +39,5 @@ class SignupButtonsWidget extends StatelessWidget {
         )
 
       );
+  }
 }

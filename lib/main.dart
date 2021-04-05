@@ -7,7 +7,7 @@ import 'package:routy_app_v102/screens/map.dart';
 import 'package:routy_app_v102/screens/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-Future main() async { 
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.blue[900],
         buttonColor: Colors.blue[900],
