@@ -10,6 +10,8 @@ Esta es una App de flutter que hasta el momento hace uso de las siguientes cosas
 * Api Here, hasta ahora para utilizar el Reverse Geocoding (https://developer.here.com/documentation/geocoding-search-api/api-reference-swagger.html)
 * Api Openrouteservice, hasta  ahora para obtener los polylines entre puntos. (https://openrouteservice.org/dev/#/api-docs/directions)
 
+## Link para ver diseño en figma
+https://www.figma.com/file/CclKZWq7vYQrzL9OPPDomg/Routy?node-id=0%3A1
 
 ### Inicio de la APP
 
