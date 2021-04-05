@@ -33,8 +33,9 @@ class SignUpWidget extends StatelessWidget {
   }
   Widget buildSignUp(BuildContext context, SignInProvider provider) => Column(
         children: [
-          
-          Logo(90),
+          SizedBox(height: 15),
+
+          Logo(85),
 
           SizedBox(height: 10),
 

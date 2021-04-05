@@ -118,11 +118,10 @@ class SignInProvider extends ChangeNotifier {
   Future loginWithEmail(String email, String password) async {
     isSigningIn = true;
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
       User user = FirebaseAuth.instance.currentUser;
-
+      print(user.uid);
       /*if (!user.emailVerified) {
         await user.sendEmailVerification();
       }*/

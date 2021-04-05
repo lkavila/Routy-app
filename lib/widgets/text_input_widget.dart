@@ -28,6 +28,9 @@ class MyTextInput extends StatelessWidget {
   }
 
   String emailValidator(String value) {
+    if (value.isEmpty){
+      return "El email no puede quedar vacío";
+    }
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
@@ -58,7 +61,7 @@ class MyTextInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: TextFormField(
             obscureText: obscure,
             decoration: InputDecoration(

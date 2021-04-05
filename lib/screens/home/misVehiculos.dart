@@ -83,7 +83,7 @@ class MisVehiculos extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(0, 150, 0, 0),
           child: Text(
             "Aún no ha agregado ningún vehículo",
-            style: TextStyle(color: Colors.blue[700], fontSize: 18),
+            style: TextStyle(color: Colors.blue[800], fontSize: 18),
             textAlign: TextAlign.center,
           ),
         ),

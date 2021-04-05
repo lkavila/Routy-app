@@ -6,26 +6,28 @@ import 'package:routy_app_v102/models/car.dart';
 class Crearvehiculo {
 
   static Car crearVe(String name, String tipo, double consumo){
+    String tipoCarApi;
     switch (tipo) {
       case "Carro":
-        tipo = "driving-car";
+        tipoCarApi = "driving-car";
         break;
       case "Camión":
-        tipo = "driving-hgv";
+        tipoCarApi = "driving-hgv";
         break;
       case "Motocicleta":
-        tipo = "cycling-electric";
+        tipoCarApi = "cycling-electric";
         break;
       case "Bicicleta":
-        tipo =  "cycling-regular";
+        tipoCarApi =  "cycling-regular";
         break;
       case "A pie":
-        tipo = "oot-walking";
+        tipoCarApi = "oot-walking";
+
         break;
       default:
     }
 
-    return Car(name: name, tipoCar: tipo, recorrido: 0, uso: 0, consumo: consumo, consumido: 0, createdAt: Timestamp.now());
+    return Car(name: name, tipoCar: tipo, tipoCarApi: tipoCarApi, recorrido: 0, uso: 0, consumo: consumo, consumido: 0, createdAt: Timestamp.now());
 
   }
 
@@ -39,10 +41,11 @@ class Crearvehiculo {
       userx.myUser.vehiculos.add(carro);
     }
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-    var map1 = {}; 
+    Map<String, dynamic> map1 = {}; 
     userx.myUser.vehiculos.forEach((element) {
-      map1.addAll(element.toJson());
+      map1.addIf(true, element.name, element.toJson());
     });
+    print(map1);
     return users
       .doc(userx.myUser.id)
       .update({'vehiculos': map1})

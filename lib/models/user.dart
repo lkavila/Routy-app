@@ -26,10 +26,12 @@ class MyUser {
             : null;
 
   Map<String, dynamic> toJson() {
-    var map1 = {}; 
-    vehiculos.forEach((element) {
-      map1.addAll(element.toJson());
+    Map<String, dynamic> map1 = {}; 
+    if (vehiculos!=null){
+      vehiculos.forEach((element) {
+        map1.addAll(element.toJson());
     });
+    }
     return {
       'id': id,
       'fullName': fullName,

@@ -33,33 +33,21 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
         body: Container(
             padding: const EdgeInsets.fromLTRB(20.0, 20, 20.0, 0),
-            child: SingleChildScrollView(
-                child: Form(
+            child: Form(
               key: _registerFormKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Logo(70),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
                   Text(
                     "Registro",
                     style: TextStyle(
                         fontSize: 20, color: Color.fromRGBO(12, 55, 106, 1)),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
-                  ),
-                  MyTextInput(firstNameInputController, "Eren Yeager", "Nombre",
-                      "nameValidator", false),
-                  MyTextInput(emailInputController, "eren.shingeki@gmail.com",
-                      "Email", "emailValidator", false),
-                  MyTextInput(pwdInputController, " ", "Contraseña",
-                      "nameValidator", true),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.07,
-                  ),
+                  MyTextInput(firstNameInputController, "Eren Yeager", "Nombre", "nameValidator", false),
+                  MyTextInput(emailInputController, "eren.shingeki@gmail.com","Email", "emailValidator", false),
+                  MyTextInput(pwdInputController, " ", "Contraseña","pwdValidator", true),
+                  
                   Container(
                     width: 150,
                     child: ElevatedButton(
@@ -83,19 +71,17 @@ class _RegisterPageState extends State<RegisterPage> {
                               (states) => 10)),
                     ),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                  ),
-                  Text("¿Ya tienes una cuenta?", style: style()),
                   TextButton(
-                    child: Text("Ingresa aquí!"),
+                    child: Text("¿Ya tienes una cuenta? Ingresa aquí!"),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                 ],
               ),
-            ))));
+            )
+          )
+      );
   }
 
   TextStyle style() {
