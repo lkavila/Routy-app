@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
+import 'package:routy_app_v102/widgets/logo_widget.dart';
+import 'package:routy_app_v102/widgets/signup_buttons_widget.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -14,7 +16,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController firstNameInputController;
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
-  final String defualtUrlImage = "https://firebasestorage.googleapis.com/v0/b/approute40-movil.appspot.com/o/users_images%2Fdefault.png?alt=media&token=bbeb9f9d-638f-4b89-ac89-e47c10de8382";
+  final String defualtUrlImage =
+      "https://firebasestorage.googleapis.com/v0/b/approute40-movil.appspot.com/o/users_images%2Fdefault.png?alt=media&token=bbeb9f9d-638f-4b89-ac89-e47c10de8382";
 
   @override
   initState() {
@@ -51,26 +54,36 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Registro"),
-        ),
         body: Container(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 9, 20.0, 0),
             child: SingleChildScrollView(
                 child: Form(
               key: _registerFormKey,
               child: Column(
                 children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Nombre', hintText: "John"),
-                    controller: firstNameInputController,
-                    validator: nameValidator
+                  Logo(70),
+                  Text(
+                    "Registro",
+                    style: TextStyle(
+                        fontSize: 25, color: Color.fromRGBO(12, 55, 106, 1)),
                   ),
+                  TextFormField(
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue[900]),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue[900]),
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(10)),
+                          labelText: 'Nombre',
+                          hintText: "John"),
+                      controller: firstNameInputController,
+                      validator: nameValidator),
                   TextFormField(
                     decoration: InputDecoration(
                         labelText: 'Email', hintText: "john.doe@gmail.com"),
@@ -85,27 +98,57 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: true,
                     validator: pwdValidator,
                   ),
-                  ElevatedButton(
-                    child: Text("Registrar"),
-                    onPressed: () {
-                      if (_registerFormKey.currentState.validate()) {
-                        SignInProvider provider = SignInProvider();
-                        provider.createAccount(emailInputController.text, pwdInputController.text, defualtUrlImage,Timestamp.now(), firstNameInputController.text);
-                        Navigator.pop(context);
-                      }
-
-                    },
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  Container(
+                    width: 150,
+                    child: Expanded(
+                      flex: 1,
+                      child: ElevatedButton(
+                        child:
+                            Text("Registrar", style: TextStyle(fontSize: 18)),
+                        onPressed: () {
+                          if (_registerFormKey.currentState.validate()) {
+                            SignInProvider provider = SignInProvider();
+                            provider.createAccount(
+                                emailInputController.text,
+                                pwdInputController.text,
+                                defualtUrlImage,
+                                Timestamp.now(),
+                                firstNameInputController.text);
+                            Navigator.pop(context);
+                          }
+                        },
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith(
+                                (states) => Colors.blue[900]),
+                            elevation: MaterialStateProperty.resolveWith(
+                                (states) => 10)),
+                      ),
                     ),
-                  
-                  Text("¿Ya tienes una cuenta?"),
+                  ),
+                  Text("¿Ya tienes una cuenta?", style: style()),
                   TextButton(
                     child: Text("Ingresa aquí!"),
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                  )
+                  ),
+                  Text(
+                    "ó",
+                    style: style(),
+                  ),
+                  SignupButtonsWidget()
                 ],
               ),
             ))));
   }
-}
+
+  TextStyle style() {
+    return TextStyle(
+        color: Color.fromRGBO(12, 55, 106, 1),
+        fontSize: 14,
+        fontWeight: FontWeight.normal);
+  }
+} // xelente :V

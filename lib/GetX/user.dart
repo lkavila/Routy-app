@@ -5,40 +5,49 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:routy_app_v102/models/user.dart';
 
-class UserX extends GetxController{
+class UserX extends GetxController {
   GoogleSignIn googleSignIn;
   FacebookLogin facebookSignIn;
   MyUser myUser;
   String signinWith;
 
-  set setGoogleSignIn( googleSignIn) => this.googleSignIn = googleSignIn;
-  set setFacebookSignIn( facebookSignIn) => this.facebookSignIn = facebookSignIn;
+  set setGoogleSignIn(googleSignIn) => this.googleSignIn = googleSignIn;
+  set setFacebookSignIn(facebookSignIn) => this.facebookSignIn = facebookSignIn;
   set setSigninWith(String signinWith) => this.signinWith = signinWith;
 
-  Future getUser() async{
-      final user = FirebaseAuth.instance.currentUser;
-      print("ESto es getuserXXX");
-      if(user!=null){
-      DocumentSnapshot dc = await FirebaseFirestore.instance.collection("users").doc(user.uid).get();
+  Future getUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    print("ESto es getuserXXX");
+    if (user != null) {
+      DocumentSnapshot dc = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .get();
       print(dc.data());
-      this.myUser = new MyUser.fromData(dc.data());
-      print(myUser.toJson());
-      update();
+      try {
+        this.myUser = new MyUser.fromData(dc.data());
+        print(myUser.toJson());
+        update();
+      } catch (e) {
+        FirebaseAuth.instance.signOut();
+        print("entro al catch");
+        print(e.toString());
       }
     }
+  }
 
   @override
-  void onInit() { // called immediately after the widget is allocated memory
+  void onInit() {
+    // called immediately after the widget is allocated memory
     getUser();
     super.onInit();
   }
 
   void logOut() async {
-    
-    if (signinWith == "Google"){
+    if (signinWith == "Google") {
       print("cerrar sesion google");
       await googleSignIn.disconnect();
-    }else if (signinWith == "Facebook"){
+    } else if (signinWith == "Facebook") {
       print("cerrar sesion facebook");
       await facebookSignIn.logOut();
     }
@@ -46,9 +55,8 @@ class UserX extends GetxController{
     this.myUser = null;
   }
 
-  void salir(){
+  void salir() {
     FirebaseAuth.instance.signOut();
     this.myUser = null;
   }
-
 }

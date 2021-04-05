@@ -28,7 +28,7 @@ class SignupButtonsWidget extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
               ),
               icon: FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
-              style: ElevatedButton.styleFrom(primary: Colors.blue[700], minimumSize: Size(260, 40), elevation: 4.0),
+              style: ElevatedButton.styleFrom(primary: Colors.blue[900], minimumSize: Size(260, 40), elevation: 4.0),
               onPressed: () {
                 final provider = Provider.of<SignInProvider>(context, listen: false);
                 provider.loginWithFacebook();

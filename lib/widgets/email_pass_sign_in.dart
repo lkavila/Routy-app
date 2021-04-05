@@ -3,17 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:routy_app_v102/provider/sign_in.dart';
 
 class EmailPassSignIn extends StatelessWidget {
-
-  final  emailInputController = new TextEditingController();
-  final  pwdInputController = new TextEditingController();
-
+  final emailInputController = new TextEditingController();
+  final pwdInputController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) => Container(
-        width: 270.0,
-        height: 250.0,
-        padding: EdgeInsets.all(4),
-        child: Column(
+      width: 270.0,
+      height: 250.0,
+      padding: EdgeInsets.all(4),
+      child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: ([
             TextField(
@@ -25,8 +23,6 @@ class EmailPassSignIn extends StatelessWidget {
                 labelText: 'Email',
               ),
             ),
-
-
             TextField(
               obscureText: true,
               controller: pwdInputController,
@@ -35,32 +31,29 @@ class EmailPassSignIn extends StatelessWidget {
                 labelText: 'Password',
               ),
             ),
-
             Align(
-            alignment: Alignment.topRight,
-            child: Text("¿Olvidaste tu contraseña?", style: TextStyle(color: Colors.blue[700])),
-          ),
-
-          
-
-          Builder(
+              alignment: Alignment.topRight,
+              child: Text("¿Olvidaste tu contraseña?",
+                  style: TextStyle(color: Colors.blue[700])),
+            ),
+            Builder(
                 // Here the magic happens
                 // this builder function will generate a new BuilContext for you
-                builder: (BuildContext newContext){
-                  return ElevatedButton(
-                    child: Text("Iniciar sesión", style: TextStyle(fontFamily: "Roboto")),
-                    style: ElevatedButton.styleFrom(primary: Colors.blue[700], elevation: 5, shadowColor: Colors.black),
-                    onPressed: () {
-                    final provider =  Provider.of<SignInProvider>(newContext, listen: false);
-                      provider.loginWithEmail(emailInputController.text, pwdInputController.text);
-                        },
-                      );
-                    }
-                  ),
-          
-                
-          ]
-        )
-        )
-      );
+                builder: (BuildContext newContext) {
+              return ElevatedButton(
+                child: Text("Iniciar sesión",
+                    style: TextStyle(fontFamily: "Roboto")),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.blue[700],
+                    elevation: 5,
+                    shadowColor: Colors.black),
+                onPressed: () {
+                  final provider =
+                      Provider.of<SignInProvider>(newContext, listen: false);
+                  provider.loginWithEmail(
+                      emailInputController.text, pwdInputController.text);
+                },
+              );
+            }),
+          ])));
 }

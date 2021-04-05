@@ -66,7 +66,8 @@ class MisVehiculos extends StatelessWidget {
 
   Widget getVehiculos(List<Car> vehis)
   {
-    if(vehis!=null){
+    print(vehis);
+    if(vehis!=null && !vehis.isBlank){
       List<Widget> list = [];
       for (Car vehi in vehis) {
         list.add(carWidget(vehi.name, vehi.tipoCar, vehi.recorrido, vehi.consumido, vehi.uso));

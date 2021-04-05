@@ -32,17 +32,20 @@ class Crearvehiculo {
  static Future< void>  crear(String name, String tipo, double consumo){
     Car carro = crearVe( name,  tipo,  consumo);
     final UserX userx = Get.find();
-    if(userx.myUser.vehiculos==null){
+    if(userx.myUser.vehiculos==null || userx.myUser.vehiculos.isEmpty){
       List<Car> primerCar= [carro];
     userx.myUser.vehiculos = primerCar;
     }else{
       userx.myUser.vehiculos.add(carro);
     }
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-
+    var map1 = {}; 
+    userx.myUser.vehiculos.forEach((element) {
+      map1.addAll(element.toJson());
+    });
     return users
       .doc(userx.myUser.id)
-      .update({'vehiculos': FieldValue.arrayUnion(userx.myUser.vehiculos)})
+      .update({'vehiculos': map1})
       .then((value) => print("User Updated"))
       .catchError((error) => print("Failed to update user vehiculo: $error"));
   }

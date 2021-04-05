@@ -20,6 +20,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       drawer: DrawerMenu(),
       body: Stack(
@@ -106,7 +107,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.cyan[700],
+                      color: Colors.cyanAccent[700],
                       ),
                     child: FaIcon(FontAwesomeIcons.check, color: Colors.white, size: 30,)
                     ),

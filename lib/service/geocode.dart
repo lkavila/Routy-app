@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+//Esta API no es muy precisa con las direcciones
 class GeoCodeReverse {
 
   final double lon;
@@ -10,8 +10,6 @@ class GeoCodeReverse {
 
 
   Future fetchGeo() async{
-    String url2 = "api.openrouteservice.org";
-    String apiKey = "5b3ce3597851110001cf6248d4141599836d412aa58e4b7569d36ef5";
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=UTF-8",
       };
