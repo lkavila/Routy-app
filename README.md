@@ -1,16 +1,22 @@
-# routy_app_v102
+# routy_app
 
-A new Flutter project.
+Esta es una App de flutter que hasta el moemtno hace uso de las siguientes cosas:
+* Autenticación con firebase
+* Base de datos con firestore
+* Inicio de sesión con redes sociales y correo y contraseña
+* provider (Para manejar el estado, espeficicamente para detectar el login)
+* Mapa de google
+* GetX, hasta ahora se usa para aprovechar su funcionalidad de singleton
+* Api Here, hasta ahora para utilizar el Reverse Geocoding (https://developer.here.com/documentation/geocoding-search-api/api-reference-swagger.html)
+* Api Openrouteservice, hasta  ahora para obtener los polylines entre puntos. (https://openrouteservice.org/dev/#/api-docs/directions)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+### Inicio de la APP
 
-A few resources to get you started if this is your first Flutter project:
+![Alt text](inicio_diseño.png?raw=true "Title")
+### Boceto de un card de una ruta
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![Alt text](rutas_diseño.gif?raw=true "Title")
+### Diseño de la ruta en el mapa de google
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Alt text](mapa_diseño.gif?raw=true "Title")

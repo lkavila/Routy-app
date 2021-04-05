@@ -24,15 +24,15 @@ class UserX extends GetxController {
           .doc(user.uid)
           .get();
       print(dc.data());
-      //try {
+      try {
         this.myUser = new MyUser.fromData(dc.data());
         print(myUser.toJson());
         update();
-      //} catch (e) {
-      //  FirebaseAuth.instance.signOut();
-      //  print("entro al catch");
-      //  print(e.toString());
-      //}
+      } catch (e) {
+        FirebaseAuth.instance.signOut();
+        print("entro al catch");
+        print(e.toString());
+      }
     }
   }
 

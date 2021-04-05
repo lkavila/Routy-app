@@ -31,12 +31,13 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
-            padding: const EdgeInsets.fromLTRB(20.0, 20, 20.0, 0),
+            padding: const EdgeInsets.fromLTRB(20.0, 15, 20.0, 0),
             child: Form(
               key: _registerFormKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Logo(70),
                   Text(
@@ -44,9 +45,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(
                         fontSize: 20, color: Color.fromRGBO(12, 55, 106, 1)),
                   ),
+                  Spacer(),
                   MyTextInput(firstNameInputController, "Eren Yeager", "Nombre", "nameValidator", false),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.04,
+                  ),
                   MyTextInput(emailInputController, "eren.shingeki@gmail.com","Email", "emailValidator", false),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.04,
+                  ),                  
                   MyTextInput(pwdInputController, " ", "Contraseña","pwdValidator", true),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.06,
+                  ),                  
                   
                   Container(
                     width: 150,
@@ -54,8 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Text("Registrar", style: TextStyle(fontSize: 18)),
                       onPressed: () {
                         if (_registerFormKey.currentState.validate()) {
-                          SignInProvider provider = SignInProvider();
-                          provider.createAccount(
+                          widget.provider.createAccount(
                               emailInputController.text,
                               pwdInputController.text,
                               defualtUrlImage,
@@ -77,6 +87,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       Navigator.pop(context);
                     },
                   ),
+                 SizedBox(
+                    height: MediaQuery.of(context).size.height*0.1,
+                  ),
+                  Spacer(),
                 ],
               ),
             )
