@@ -30,7 +30,6 @@ class _LoggedInState extends State<LoggedIn> {
   @override
   Widget build(BuildContext context) {
     final UserX userx = Get.find();
-    print(userx.myUser.toJson());
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerMenu(),

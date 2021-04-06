@@ -15,7 +15,7 @@ class Logo extends StatelessWidget {
               child: Text(
                 'Routy',
                 style: TextStyle(
-                  color: Colors.blue[700],
+                  color: Colors.blue[900],
                   fontSize: fontsize,
                   fontWeight: FontWeight.normal,
                   fontFamily: 'Pacifico'
