@@ -6,7 +6,7 @@ Esta es una App de flutter que hasta el momento hace uso de las siguientes cosas
 * Inicio de sesión con redes sociales y correo y contraseña
 * provider (Para manejar el estado, espeficicamente para detectar el login)
 * Mapa de google
-* GetX, hasta ahora se usa para aprovechar su funcionalidad de singleton
+* GetX, aprovechamos su funcionalidad de singleton y llamar instancias para hacer injección de dependencias (Usuario en cualquier pantalla)
 * Api Here, hasta ahora para utilizar el Reverse Geocoding (https://developer.here.com/documentation/geocoding-search-api/api-reference-swagger.html)
 * Api Openrouteservice, hasta  ahora para obtener los polylines entre puntos. (https://openrouteservice.org/dev/#/api-docs/directions)
 
