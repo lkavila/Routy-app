@@ -6,11 +6,12 @@ import 'package:routy_app_v102/screens/home/misVehiculos.dart';
 import 'package:routy_app_v102/screens/map.dart';
 import 'package:routy_app_v102/screens/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await FlutterConfig.loadEnvVariables();
   runApp(MyApp());
 }
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.blue[900],
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
         primaryColorDark: Colors.grey,
         primarySwatch: Colors.blue,
         accentColor: Colors.orange,
+        
         fontFamily: "OpenSans",
       ),
       initialRoute: "/wrapper",

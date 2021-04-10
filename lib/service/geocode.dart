@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+//Este codigo no se esta usando, aunque si funciona
 //Esta API no es muy precisa con las direcciones
 class GeoCodeReverse {
 
@@ -16,7 +17,7 @@ class GeoCodeReverse {
       print(lon.toString()+ "longitud");
       print(lat.toString()+ "latitud");
     Map<String, String> parametros = {
-      "api_key": "5b3ce3597851110001cf6248d4141599836d412aa58e4b7569d36ef5",
+      "api_key": "",
       "point.lat": lon.toString(),
       "point.lon": lat.toString(),
       "size": "1",

@@ -1,5 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:routy_app_v102/secrets.dart';
+
 
 class GeoCodeReverse {
 
@@ -12,7 +14,7 @@ class GeoCodeReverse {
       "Connection": "keep-alive",
       };
     Map<String, String> parametros = {
-      "apikey": "YGbDQjCN-FTQsORX4ZAj-W_9Y-3S4J6vyJtCOl6jAt4",
+      "apikey": Secrets.hereAPIKEY,
       "at": lat.toString()+","+lon.toString(),
       "lang": "es"
       };
@@ -24,7 +26,12 @@ class GeoCodeReverse {
       var dir = jsonDecode(utf8.decode(response.bodyBytes));
       var pro = dir['items'][0]['address'];
       String street = pro['street'];
-      List<String> list = street.split(" ");
+      List<String> list;
+      if (street.contains(" ")){
+        list = street.split(" ");
+      } else {
+        list = [street];
+      }
       if (list.length==3){
         street = list[0]+" "+list[1]+" "+"#"+list[2];
       }

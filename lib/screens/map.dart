@@ -86,7 +86,8 @@ class _MyAppState extends State<MyMap> {
         departamentos = departamentoD;
       }
 
-      miRuta = new MyRoute(
+      setState(() {
+        miRuta = new MyRoute(
         id: uuid.v1(), 
         userId: userx.myUser.id,
         createdAt: Timestamp.now(),
@@ -101,6 +102,8 @@ class _MyAppState extends State<MyMap> {
         puntos: polyPoints,
         tipoCar: "driving-car"
       );
+      });
+
     }
   }
 
@@ -229,7 +232,7 @@ class _MyAppState extends State<MyMap> {
               ),
               child: GestureDetector(
                 onTap: (){
-                  
+
                   getJsonData();
                 },
                 child: Row(

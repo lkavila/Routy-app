@@ -1,6 +1,9 @@
 class ConvertirTD{
 
   static String convertDistancia(double distancia){
+    if (distancia<1000){
+      return distancia.round().toString()+" metros";
+    }
     distancia = distancia/1000; //distancia se recibe en metros y se pasa a kilometros 
     if(distancia>=100000){
       return distancia.round().toString()+" kilometros";
@@ -18,9 +21,8 @@ class ConvertirTD{
     }else{
       duracion = duracion/60;
       if (duracion<60){
-        double min = duracion.floorToDouble();
-        double seg = (duracion - min)*60;
-        return (min.round().toString()+" minutos con "+seg.round().toString()+" seg");
+        double min = duracion.ceilToDouble();
+        return (min.round().toString()+" minutos");
       }else{
         duracion = duracion/60;
         double hours = duracion.floorToDouble();
