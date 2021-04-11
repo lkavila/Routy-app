@@ -8,9 +8,9 @@ class RouteX extends GetxController{
   List<MyRoute> misRutas = [];
 
   Future getRutas() async{
+
     final user = FirebaseAuth.instance.currentUser;
     print("ESto es GetRutasX");
-    if (user != null) {
       final String uid = user.uid;
     try {
       QuerySnapshot query = await FirebaseFirestore.instance
@@ -20,19 +20,19 @@ class RouteX extends GetxController{
       
         query.docs.forEach((element) {
             misRutas.add(MyRoute.fromData(element.data()));
-            print(element.data());
+            
          });
+         update();
       } catch (e) {
         FirebaseAuth.instance.signOut();
         print("entro al catch");
         print(e.toString());
       }
-    }
-    
 
   }
 
   limpiar(){
+    misRutas = [];
     this.misRutas = [];
   }
 

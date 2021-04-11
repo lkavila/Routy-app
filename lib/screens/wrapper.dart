@@ -37,12 +37,11 @@ class Wrapper extends StatelessWidget {
                 return GetBuilder<UserX>(
                         builder: (_) { 
                           if(userX.myUser==null){
-                            userX.getUser();
                             return buildLoading();
                           }else {
                               return MisRutas();
-                          }
-                          }
+                              }
+                            }
                           );
                       
               } else {

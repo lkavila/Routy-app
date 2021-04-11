@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/GetX/route.dart';
+import 'package:routy_app_v102/GetX/user.dart';
 import 'package:routy_app_v102/models/route.dart';
 import 'package:routy_app_v102/screens/map.dart';
+import 'package:routy_app_v102/widgets/background_painter.dart';
 import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/widgets/menu_widget.dart';
 
@@ -11,6 +13,7 @@ class MisRutas extends StatelessWidget {
   MisRutas({Key key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final RouteX routeX = Get.find();
+  
   @override
   Widget build(BuildContext context) {
     routeX.misRutas.forEach((element){
@@ -19,38 +22,42 @@ class MisRutas extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerMenu(),
-      body: Stack(
-        children: [
-          Container(
-          padding: EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 0.0),
-          child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: GetBuilder<RouteX>(
+        builder: (_){
+          if (routeX.misRutas.isEmpty){
+            return   buildLoading();
+          }else return Stack(
               children: [
-              Text("Mis Rutas", style: TextStyle(fontFamily: 'pacifico', fontSize: 25, color:  Colors.blue[800],),),
-
-            ],
-            ),
-            Expanded(
-
-              child:  getRutas(routeX.misRutas, context),
-                
-              ),
-            
-            
-
-            ]
-          ),
-          ),
-
-            Menu(_scaffoldKey), //este es el menu que abre el drawer
-
-
-        ],
-      ),
+                Container(
+                padding: EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 0.0),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                    Text("Mis Rutas", style: TextStyle(fontFamily: 'pacifico', fontSize: 25, color:  Colors.blue[800],),),
+                  ],
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child:  getRutas(routeX.misRutas, context),
+                    ),
+                  ]
+                ),
+                ),
+                  Menu(_scaffoldKey), //este es el menu que abre el drawer
+              ],
+              );
+        },
+      ) 
     );
   }
-
+Widget buildLoading() => Stack(
+        fit: StackFit.expand,
+        children: [
+          CustomPaint(painter: BackgroundPainter()),
+          Center(child: CircularProgressIndicator()),
+        ],
+      );
 
   Widget getRutas(List<MyRoute> rutas, BuildContext context)
   {
@@ -58,7 +65,10 @@ class MisRutas extends StatelessWidget {
     rutas.forEach((ruta) {
       list.add(carWidget(ruta.departamentos, ruta.origen, ruta.destino, ConvertirTD.convertDistancia(ruta.distancia), ConvertirTD.convertirTiempo(ruta.duracion), context));
     });
-    return new ListView(children: list);
+    return new ListView(
+      padding: EdgeInsets.only(top: 0.0),
+      children: list,
+      );
   }
 
   Widget carWidget(String departamento, String origen, String destino, String distancia, String duracion, BuildContext context){
@@ -70,7 +80,7 @@ class MisRutas extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
               ),
-            padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
             
       child: Card(
         color: Colors.grey,

@@ -22,16 +22,14 @@ class UserX extends GetxController {
     if (user != null) {
       DocumentSnapshot dc = await FirebaseFirestore.instance
           .collection("users")
-          .doc(user.uid)
+          .doc(user.uid) 
           .get();
-      print(dc.data());
       try {
         this.myUser = new MyUser.fromData(dc.data());
-        print(myUser.toJson());
-        update();
         final routeX = Get.put(RouteX());
         routeX.getRutas();
-      } catch (e) {
+        update();
+      } catch (e) { 
         FirebaseAuth.instance.signOut();
         print("entro al catch");
         print(e.toString());
