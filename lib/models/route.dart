@@ -5,12 +5,11 @@ class MyRoute {
   final String id;
   final String origen;
   final String destino;
-  final List<LatLng> puntos;
-  final Set<Polyline> polyLines; // For holding instance of Polyline
-  final Set<Marker> markers; 
-  final String distancia;
+  final List<LatLng> markerPoints;
+  final List<LatLng> polyPoints;
+  final double distancia;
   final String departamentos;
-  final String duracion;
+  final double duracion;
   final bool circular;
   final String userId;
   final Timestamp createdAt;
@@ -25,7 +24,7 @@ class MyRoute {
 
   set setTipoCar(String tipoCar) => this.tipoCar = tipoCar;
 
-  MyRoute({this.id, this.userId, this.origen, this.destino, this.departamentos, this.circular, this.tipoCar, this.distancia, this.duracion, this.puntos, this.polyLines, this.markers, this.createdAt});
+  MyRoute({this.id, this.userId, this.origen, this.destino, this.departamentos, this.circular, this.tipoCar, this.distancia, this.duracion, this.markerPoints, this.polyPoints, this.createdAt});
 
   MyRoute.fromData(Map<String,dynamic> data)
       : id = data['id'],
@@ -39,11 +38,20 @@ class MyRoute {
         distancia = data['distancia'],
         frecuente = data['frecuente'],
         duracion = data['duracion'],
-        puntos = data['puntos'],
-        polyLines = data['polyLines'],
-        markers = data['markers'];
-  
-    Map<String, dynamic> toJson() {
+        polyPoints = (List<GeoPoint>.from(data['polyPoints'])).map((e) => new LatLng(e.latitude, e.longitude)).toList(),
+        markerPoints = (List<GeoPoint>.from(data['markerPoints'])).map((e) => new LatLng(e.latitude, e.longitude)).toList();
+        
+  Map<String, dynamic> toJson() {
+    List geopoints = [];
+    markerPoints.forEach((element) { 
+      geopoints.add(GeoPoint(element.latitude, element.longitude));
+    });
+
+    List geoPolypoints = [];
+    polyPoints.forEach((element) { 
+      geoPolypoints.add(GeoPoint(element.latitude, element.longitude));
+    });
+    
     return {
       'id': id,
       'userId': userId,
@@ -56,9 +64,8 @@ class MyRoute {
       'distancia': distancia,
       'duracion':duracion,
       'frecuente':frecuente,
-      'puntos':puntos,
-      'polyLines':polyLines,
-      'markers':markers,
+      'markerPoints':geopoints,
+      'polyPoints':geoPolypoints,
 
     };
   }

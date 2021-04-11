@@ -14,6 +14,8 @@ import 'package:routy_app_v102/widgets/ruta_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class MyMap extends StatefulWidget {
+  final MyRoute ruta;
+  const MyMap(this.ruta,{Key key}): super(key: key);
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -22,31 +24,25 @@ class _MyAppState extends State<MyMap> {
   final UserX userx = Get.find();
   GoogleMapController mapController;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final List<LatLng> polyPoints = []; // For holding Co-ordinates as LatLng
-  final List<LatLng> puntos = []; 
+  List<LatLng> polyPoints = []; // For holding Co-ordinates as LatLng
+  List<LatLng> puntos = []; 
   final Set<Polyline> polyLines = {}; // For holding instance of Polyline
   final Set<Marker> markers = {}; // For holding instance of Marker
   var data;
   var uuid = Uuid();
   MyRoute miRuta;
-  double onTapLat;
-  double onTapLng;
-  String distancia="";
-  String duracion="";
+  double onTapLat, onTapLng, distancia, duracion;
   // Dummy Start and Destination Points
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    
   }
 
 
   void getJsonData() async {
     // Create an instance of Class NetworkHelper which uses http package
     // for requesting data to the server and receiving response as JSON format
-
     OpenRoute openRoute = new OpenRoute(); 
-
 
     try {
       // getData() returns a json Decoded data
@@ -55,17 +51,19 @@ class _MyAppState extends State<MyMap> {
         // We can reach to our desired JSON data manually as following
         LineString ls =
             LineString(data['features'][0]['geometry']['coordinates']);
-
+        print("antes de polylines");
         for (int i = 0; i < ls.lineString.length; i++) {
           polyPoints.add(LatLng(ls.lineString[i][1], ls.lineString[i][0]));
         }
 
         if (polyPoints.length == ls.lineString.length) {
+          print("antes de polylines");
           setPolyLines();
+          print("despues de polylines");
         }
         
-        distancia = ConvertirTD.convertDistancia(data['features'][0]['properties']['summary']["distance"]);
-        duracion = ConvertirTD.convertirTiempo(data['features'][0]['properties']['summary']["duration"]);
+        distancia = data['features'][0]['properties']['summary']["distance"];
+        duracion = data['features'][0]['properties']['summary']["duration"];
       }
     } catch (e) {
       print(e);
@@ -97,9 +95,8 @@ class _MyAppState extends State<MyMap> {
         distancia: distancia,
         duracion: duracion,
         departamentos: departamentos,
-        polyLines: polyLines,
-        markers: markers,
-        puntos: polyPoints,
+        markerPoints: puntos,
+        polyPoints: polyPoints,
         tipoCar: "driving-car"
       );
       });
@@ -123,7 +120,14 @@ class _MyAppState extends State<MyMap> {
   @override
   void initState() {
     super.initState();
-
+    if (widget.ruta!=null){
+      miRuta = widget.ruta;
+      polyPoints = widget.ruta.polyPoints;
+      setPolyLines();
+      widget.ruta.markerPoints.forEach((element) {
+        createMarkers(element.latitude, element.longitude);
+      });
+    }
     //getJsonData();
   }
 
@@ -135,7 +139,7 @@ class _MyAppState extends State<MyMap> {
           position: LatLng(lat, lng),
           infoWindow: InfoWindow(
             title: "Home",
-            snippet: "lat: "+lat.toString()+"| long: "+lng.toString(),
+            snippet: "lat: "+lat.toString(),
           ),
           onTap: (){
             setState(() {
@@ -171,8 +175,6 @@ class _MyAppState extends State<MyMap> {
                 polyLines.clear();
                 polyPoints.clear();
                 miRuta = null;
-                distancia = "";
-                duracion = "";
               }); 
             }
             },
@@ -200,9 +202,7 @@ class _MyAppState extends State<MyMap> {
                     polyPoints.clear();
                     puntos.clear();
                     markers.clear();
-                    miRuta = null;
-                    distancia = "";
-                    duracion = "";                 
+                    miRuta = null;               
                   });
 
                 },
@@ -234,6 +234,7 @@ class _MyAppState extends State<MyMap> {
                 onTap: (){
 
                   getJsonData();
+                  print("despues de llamado");
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

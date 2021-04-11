@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:routy_app_v102/GetX/route.dart';
 import 'package:routy_app_v102/GetX/user.dart';
 import 'package:routy_app_v102/screens/wrapper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,6 +15,7 @@ class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserX userx = Get.find();
+    final RouteX rutax = Get.find();
     return Container(
         width: MediaQuery.of(context).size.width * 0.7, // 75% of screen will be occupied
         
@@ -74,6 +76,7 @@ class DrawerMenu extends StatelessWidget {
                 leading: Icon(Icons.logout, color: Colors.white),
                 onTap: (){
                         userx.salir();
+                        rutax.limpiar();
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
                 },
 

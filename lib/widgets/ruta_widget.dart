@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
+import 'package:routy_app_v102/Controllers/crear_ruta.dart';
 import 'package:routy_app_v102/models/route.dart';
 
 class Ruta extends StatelessWidget {
@@ -94,7 +96,7 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 10,),
                       Text('Distancia:', style:style(),),
                       SizedBox(width: 5,),
-                      Text('${ruta.distancia}', style:style2()),
+                      Text('${ConvertirTD.convertDistancia(ruta.distancia)}', style:style2()),
                     ],
                   ),
                   Row(
@@ -105,14 +107,14 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 10,),
                       Text('Tiempo en carro:', style:style(),),
                       SizedBox(width: 5,),
-                      Text('${ruta.duracion}', style:style2() ),
+                      Text('${ConvertirTD.convertirTiempo(ruta.duracion)}', style:style2() ),
                     ],
                   ),
                   Container(
                     width: 180,
                     child: ElevatedButton(
                         onPressed: (){
-
+                          CrearRuta.crear(ruta);
                         },
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(

@@ -33,19 +33,19 @@ class SignUpWidget extends StatelessWidget {
   }
   Widget buildSignUp(BuildContext context, SignInProvider provider) => Column(
         children: [
-          SizedBox(height: 15),
+          SizedBox(height: 5),
 
           Logo(85),
 
-          SizedBox(height: 10),
+          SizedBox(height: 5),
 
           EmailPassSignIn(),
 
           Text("ó"),
-          SizedBox(height: 10),
+          SizedBox(height: 5),
           SignupButtonsWidget(provider),
           
-          SizedBox(height: 10),
+          SizedBox(height: 5),
           TextButton(
              onPressed:  (){ Navigator.push(context,
                                 MaterialPageRoute(builder: (context) => RegisterPage(provider)),

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         "/logged_in": (context) => LoggedIn(),
         "/misVehiculos": (context) => MisVehiculos(),
         "/crearVehiculo": (context) => CrearVehiculo(),
-        "/map": (context) => MyMap(),
+        "/map": (context) => MyMap(null),
       },
     );
   }
