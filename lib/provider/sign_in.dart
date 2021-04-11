@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:routy_app_v102/GetX/user.dart';
 import 'package:routy_app_v102/models/car.dart';
 import 'package:routy_app_v102/models/user.dart';
 
@@ -49,12 +51,15 @@ class SignInProvider extends ChangeNotifier {
 
       addAccount(currentUser.user, currentUser.user.displayName,
           currentUser.user.email, Timestamp.now(), currentUser.user.photoURL);
-
+      obtenerUserX();
       _signinWith = "Google";
       isSigningIn = false;
     }
   }
-
+  obtenerUserX(){
+    final UserX userx = Get.find();
+    userx.getUser();
+  }
   Future loginWithFacebook() async {
     isSigningIn = true;
 
@@ -77,7 +82,7 @@ class SignInProvider extends ChangeNotifier {
 
         addAccount(currentUser.user, currentUser.user.displayName,
             currentUser.user.email, Timestamp.now(), currentUser.user.photoURL);
-
+        obtenerUserX();
         _signinWith = "Facebook";
         print('${currentUser.user.displayName} is now logged in');
         break;
@@ -119,12 +124,10 @@ class SignInProvider extends ChangeNotifier {
     isSigningIn = true;
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-
-      User user = FirebaseAuth.instance.currentUser;
-      print(user.uid);
       /*if (!user.emailVerified) {
         await user.sendEmailVerification();
       }*/
+      obtenerUserX();
       _signinWith = "Email";
     } on PlatformException catch (e) {
       switch (e.code) {
