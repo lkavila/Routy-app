@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/GetX/user.dart';
-import 'package:routy_app_v102/models/route.dart';
 import 'package:routy_app_v102/screens/map.dart';
 import 'package:routy_app_v102/screens/wrapper.dart';
 import 'package:routy_app_v102/widgets/background_painter.dart';
@@ -71,16 +70,16 @@ class _LoggedInState extends State<LoggedIn> {
           SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => MyMap(null)),);
+              Navigator.push(context,MaterialPageRoute(builder: (context) => MyMap(null, 0)),);
               
             },
             child: Text('Ir a Mapa'),
           ),
           SizedBox(height: 8),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async{
                       
-                      userx.logOut();
+                      await userx.logOut();
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
                       },
             child: Text('Logout', style: myStyle(),),),

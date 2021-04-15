@@ -58,7 +58,6 @@ class SignInProvider extends ChangeNotifier {
   }
   obtenerUserX(){
     final UserX userx = Get.find();
-    userx.getUser();
   }
   Future loginWithFacebook() async {
     isSigningIn = true;

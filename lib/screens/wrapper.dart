@@ -10,35 +10,37 @@ import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
   final userX = Get.put(UserX());
-  
   return Scaffold(
         key: _scaffoldKey,
         drawerEnableOpenDragGesture: true,
         resizeToAvoidBottomInset: false,
         body: ChangeNotifierProvider(
           create: (context) => SignInProvider(),
-          child: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
+          child: Builder(
+            builder: (context) {
                final provider = Provider.of<SignInProvider>(context);
 
-
               if (provider.isSigningIn) {
+                print("hola11111111");
                 return buildLoading();
-              } else if (snapshot.hasData) {
-
+              } else if (FirebaseAuth.instance.currentUser!=null) {
+                print("hola22222222222");
                 userX.facebookSignIn = provider.facebookSignIn;
                 userX.googleSignIn = provider.googleSignIn;
                 userX.signinWith = provider.signinWith;
-
                 return GetBuilder<UserX>(
                         builder: (_) { 
+                          print("??????????????");
                           if(userX.myUser==null){
+                            print("hola33333333333");
+                            userX.getUser();
                             return buildLoading();
                           }else {
+                              
                               return MisRutas();
                               }
                             }

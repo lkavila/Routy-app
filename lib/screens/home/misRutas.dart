@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/GetX/route.dart';
-import 'package:routy_app_v102/GetX/user.dart';
+import 'package:routy_app_v102/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/models/route.dart';
 import 'package:routy_app_v102/screens/map.dart';
 import 'package:routy_app_v102/widgets/background_painter.dart';
@@ -16,9 +16,7 @@ class MisRutas extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    routeX.misRutas.forEach((element){
-      print(element.origen);
-      }); 
+    Get.put(Elegido());
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerMenu(),
@@ -63,7 +61,7 @@ Widget buildLoading() => Stack(
   {
     List<Widget> list = [];
     rutas.forEach((ruta) {
-      list.add(carWidget(ruta.departamentos, ruta.origen, ruta.destino, ConvertirTD.convertDistancia(ruta.distancia), ConvertirTD.convertirTiempo(ruta.duracion), context));
+      list.add(carWidget(ruta, context));
     });
     return new ListView(
       padding: EdgeInsets.only(top: 0.0),
@@ -71,7 +69,7 @@ Widget buildLoading() => Stack(
       );
   }
 
-  Widget carWidget(String departamento, String origen, String destino, String distancia, String duracion, BuildContext context){
+  Widget carWidget(MyRoute ruta, BuildContext context){
     final List<Color> _colors = [Colors.indigo[900], Colors.blue[800], Colors.cyanAccent[400]];
     final List<double> _stops = [0.0, 0.4, 1];
     return Container(
@@ -109,7 +107,7 @@ Widget buildLoading() => Stack(
                     children: [
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
-                      child: Text("$departamento", style: TextStyle(color: Colors.white,fontSize: 22, fontWeight: FontWeight.w600),),
+                      child: Text("${ruta.departamentos}", style: TextStyle(color: Colors.white,fontSize: 22, fontWeight: FontWeight.w600),),
                         
                     ),
 
@@ -127,33 +125,33 @@ Widget buildLoading() => Stack(
 
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                      child: Text('Origen: $origen',
+                      child: Text('Origen: ${ruta.origen}',
                             style: TextStyle(color: Colors.white, fontSize: 15,),
                           ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                      child: Text('Destino: $destino',
+                      child: Text('Destino: ${ruta.destino}',
                             style: TextStyle(color: Colors.white, fontSize: 15,),
                           ),
                     ),
                     
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                      child: Text('Distancia: $distancia',
+                      child: Text('Distancia: ${ConvertirTD.convertDistancia(ruta.distancia)}',
                             style: TextStyle(color: Colors.white, fontSize: 15,),
                           ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                      child: Text('Duración: $duracion',
+                      child: Text('Duración: ${ConvertirTD.convertirTiempo(ruta.duracion)}',
                             style: TextStyle(color: Colors.white, fontSize: 15,),
                           ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(205.0, 0.0, 0.0, 0.0),
                       child:TextButton(onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => MyMap(null)),);
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => MyMap(ruta, 4)),);//4 significa que ya no hay que volver a crear la ruta
                           }, child: Text("Ver en mapa", style: TextStyle(color: Colors.indigo[900], fontSize: 15),))
                     )
                     ],

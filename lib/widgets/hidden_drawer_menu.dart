@@ -74,8 +74,8 @@ class DrawerMenu extends StatelessWidget {
               ListTile(
                 title: Text('Cerrar sesión',style: myStyle(),),
                 leading: Icon(Icons.logout, color: Colors.white),
-                onTap: (){
-                        userx.salir();
+                onTap: ()async {
+                        await userx.salir();
                         rutax.limpiar();
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
                 },

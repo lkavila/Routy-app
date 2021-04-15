@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
-import 'package:routy_app_v102/Controllers/crear_ruta.dart';
+import 'package:routy_app_v102/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/models/route.dart';
+import 'package:routy_app_v102/screens/home/elegir_vehiculo.dart';
 
 class Ruta extends StatelessWidget {
   final MyRoute ruta;
-  const Ruta(this.ruta, {Key key}) : super(key: key);
+  final int tipoMenu;
+  const Ruta(this.ruta, this.tipoMenu, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     List<String> depar;
+    Elegido elegido = Get.find();
     print(ruta.departamentos);
 
     return Container(
@@ -105,26 +109,14 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 10,),
                       FaIcon(FontAwesomeIcons.clock, color: Colors.orange[900], size: 18,),
                       SizedBox(width: 10,),
-                      Text('Tiempo en carro:', style:style(),),
+                      texto(tipoMenu, elegido.elegido),
                       SizedBox(width: 5,),
                       Text('${ConvertirTD.convertirTiempo(ruta.duracion)}', style:style2() ),
                     ],
                   ),
                   Container(
                     width: 180,
-                    child: ElevatedButton(
-                        onPressed: (){
-                          CrearRuta.crear(ruta);
-                        },
-                        //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text("Elegir vehículo", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
-                          ]
-                        )
-                    )
+                    child: boton(tipoMenu),
                   )
                 ],
                 )
@@ -141,4 +133,78 @@ class Ruta extends StatelessWidget {
   TextStyle style2(){
       return TextStyle(color: Color.fromRGBO(12,55,106,1), fontSize: 14, fontWeight: FontWeight.normal);
   }
+
+  Text texto(int tipoMenu, String elegido){
+    if (tipoMenu==0){
+        return Text('Tiempo en carro:', style:style(),);
+    }else {
+      return Text('Tiempo en $elegido:', style:style(),);
+    }
+  }
+
+ ElevatedButton boton(int tipoMenu){
+   switch (tipoMenu) {
+     case 0:
+            return  ElevatedButton(
+                        onPressed: (){
+                          Get.to(ElegirVehiculo(ruta, tipoMenu));
+                        },
+                        //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("Elegir vehículo", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
+                          ]
+                        )
+                    );
+       break;
+     case 1:
+            return  ElevatedButton(
+                        onPressed: (){
+                          Get.to(ElegirVehiculo(ruta, tipoMenu));
+                        },
+                        //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("En camino", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
+                          ]
+                        )
+                    );
+       break;
+     case 2:
+            return  ElevatedButton(
+                        onPressed: (){
+                          Get.to(ElegirVehiculo(ruta, tipoMenu));
+                        },
+                        //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("Finalizar", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
+                          ]
+                        )
+                    );
+       break;
+
+     default:
+            return  ElevatedButton(
+                        onPressed: (){
+                          Get.to(ElegirVehiculo(ruta, tipoMenu));
+                        },
+                        //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("Elegir vehículo", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
+                          ]
+                        )
+                    );
+ 
+   }
+ }
 }

@@ -18,13 +18,14 @@ class UserX extends GetxController {
 
   Future getUser() async {
     final user = FirebaseAuth.instance.currentUser;
-    print("ESto es getuserXXX");
     if (user != null) {
-      DocumentSnapshot dc = await FirebaseFirestore.instance
-          .collection("users")
-          .doc(user.uid) 
-          .get();
+      print("ESto es getuserXXX");
       try {
+        DocumentSnapshot dc = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(user.uid) 
+            .get();
+      
         this.myUser = new MyUser.fromData(dc.data());
         final routeX = Get.put(RouteX());
         routeX.getRutas();
@@ -37,7 +38,7 @@ class UserX extends GetxController {
     }
   }
 
-  void logOut() async {
+  Future logOut() async {
     if (signinWith == "Google") {
       print("cerrar sesion google");
       await googleSignIn.disconnect();
@@ -45,12 +46,13 @@ class UserX extends GetxController {
       print("cerrar sesion facebook");
       await facebookSignIn.logOut();
     }
-    FirebaseAuth.instance.signOut();
     this.myUser = null;
+    await FirebaseAuth.instance.signOut();
   }
 
-  void salir() {
-    FirebaseAuth.instance.signOut();
-    this.myUser = null;
+  Future salir() async {
+    myUser = null;
+    await FirebaseAuth.instance.signOut();
+    
   }
 }

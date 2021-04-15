@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:routy_app_v102/screens/home/crearVehiculo.dart';
 import 'package:routy_app_v102/screens/home/logged_in.dart';
 import 'package:routy_app_v102/screens/home/misRutas.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         "/logged_in": (context) => LoggedIn(),
         "/misVehiculos": (context) => MisVehiculos(),
         "/crearVehiculo": (context) => CrearVehiculo(),
-        "/map": (context) => MyMap(null),
+        "/map": (context) => MyMap(null, 0),
       },
     );
   }

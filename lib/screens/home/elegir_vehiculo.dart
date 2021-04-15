@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:routy_app_v102/Controllers/crear_ruta.dart';
 import 'package:routy_app_v102/GetX/user.dart';
+import 'package:routy_app_v102/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/models/car.dart';
 import 'package:routy_app_v102/models/route.dart';
+import 'package:routy_app_v102/screens/map.dart';
 
 class ElegirVehiculo extends StatefulWidget {
   final MyRoute miRuta;
-  ElegirVehiculo(this.miRuta, {Key key}) : super(key: key);
+  final int tipoMenu;
+  ElegirVehiculo(this.miRuta, this.tipoMenu, {Key key}) : super(key: key);
 
   @override
   _ElegirVehiculoState createState() => _ElegirVehiculoState();
@@ -16,6 +20,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
   @override
   Widget build(BuildContext context) {
     final UserX userx = Get.find();
+    final Elegido elegido = Get.find();
     Car dropdown1Value = userx.myUser.vehiculos.first;
     Car dropdown2Value = userx.myUser.vehiculos.first;
     return Container(
@@ -38,7 +43,9 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
               ),
               onChanged: (value) =>         
                   setState(() {
+                      
                       dropdown1Value = value;
+                      elegido.actualizar(dropdown1Value.name);
                     }),
              items: userx.myUser.vehiculos.map<DropdownMenuItem<Car>>((Car value) {
                 return DropdownMenuItem<Car>(
@@ -71,7 +78,16 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
               }).toList(),)
 
            ],
-           )
+           ),
+
+           ElevatedButton(
+             onPressed:(){
+                if (widget.tipoMenu==0){
+                    CrearRuta.crear(widget.miRuta);
+                }
+                Get.to(MyMap(widget.miRuta, widget.tipoMenu));
+                  }, 
+           child: Text("Continuar")),
 
          ],
        ),

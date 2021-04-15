@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/GetX/user.dart';
 import 'package:routy_app_v102/models/route.dart';
 import 'package:routy_app_v102/service/hereGeocode.dart';
@@ -15,7 +14,8 @@ import 'package:uuid/uuid.dart';
 
 class MyMap extends StatefulWidget {
   final MyRoute ruta;
-  const MyMap(this.ruta,{Key key}): super(key: key);
+  final int tipoMenu;
+  const MyMap(this.ruta,this.tipoMenu, {Key key}): super(key: key);
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -127,6 +127,8 @@ class _MyAppState extends State<MyMap> {
       widget.ruta.markerPoints.forEach((element) {
         createMarkers(element.latitude, element.longitude);
       });
+    
+    
     }
     //getJsonData();
   }
@@ -251,7 +253,7 @@ class _MyAppState extends State<MyMap> {
           Builder(builder: (context){
             
             if(miRuta!=null){
-              return Ruta(miRuta);
+              return Ruta(miRuta, widget.tipoMenu);
             }else{return SizedBox();}
           }),
         
