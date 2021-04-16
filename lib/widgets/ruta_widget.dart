@@ -135,7 +135,7 @@ class Ruta extends StatelessWidget {
   }
 
   Text texto(int tipoMenu, String elegido){
-    if (tipoMenu==0){
+    if (tipoMenu==0 || tipoMenu==4){
         return Text('Tiempo en carro:', style:style(),);
     }else {
       return Text('Tiempo en $elegido:', style:style(),);

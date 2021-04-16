@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:routy_app_v102/GetX/user.dart';
 import 'package:routy_app_v102/models/route.dart';
-import 'package:routy_app_v102/service/hereGeocode.dart';
-import 'package:routy_app_v102/service/networking.dart';
+import 'package:routy_app_v102/services/hereGeocode.dart';
+import 'package:routy_app_v102/services/networking.dart';
 import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/widgets/menu_widget.dart';
 import 'package:routy_app_v102/widgets/ruta_widget.dart';
@@ -46,7 +46,7 @@ class _MyAppState extends State<MyMap> {
 
     try {
       // getData() returns a json Decoded data
-      data = await openRoute.getRoute(puntos);
+      data = await openRoute.getPolylines(puntos);
       if(data!="YAPER"){
         // We can reach to our desired JSON data manually as following
         LineString ls =

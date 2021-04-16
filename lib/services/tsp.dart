@@ -5,23 +5,24 @@ import 'dart:convert';
 import 'package:routy_app_v102/secrets.dart';
 
 
-class OpenRoute{
+class OpenRouteS{
   
   Future getRoute(List<LatLng> lugares) async{
 
     List<List<double>> coordenadas = convertir(lugares);
     Map<String, String> headers = {
-      "Authorization": Secrets.orsAPIKEY,
       "Content-Type": "application/json; charset=UTF-8",
       "Accept-Encoding": "gzip, deflate, br",
       "connection": "keep-alive",
+      "x-api-key": Secrets.orsAPIKEY,
       };
 
-      http.Response response = await http.post(
-        Uri.https("api.openrouteservice.org", "v2/directions/driving-car/geojson"),
+      http.Response response = await http.post(Uri.https("tsp-routy.herokuapp.com", "calcularRuta"),
                           headers: headers,
-                          body: jsonEncode(<String, List<List<double>>>{
-                            "coordinates": coordenadas
+                          body: jsonEncode(<String, dynamic>{
+                                "locations": coordenadas,
+                                "metrics": ["distance"],
+                                "units": "m"
                                 })
                   );
       print(coordenadas);
@@ -34,7 +35,7 @@ class OpenRoute{
         
         print(response.statusCode);
         print(response.toString());
-        return "YAPER";
+        return 400;
       }
   }
 
