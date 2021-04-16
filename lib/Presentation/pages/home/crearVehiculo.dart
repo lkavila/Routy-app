@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:routy_app_v102/Controllers/crear_vehiculo.dart';
-import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
-import 'package:routy_app_v102/widgets/menu_widget.dart';
+import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
+import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class CrearVehiculo extends StatefulWidget {
   CrearVehiculo({Key key}) : super(key: key);

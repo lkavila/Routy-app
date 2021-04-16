@@ -9,7 +9,7 @@ class OpenRouteS{
   
   Future getRoute(List<LatLng> lugares) async{
 
-    List<List<double>> coordenadas = convertir(lugares);
+    List<List<double>> coordenadas = convertir(lugares); //quitar esta coversion,poner con tipo de dato dynamic 
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=UTF-8",
       "Accept-Encoding": "gzip, deflate, br",

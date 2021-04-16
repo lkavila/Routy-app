@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:routy_app_v102/provider/sign_in.dart';
-import 'package:routy_app_v102/screens/authenticate/email_sign_up.dart';
-import 'package:routy_app_v102/widgets/email_pass_sign_in.dart';
-import 'package:routy_app_v102/widgets/logo_widget.dart';
-import 'package:routy_app_v102/widgets/signup_buttons_widget.dart';
+import 'package:routy_app_v102/Presentation/provider/sign_in.dart';
+import 'package:routy_app_v102/Presentation/pages/authenticate/email_sign_up.dart';
+import 'package:routy_app_v102/Presentation/widgets/email_pass_sign_in.dart';
+import 'package:routy_app_v102/Presentation/widgets/logo_widget.dart';
+import 'package:routy_app_v102/Presentation/widgets/signup_buttons_widget.dart';
 
 class SignUpWidget extends StatelessWidget {
 

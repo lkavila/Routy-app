@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:routy_app_v102/provider/sign_in.dart';
-import 'package:routy_app_v102/widgets/logo_widget.dart';
-import 'package:routy_app_v102/widgets/text_input_widget.dart';
+import 'package:routy_app_v102/Presentation/provider/sign_in.dart';
+import 'package:routy_app_v102/Presentation/widgets/logo_widget.dart';
+import 'package:routy_app_v102/Presentation/widgets/text_input_widget.dart';
 
 class RegisterPage extends StatefulWidget {
   final SignInProvider provider;

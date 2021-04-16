@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/GetX/user.dart';
 import 'package:routy_app_v102/models/car.dart';
 
 class Crearvehiculo {

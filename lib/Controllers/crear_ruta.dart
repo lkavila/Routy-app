@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/GetX/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/route.dart';
 import 'package:routy_app_v102/models/route.dart';
 
 class CrearRuta {

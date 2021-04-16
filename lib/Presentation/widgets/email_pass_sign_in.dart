@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:routy_app_v102/provider/sign_in.dart';
-import 'package:routy_app_v102/widgets/text_input_widget.dart';
+import 'package:routy_app_v102/Presentation/provider/sign_in.dart';
+import 'package:routy_app_v102/Presentation/widgets/text_input_widget.dart';
 
 class EmailPassSignIn extends StatelessWidget {
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();

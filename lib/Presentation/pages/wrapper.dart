@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/GetX/user.dart';
-import 'package:routy_app_v102/provider/sign_in.dart';
-import 'package:routy_app_v102/screens/home/misRutas.dart';
-import 'package:routy_app_v102/widgets/background_painter.dart';
-import 'package:routy_app_v102/screens/authenticate/sign_up_widget.dart';
+import 'package:routy_app_v102/Presentation/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/provider/sign_in.dart';
+import 'package:routy_app_v102/Presentation/pages/home/misRutas.dart';
+import 'package:routy_app_v102/Presentation/widgets/background_painter.dart';
+import 'package:routy_app_v102/Presentation/pages/authenticate/sign_up_widget.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {

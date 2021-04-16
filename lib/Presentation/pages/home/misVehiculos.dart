@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/GetX/user.dart';
 import 'package:routy_app_v102/models/car.dart';
-import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
-import 'package:routy_app_v102/widgets/menu_widget.dart';
+import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
+import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class MisVehiculos extends StatelessWidget {
   MisVehiculos({Key key}) : super(key: key);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/GetX/route.dart';
-import 'package:routy_app_v102/GetX/user.dart';
-import 'package:routy_app_v102/screens/wrapper.dart';
+import 'package:routy_app_v102/Presentation/GetX/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:routy_app_v102/widgets/logo_widget.dart';
+import 'package:routy_app_v102/Presentation/widgets/logo_widget.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({Key key}) : super(key: key);

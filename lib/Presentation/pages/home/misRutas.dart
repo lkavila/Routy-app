@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
-import 'package:routy_app_v102/GetX/route.dart';
-import 'package:routy_app_v102/GetX/vehiculo_elegido.dart';
+import 'package:routy_app_v102/Presentation/GetX/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/models/route.dart';
-import 'package:routy_app_v102/screens/map.dart';
-import 'package:routy_app_v102/widgets/background_painter.dart';
-import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
-import 'package:routy_app_v102/widgets/menu_widget.dart';
+import 'package:routy_app_v102/Presentation/pages/map.dart';
+import 'package:routy_app_v102/Presentation/widgets/background_painter.dart';
+import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
+import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class MisRutas extends StatelessWidget {
   MisRutas({Key key}) : super(key: key);

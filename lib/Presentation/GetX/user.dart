@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:routy_app_v102/GetX/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/route.dart';
 import 'package:routy_app_v102/models/user.dart';
 
 class UserX extends GetxController {

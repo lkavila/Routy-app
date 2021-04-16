@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:routy_app_v102/provider/sign_in.dart';
+import 'package:routy_app_v102/Presentation/provider/sign_in.dart';
 
 class SignupButtonsWidget extends StatelessWidget {
   final SignInProvider provider;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/GetX/user.dart';
-import 'package:routy_app_v102/screens/map.dart';
-import 'package:routy_app_v102/screens/wrapper.dart';
-import 'package:routy_app_v102/widgets/background_painter.dart';
-import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
-import 'package:routy_app_v102/widgets/menu_widget.dart';
+import 'package:routy_app_v102/Presentation/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/pages/map.dart';
+import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
+import 'package:routy_app_v102/Presentation/widgets/background_painter.dart';
+import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
+import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class LoggedIn extends StatefulWidget {
   LoggedIn({Key key}) : super(key: key);

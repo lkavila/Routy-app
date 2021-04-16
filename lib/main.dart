@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/screens/home/crearVehiculo.dart';
-import 'package:routy_app_v102/screens/home/logged_in.dart';
-import 'package:routy_app_v102/screens/home/misRutas.dart';
-import 'package:routy_app_v102/screens/home/misVehiculos.dart';
-import 'package:routy_app_v102/screens/map.dart';
-import 'package:routy_app_v102/screens/wrapper.dart';
+import 'package:routy_app_v102/Presentation/pages/home/crearVehiculo.dart';
+import 'package:routy_app_v102/Presentation/pages/home/logged_in.dart';
+import 'package:routy_app_v102/Presentation/pages/home/misRutas.dart';
+import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
+import 'package:routy_app_v102/Presentation/pages/map.dart';
+import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_config/flutter_config.dart';
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/crear_ruta.dart';
-import 'package:routy_app_v102/GetX/user.dart';
-import 'package:routy_app_v102/GetX/vehiculo_elegido.dart';
+import 'package:routy_app_v102/Presentation/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/models/car.dart';
 import 'package:routy_app_v102/models/route.dart';
-import 'package:routy_app_v102/screens/map.dart';
-import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
-import 'package:routy_app_v102/widgets/menu_widget.dart';
+import 'package:routy_app_v102/Presentation/pages/map.dart';
+import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
+import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class ElegirVehiculo extends StatefulWidget {
   final MyRoute miRuta;

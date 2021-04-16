@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:routy_app_v102/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/GetX/user.dart';
 import 'package:routy_app_v102/models/route.dart';
 import 'package:routy_app_v102/services/hereGeocode.dart';
 import 'package:routy_app_v102/services/networking.dart';
-import 'package:routy_app_v102/widgets/hidden_drawer_menu.dart';
-import 'package:routy_app_v102/widgets/menu_widget.dart';
-import 'package:routy_app_v102/widgets/ruta_widget.dart';
+import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
+import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
+import 'package:routy_app_v102/Presentation/widgets/ruta_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class MyMap extends StatefulWidget {
