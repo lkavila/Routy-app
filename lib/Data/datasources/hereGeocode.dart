@@ -20,8 +20,7 @@ class GeoCodeReverse {
       };
       var url = Uri.https('revgeocode.search.hereapi.com', '/v1/revgeocode', parametros);
     http.Response response = await http.get(url,headers: headers);
-    //https://revgeocode.search.hereapi.com/v1/revgeocode?at=10.900889651875216%2C-74.79065850377083&apikey=YGbDQjCN-FTQsORX4ZAj-W_9Y-3S4J6vyJtCOl6jAt4
-    //http.Response response = await http.get(Uri.https(url,"geocode/reverse?",parametros), headers: headers);
+    
     if(response.statusCode == 200) {
       var dir = jsonDecode(utf8.decode(response.bodyBytes));
       var pro = dir['items'][0]['address'];

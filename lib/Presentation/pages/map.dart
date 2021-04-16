@@ -4,12 +4,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:routy_app_v102/Presentation/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/widgets/dialog_marker.dart';
 import 'package:routy_app_v102/models/route.dart';
-import 'package:routy_app_v102/services/hereGeocode.dart';
-import 'package:routy_app_v102/services/networking.dart';
+import 'package:routy_app_v102/Data/datasources/hereGeocode.dart';
+import 'package:routy_app_v102/Data/datasources/networking.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 import 'package:routy_app_v102/Presentation/widgets/ruta_widget.dart';
+import 'package:routy_app_v102/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class MyMap extends StatefulWidget {
@@ -32,6 +34,10 @@ class _MyAppState extends State<MyMap> {
   var uuid = Uuid();
   MyRoute miRuta;
   double onTapLat, onTapLng, distancia, duracion;
+  BitmapDescriptor start;
+  BitmapDescriptor finish;
+  bool dialog = false;
+  Marker marker;
   // Dummy Start and Destination Points
 
   void _onMapCreated(GoogleMapController controller) {
@@ -109,9 +115,9 @@ class _MyAppState extends State<MyMap> {
   setPolyLines() {
     Polyline polyline = Polyline(
       polylineId: PolylineId("polyline"),
-      color: Colors.indigo,
+      color: Colors.blue[800],
       points: polyPoints,
-      width: 4,
+      width: 3,
     );
     polyLines.add(polyline);
     setState(() {});
@@ -120,6 +126,20 @@ class _MyAppState extends State<MyMap> {
   @override
   void initState() {
     super.initState();
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(130, 130)),
+        'assets/images/map.png')
+        .then((onValue) {
+      finish = onValue;
+    });
+
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(130, 130)),
+        'assets/images/location.png')
+        .then((onValue) {
+      start = onValue;
+    });
+
     if (widget.ruta!=null){
       miRuta = widget.ruta;
       polyPoints = widget.ruta.polyPoints;
@@ -135,7 +155,60 @@ class _MyAppState extends State<MyMap> {
 
     createMarkers(double lat, double lng) {
       puntos.add(LatLng(lat, lng));
+      if (markers.isEmpty){
       markers.add(
+        Marker(
+          markerId: MarkerId("1"),
+          position: LatLng(lat, lng),
+          icon: start,
+          infoWindow: InfoWindow(
+            title: "Home",
+          ),
+          onTap: (){
+              /*showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+              title: Text("Modificar marker"),
+              content: Container(
+                height: 150,
+                child: Column(
+
+                  children: [
+                    TextButton(onPressed: (){
+                      Utils.hacerInicio(markers, marker);
+                      },
+                      child: Text("Hacer inicio")),
+
+                    TextButton(onPressed: (){
+                      Utils.hacerInicio(markers, marker);
+                      },
+                      child: Text("Hacer inicio")),
+
+                    TextButton(onPressed: (){
+                      Utils.hacerInicio(markers, marker);
+                      },
+                      child: Text("Hacer inicio")),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(onPressed: (){
+
+                  Navigator.of(context, rootNavigator: true).pop();
+
+                }, child: Text("Cancelar"))
+              ],
+            ),
+            ).then((value) => null); */
+            setState(() {
+              //marker = markers.where((element) => element.position==LatLng(lat, lng)).single;
+              markers.removeWhere((element) => element.markerId==MarkerId(lat.toString()));
+              puntos.removeWhere((element) => (element == LatLng(lat, lng)));            
+            });
+          }
+        ),
+      );       
+      }else markers.add(
         Marker(
           markerId: MarkerId(lat.toString()),
           position: LatLng(lat, lng),
@@ -200,6 +273,7 @@ class _MyAppState extends State<MyMap> {
               child: GestureDetector(
                 onTap: (){
                   setState(() {
+                    
                     polyLines.clear();
                     polyPoints.clear();
                     puntos.clear();
@@ -256,12 +330,19 @@ class _MyAppState extends State<MyMap> {
               return Ruta(miRuta, widget.tipoMenu);
             }else{return SizedBox();}
           }),
+
+          Builder(builder: (context){
+            if(dialog){
+              return DialogMarker(marker, markers);
+            }else{return SizedBox();}
+          }),
         
           Menu(_scaffoldKey), //este es el menu que abre el drawer
           ]
       ),
 
     );
+
   }
 }
 
