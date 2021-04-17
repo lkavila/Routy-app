@@ -11,7 +11,6 @@ import 'package:routy_app_v102/Data/datasources/networking.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 import 'package:routy_app_v102/Presentation/widgets/ruta_widget.dart';
-import 'package:routy_app_v102/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class MyMap extends StatefulWidget {
@@ -45,14 +44,14 @@ class _MyAppState extends State<MyMap> {
   }
 
 
-  void getJsonData() async {
+  void getJsonData(String circular) async {
     // Create an instance of Class NetworkHelper which uses http package
     // for requesting data to the server and receiving response as JSON format
     OpenRoute openRoute = new OpenRoute(); 
 
     try {
       // getData() returns a json Decoded data
-      data = await openRoute.getPolylines(puntos);
+      data = await openRoute.getPolylines(puntos, circular);
       if(data!="YAPER"){
         // We can reach to our desired JSON data manually as following
         LineString ls =
@@ -90,6 +89,8 @@ class _MyAppState extends State<MyMap> {
         departamentos = departamentoD;
       }
 
+      bool cir = circular=="true";
+
       setState(() {
         miRuta = new MyRoute(
         id: uuid.v1(), 
@@ -97,7 +98,7 @@ class _MyAppState extends State<MyMap> {
         createdAt: Timestamp.now(),
         origen: dirOrigen.first,
         destino: dirDestino.first,
-        circular: false,
+        circular: cir,
         distancia: distancia,
         duracion: duracion,
         departamentos: departamentos,
@@ -308,8 +309,53 @@ class _MyAppState extends State<MyMap> {
               ),
               child: GestureDetector(
                 onTap: (){
-
-                  getJsonData();
+                  if (puntos.length>1){
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("¿Ruta circular?"),
+                        content: Text("Despues de llegar al final ¿regresará al inicio?"),
+                        actions: [
+                          TextButton(
+                            onPressed: (){
+                            Navigator.of(context).pop(true);
+                          }, child: Text("Si")
+                          ),
+                          TextButton(
+                            onPressed: (){
+                            Navigator.of(context).pop(false);
+                          }, child: Text("No")
+                          ),
+                          TextButton(
+                            onPressed: (){
+                            Navigator.of(context).pop(null);
+                          }, child: Text("Cancelar")
+                          )
+                        ],
+                      ),
+                    ).then((value) {
+                        if (value!=null){
+                          print("La opcion tomada fue: "+value.toString());
+                          getJsonData(value.toString());
+                        }else{print("La opcion tomada fue: Cancelar ");}
+                       });
+                  }else{
+                      showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("No hay suficientes puntos"),
+                        content: Text("Para poder calcular la mejor ruta debe haber al menos 2 puntos, para crear puntos debe hacer tap sobre el mapa"),
+                        actions: [
+                          TextButton(
+                            onPressed: (){
+                            Navigator.of(context).pop();
+                          }, child: Text("OK")
+                          )
+                        ],
+                      ),
+                    ); 
+                  }
+                  
                   print("despues de llamado");
                 },
                 child: Row(

@@ -28,7 +28,7 @@ class UserX extends GetxController {
       
         this.myUser = new MyUser.fromData(dc.data());
         final routeX = Get.put(RouteX());
-        routeX.getRutas();
+        await routeX.getRutas();
         update();
       } catch (e) { 
         FirebaseAuth.instance.signOut();
@@ -39,12 +39,12 @@ class UserX extends GetxController {
   }
 
   Future logOut() async {
-    if (signinWith == "Google") {
-      print("cerrar sesion google");
+
+    try {
       await googleSignIn.disconnect();
-    } else if (signinWith == "Facebook") {
-      print("cerrar sesion facebook");
       await facebookSignIn.logOut();
+    } catch (e) {
+      print(e);
     }
     this.myUser = null;
     await FirebaseAuth.instance.signOut();

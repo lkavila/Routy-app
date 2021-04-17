@@ -7,7 +7,7 @@ import 'package:routy_app_v102/secrets.dart';
 
 class OpenRouteS{
   
-  Future getRoute(List<LatLng> lugares) async{
+  Future getRoute(List<LatLng> lugares, String circular) async{
 
     List<List<double>> coordenadas = convertir(lugares); //quitar esta coversion,poner con tipo de dato dynamic 
     Map<String, String> headers = {
@@ -15,6 +15,7 @@ class OpenRouteS{
       "Accept-Encoding": "gzip, deflate, br",
       "connection": "keep-alive",
       "x-api-key": Secrets.orsAPIKEY,
+      "circular": circular,
       };
 
       http.Response response = await http.post(Uri.https("tsp-routy.herokuapp.com", "calcularRuta"),
@@ -29,19 +30,19 @@ class OpenRouteS{
       if(response.statusCode == 200) {
         String data = response.body;
         return jsonDecode(data);
-
       }
       else{
-        
         print(response.statusCode);
         print(response.toString());
         return 400;
       }
   }
 
+
+
+
   List<List<double>> convertir(List<LatLng> lugares){
 
-    
     List<List<double>> allLatLng = [];
     for (LatLng e in lugares) {
       List<double> latlng = [];

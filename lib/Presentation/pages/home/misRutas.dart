@@ -23,7 +23,27 @@ class MisRutas extends StatelessWidget {
       body: GetBuilder<RouteX>(
         builder: (_){
           if (routeX.misRutas.isEmpty){
-            return   buildLoading();
+            return Stack(
+              children: [
+                Container(
+                padding: EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 0.0),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                    Text("Mis Rutas", style: TextStyle(fontFamily: 'pacifico', fontSize: 25, color:  Colors.blue[800],),),
+                  ],
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child:  getRutas(routeX.misRutas, context),
+                    ),
+                  ]
+                ),
+                ),
+                  Menu(_scaffoldKey), //este es el menu que abre el drawer
+              ],
+              );
           }else return Stack(
               children: [
                 Container(
@@ -107,7 +127,7 @@ Widget buildLoading() => Stack(
                     children: [
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
-                      child: Text("${ruta.departamentos}", style: TextStyle(color: Colors.white,fontSize: 22, fontWeight: FontWeight.w600),),
+                      child: Text("${ruta.departamentos}", style: TextStyle(color: Colors.white,fontSize: 21, fontWeight: FontWeight.w600),),
                         
                     ),
 
@@ -126,30 +146,30 @@ Widget buildLoading() => Stack(
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                       child: Text('Origen: ${ruta.origen}',
-                            style: TextStyle(color: Colors.white, fontSize: 15,),
+                            style: TextStyle(color: Colors.white, fontSize: 14.5,),
                           ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                       child: Text('Destino: ${ruta.destino}',
-                            style: TextStyle(color: Colors.white, fontSize: 15,),
+                            style: TextStyle(color: Colors.white, fontSize: 14.5,),
                           ),
                     ),
                     
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                       child: Text('Distancia: ${ConvertirTD.convertDistancia(ruta.distancia)}',
-                            style: TextStyle(color: Colors.white, fontSize: 15,),
+                            style: TextStyle(color: Colors.white, fontSize: 14.5,),
                           ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                       child: Text('Duración: ${ConvertirTD.convertirTiempo(ruta.duracion)}',
-                            style: TextStyle(color: Colors.white, fontSize: 15,),
+                            style: TextStyle(color: Colors.white, fontSize: 14.5,),
                           ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(205.0, 0.0, 0.0, 0.0),
+                      padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.55, 0.0, 0.0, 0.0),
                       child:TextButton(onPressed: (){
                             Navigator.push(context,MaterialPageRoute(builder: (context) => MyMap(ruta, 4)),);//4 significa que ya no hay que volver a crear la ruta
                           }, child: Text("Ver en mapa", style: TextStyle(color: Colors.indigo[900], fontSize: 15),))

@@ -8,11 +8,11 @@ import 'package:routy_app_v102/Data/datasources/tsp.dart';
 
 class OpenRoute{
   
-  Future getPolylines(List<LatLng> lugares) async{
+  Future getPolylines(List<LatLng> lugares, String circular) async{
 
     OpenRouteS orsTsp = OpenRouteS();
     
-    dynamic data = await orsTsp.getRoute(lugares);
+    dynamic data = await orsTsp.getRoute(lugares, circular);
 
     if (data!=400){
         

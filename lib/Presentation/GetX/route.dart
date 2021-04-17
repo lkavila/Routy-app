@@ -20,7 +20,6 @@ class RouteX extends GetxController{
             .get();
 
           query.docs.forEach((element) {
-              
               misRutas.add(MyRoute.fromData(element.data()));
           });
           update();
