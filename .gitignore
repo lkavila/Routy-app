@@ -32,12 +32,12 @@
 .pub-cache/
 .pub/
 /build/
-
 # Enviroment variables and secrets
 .env
+/lib/secrets.dart
 # Web related
 lib/generated_plugin_registrant.dart
-lib/secrets.dart
+
 # Symbolication related
 app.*.symbols
 
