@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         buttonColor: Colors.blue[900],
         primaryColorDark: Colors.grey,
         primarySwatch: Colors.blue,
-        accentColor: Colors.orange,
+        accentColor: Colors.blue,
         
         fontFamily: "OpenSans",
       ),
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         "/logged_in": (context) => LoggedIn(),
         "/misVehiculos": (context) => MisVehiculos(),
         "/crearVehiculo": (context) => CrearVehiculo(),
-        "/map": (context) => MyMap(null, 0),
+        "/map": (context) => MyMap(),
       },
     );
   }

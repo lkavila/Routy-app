@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 
@@ -9,6 +10,6 @@ abstract class RouteRepository{
 
   Future<List<RouteEntity>> getUserRoutes();
 
-  void createRoute(RouteEntity ruta);
+  void createRoute(String userId, String origen, String destino, String departamentos, bool circular, String tipoCar, double distancia, double duracion, List<LatLng> markerPoints, List<LatLng> polyPoints, Timestamp createdAt);
   
 }

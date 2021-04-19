@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/Presentation/GetX/user.dart';
-import 'package:routy_app_v102/models/car.dart';
+import 'package:routy_app_v102/Domain/entities/car.dart';
+import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class MisVehiculos extends StatelessWidget {
   MisVehiculos({Key key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final UserX userx = Get.find();
+  
   @override
   Widget build(BuildContext context) {
+    final UserController uc = Get.find();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
@@ -35,7 +36,7 @@ class MisVehiculos extends StatelessWidget {
                 ],
               ),
               Expanded(
-                child: getVehiculos(userx.myUser.vehiculos),
+                child: getVehiculos(uc.user.vehiculos),
               ),
             ]),
           ),
@@ -67,11 +68,11 @@ class MisVehiculos extends StatelessWidget {
     );
   }
 
-  Widget getVehiculos(List<Car> vehis) {
+  Widget getVehiculos(List<CarEntity> vehis) {
     print(vehis);
     if (vehis != null && !vehis.isBlank) {
       List<Widget> list = [];
-      for (Car vehi in vehis) {
+      for (CarEntity vehi in vehis) {
         list.add(carWidget(vehi.name, vehi.tipoCar, vehi.recorrido,
             vehi.consumido, vehi.uso, vehi.consumo));
       }

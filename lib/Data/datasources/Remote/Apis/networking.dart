@@ -14,7 +14,7 @@ class OpenRoute{
     dynamic data = await _orsTsp.getRoute(lugares, circular);
 
     if (data!=400){
-        
+      print("Esta es la distancia minima: "+data['distanciaMinima'].toString());
       List<dynamic> coordenadas = data['caminoMinimo'];
       print("el orden del camino más corto es ${data["orden"]}");
       Map<String, String> headers = {

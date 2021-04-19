@@ -28,16 +28,5 @@ class CarModel extends CarEntity{
       );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'tipoCar': tipoCar,
-      'tipoCarApi': tipoCarApi,
-      'createdAt': createdAt,
-      'recorrido': recorrido,
-      'consumo': consumo,
-      'consumido': consumido,
-      'uso': uso,
-    };
-  }
+
 }

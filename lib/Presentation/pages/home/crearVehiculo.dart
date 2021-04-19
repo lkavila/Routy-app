@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:routy_app_v102/Controllers/crear_vehiculo.dart';
+import 'package:get/get.dart';
+import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
@@ -19,6 +20,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
 
   @override
   Widget build(BuildContext context) {
+    final carController = Get.put(CarController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
@@ -97,7 +99,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
               alignment: AlignmentDirectional.topEnd,
               child: GestureDetector(
                 onTap: () {
-                  Crearvehiculo.crear(nameInputController.text, dropdownValue, double.parse(consumoInputController.text));
+                  carController.createCar(nameInputController.text, dropdownValue, double.parse(consumoInputController.text));
                   Navigator.pushNamed(context, "/misVehiculos");
                 },
                 child: Container(

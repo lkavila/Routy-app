@@ -12,5 +12,17 @@ class CarEntity {
 
   CarEntity({this.name, this.tipoCar, this.tipoCarApi, this.recorrido, this.uso, this.consumo, this.consumido, this.createdAt});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'tipoCar': tipoCar,
+      'tipoCarApi': tipoCarApi,
+      'createdAt': createdAt,
+      'recorrido': recorrido,
+      'consumo': consumo,
+      'consumido': consumido,
+      'uso': uso,
+    };
+  }
 
 }

@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/Domain/entities/route.dart';
-import 'package:routy_app_v102/Presentation/GetX/route.dart';
-import 'package:routy_app_v102/Presentation/GetX/user.dart';
+import 'package:routy_app_v102/Domain/entities/car.dart';
+import 'package:routy_app_v102/Presentation/GetX/map_route_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
-import 'package:routy_app_v102/models/car.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class ElegirVehiculo extends StatefulWidget {
-  final RouteEntity miRuta;
-  final int tipoMenu;
-  ElegirVehiculo(this.miRuta, this.tipoMenu, {Key key}) : super(key: key);
-  
+  ElegirVehiculo({Key key}) : super(key: key);
 
   @override
   _ElegirVehiculoState createState() => _ElegirVehiculoState();
@@ -23,11 +19,11 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final UserX userx = Get.find();
+    final UserController uc = Get.find();
     final Elegido elegido = Get.find();
-    final RouteX routeX = Get.find();
-    String dropdown1Value = userx.myUser.vehiculos.first.name;
-    String dropdown2Value = userx.myUser.vehiculos.last.name;
+    final RouteController rc = Get.find();
+    String dropdown1Value = uc.user.vehiculos.first.name;
+    String dropdown2Value = uc.user.vehiculos.last.name;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
@@ -58,7 +54,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                       dropdown1Value = value;
                       elegido.actualizar(dropdown1Value);
                     }),
-             items: userx.myUser.vehiculos.map<DropdownMenuItem<String>>((Car value) {
+             items: uc.user.vehiculos.map<DropdownMenuItem<String>>((CarEntity value) {
                 return DropdownMenuItem<String>(
                   value: value.name,
                   child: Text(value.name),
@@ -81,7 +77,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                   setState(() {
                       dropdown2Value = value;
                     }),
-             items: userx.myUser.vehiculos.map<DropdownMenuItem<String>>((Car value) {
+             items: uc.user.vehiculos.map<DropdownMenuItem<String>>((CarEntity value) {
                 return DropdownMenuItem<String>(
                   value: value.name,
                   child: Text(value.name),
@@ -93,10 +89,10 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
 
            ElevatedButton(
              onPressed:(){
-                if (widget.tipoMenu==0){
-                    routeX.saveRoute(widget.miRuta);
+                if (rc.tipoMenu==0){
+                    rc.saveRoute(rc.ruta);
                 }
-                Get.to(MyMap(widget.miRuta, 1));
+                Get.to( () => MyMap());
                   }, 
            child: Text("Iniciar ruta")),
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:routy_app_v102/Presentation/provider/sign_in.dart';
 import 'package:routy_app_v102/Presentation/pages/authenticate/email_sign_up.dart';
 import 'package:routy_app_v102/Presentation/widgets/email_pass_sign_in.dart';
 import 'package:routy_app_v102/Presentation/widgets/logo_widget.dart';
@@ -13,7 +11,7 @@ class SignUpWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<SignInProvider>(context, listen: false);
+    
     return Stack(
         fit: StackFit.expand,
         children: [
@@ -27,11 +25,11 @@ class SignUpWidget extends StatelessWidget {
               )
           ),            
           ),
-          buildSignUp(context, provider),
+          buildSignUp(context),
         ],
       );
   }
-  Widget buildSignUp(BuildContext context, SignInProvider provider) => Column(
+  Widget buildSignUp(BuildContext context) => Column(
         children: [
           SizedBox(height: 5),
 
@@ -43,12 +41,12 @@ class SignUpWidget extends StatelessWidget {
 
           Text("ó"),
           SizedBox(height: 5),
-          SignupButtonsWidget(provider),
+          SignupButtonsWidget(),
           
           SizedBox(height: 5),
           TextButton(
              onPressed:  (){ Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => RegisterPage(provider)),
+                                MaterialPageRoute(builder: (context) => RegisterPage()),
                               );
                           },
                         child: Text("¿No tienes cuenta? Registrate aquí", style: TextStyle(color: Colors.blue[700])),

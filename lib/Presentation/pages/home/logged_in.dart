@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/Presentation/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
 import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 import 'package:routy_app_v102/Presentation/widgets/background_painter.dart';
@@ -29,7 +29,7 @@ class _LoggedInState extends State<LoggedIn> {
 
   @override
   Widget build(BuildContext context) {
-    final UserX userx = Get.find();
+    final UserController uc = Get.find();
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerMenu(),
@@ -50,27 +50,27 @@ class _LoggedInState extends State<LoggedIn> {
           SizedBox(height: 8),
           CircleAvatar(
             maxRadius: 60,
-            backgroundImage: NetworkImage(userx.myUser.image),
+            backgroundImage: NetworkImage(uc.user.image),
           ),
           SizedBox(height: 8),
           Text(
-            'Name: ' + userx.myUser.fullName,
+            'Name: ' + uc.user.fullName,
             style: myStyle(),
           ),
           SizedBox(height: 8),
           Text(
-            'Email: ' + userx.myUser.email,
+            'Email: ' + uc.user.email,
             style: myStyle(),
           ),
           SizedBox(height: 8),
           Text(
-            'Fecha de creación: ' + userx.myUser.createdAt.toDate().toString(),
+            'Fecha de creación: ' + uc.user.createdAt.toDate().toString(),
             style: myStyle(),
           ),
           SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => MyMap(null, 0)),);
+              Navigator.push(context,MaterialPageRoute(builder: (context) => MyMap()),);
               
             },
             child: Text('Ir a Mapa'),
@@ -79,7 +79,7 @@ class _LoggedInState extends State<LoggedIn> {
           ElevatedButton(
             onPressed: () async{
                       
-                      await userx.logOut();
+                      await uc.logOut();
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
                       },
             child: Text('Logout', style: myStyle(),),),

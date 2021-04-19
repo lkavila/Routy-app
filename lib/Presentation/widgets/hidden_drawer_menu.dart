@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/Presentation/GetX/route.dart';
-import 'package:routy_app_v102/Presentation/GetX/user.dart';
+import 'package:routy_app_v102/Presentation/GetX/map_route_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:routy_app_v102/Presentation/widgets/logo_widget.dart';
@@ -14,8 +14,8 @@ class DrawerMenu extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    final UserX userx = Get.find();
-    final RouteX rutax = Get.find();
+    final UserController uc = Get.find();
+    final RouteController rutax = Get.find();
     return Container(
         width: MediaQuery.of(context).size.width * 0.7, // 75% of screen will be occupied
         
@@ -27,9 +27,9 @@ class DrawerMenu extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child:             UserAccountsDrawerHeader(
-                accountName: Text("${userx.myUser.fullName}"),
-                accountEmail: Text("${userx.myUser.email}"),
-                currentAccountPicture: CircleAvatar(backgroundImage: NetworkImage(userx.myUser.image),),
+                accountName: Text("${uc.user.fullName}"),
+                accountEmail: Text("${uc.user.email}"),
+                currentAccountPicture: CircleAvatar(backgroundImage: NetworkImage(uc.user.image),),
                 decoration: BoxDecoration(
                   color: Colors.indigo[900],
                 ),
@@ -75,7 +75,7 @@ class DrawerMenu extends StatelessWidget {
                 title: Text('Cerrar sesión',style: myStyle(),),
                 leading: Icon(Icons.logout, color: Colors.white),
                 onTap: ()async {
-                        await userx.salir();
+                        await uc.salir();
                         rutax.limpiar();
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Wrapper()), (route) => route.isFirst);
                 },

@@ -1,7 +1,6 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:routy_app_v102/Data/models/car.dart';
 import 'package:routy_app_v102/Domain/entities/user.dart';
-import 'package:routy_app_v102/models/car.dart';
 import 'package:meta/meta.dart';
 
 class UserModel extends UserEntity{
@@ -12,7 +11,7 @@ class UserModel extends UserEntity{
   @required String email,
   @required Timestamp createdAt,
   @required String image,
-  @required List<Car> vehiculos
+  @required List<CarModel> vehiculos
 
   }) : super(id:id, fullName:fullName, email:email, createdAt:createdAt, image:image, vehiculos:vehiculos);
 
@@ -25,15 +24,15 @@ class UserModel extends UserEntity{
         vehiculos : (data['vehiculos'] != null && data['vehiculos'] !=[])
             ? new Map<String, dynamic>.from(data['vehiculos'])
                 .values
-                .map((e) => new Car.fromData(e))
+                .map((e) => new CarModel.fromData(e))
                 .toList()
             : null);
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map1 = {}; 
-    if (vehiculos!=null){
-      vehiculos.forEach((element) {
+    if (this.vehiculos!=null){
+      this.vehiculos.forEach((element) {
         map1.addAll(element.toJson());
     });
     }

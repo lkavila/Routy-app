@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:routy_app_v102/Presentation/provider/sign_in.dart';
+import 'package:get/get.dart';
+import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/widgets/logo_widget.dart';
 import 'package:routy_app_v102/Presentation/widgets/text_input_widget.dart';
 
 class RegisterPage extends StatefulWidget {
-  final SignInProvider provider;
-  RegisterPage(this.provider, {Key key}) : super(key: key);
+  RegisterPage({Key key}) : super(key: key);
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -17,8 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController firstNameInputController;
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
-  final String defualtUrlImage =
-      "https://firebasestorage.googleapis.com/v0/b/approute40-movil.appspot.com/o/users_images%2Fdefault.png?alt=media&token=bbeb9f9d-638f-4b89-ac89-e47c10de8382";
+
 
   @override
   initState() {
@@ -30,6 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final UserController uc = Get.find();
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
@@ -65,11 +64,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Text("Registrar", style: TextStyle(fontSize: 18)),
                       onPressed: () {
                         if (_registerFormKey.currentState.validate()) {
-                          widget.provider.createAccount(
+                          uc.createAccount(
                               emailInputController.text,
                               pwdInputController.text,
-                              defualtUrlImage,
-                              Timestamp.now(),
                               firstNameInputController.text);
                           Navigator.pop(context);
                         }
