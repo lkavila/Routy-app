@@ -1,8 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:routy_app_v102/secrets.dart';
+import '../../../../secrets.dart';
 
 
 class OpenRouteS{
@@ -12,8 +11,6 @@ class OpenRouteS{
     List<List<double>> coordenadas = convertir(lugares); //quitar esta coversion,poner con tipo de dato dynamic 
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=UTF-8",
-      "Accept-Encoding": "gzip, deflate, br",
-      "connection": "keep-alive",
       "x-api-key": Secrets.orsAPIKEY,
       "circular": circular,
       };

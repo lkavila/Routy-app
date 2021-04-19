@@ -1,17 +1,14 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:routy_app_v102/secrets.dart';
+import '../../../../secrets.dart';
 
 
 class GeoCodeReverse {
 
-  static Future fetchGeo(double lon, double lat) async{
+  Future<List<String>> fetchGeo(double lon, double lat) async{
 
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=UTF-8",
-      "Accept": "*/*",
-      "Accept-Encoding":"gzip, deflate, br",
-      "Connection": "keep-alive",
       };
     Map<String, String> parametros = {
       "apikey": Secrets.hereAPIKEY,

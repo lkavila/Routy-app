@@ -1,28 +1,25 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:routy_app_v102/secrets.dart';
-import 'package:routy_app_v102/Data/datasources/tsp.dart';
+import '../../../../secrets.dart';
+import 'package:routy_app_v102/Data/datasources/Remote/Apis/tsp.dart';
 
 
 class OpenRoute{
   
   Future getPolylines(List<LatLng> lugares, String circular) async{
 
-    OpenRouteS orsTsp = OpenRouteS();
+    OpenRouteS _orsTsp = OpenRouteS();
     
-    dynamic data = await orsTsp.getRoute(lugares, circular);
+    dynamic data = await _orsTsp.getRoute(lugares, circular);
 
     if (data!=400){
         
       List<dynamic> coordenadas = data['caminoMinimo'];
-      print("el orden es ${data["orden"]}");
+      print("el orden del camino más corto es ${data["orden"]}");
       Map<String, String> headers = {
         "Authorization": Secrets.orsAPIKEY,
         "Content-Type": "application/json; charset=UTF-8",
-        "Accept-Encoding": "gzip, deflate, br",
-        "connection": "keep-alive",
         };
 
         http.Response response = await http.post(
@@ -42,12 +39,12 @@ class OpenRoute{
           
           print(response.statusCode);
           print(response.toString());
-          return "YAPER";
+          return null;
         }
 
       }else{
 
-        return "YAPER";
+        return null;
       }
   }
 

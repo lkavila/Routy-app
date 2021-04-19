@@ -90,8 +90,7 @@ class SignInProvider extends ChangeNotifier {
     isSigningIn = false;
   }
 
-  Future createAccount(String email, String password, String imageUrl,
-      Timestamp createdAt, String name) async {
+  Future createAccount(String email, String password, String imageUrl, Timestamp createdAt, String name) async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -103,6 +102,9 @@ class SignInProvider extends ChangeNotifier {
       }
 
       addAccount(user, name, email, createdAt, imageUrl);
+      
+      await loginWithEmail(email, password);
+      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('La contraseña es muy debil.');

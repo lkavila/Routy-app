@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
+import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
-import 'package:routy_app_v102/models/route.dart';
 import 'package:routy_app_v102/Presentation/pages/home/elegir_vehiculo.dart';
 
 class Ruta extends StatelessWidget {
-  final MyRoute ruta;
+  final RouteEntity ruta;
   final int tipoMenu;
   const Ruta(this.ruta, this.tipoMenu, {Key key}) : super(key: key);
 

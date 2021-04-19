@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RouteEntity {
-  final String id;
   final String origen;
   final String destino;
   final List<LatLng> markerPoints;
@@ -24,7 +23,7 @@ class RouteEntity {
 
   set setTipoCar(String tipoCar) => this.tipoCar = tipoCar;
 
-  RouteEntity({this.id, this.userId, this.origen, this.destino, this.departamentos, this.circular, this.tipoCar, this.distancia, this.duracion, this.markerPoints, this.polyPoints, this.createdAt});
+  RouteEntity({this.userId, this.origen, this.destino, this.departamentos, this.circular, this.tipoCar, this.distancia, this.duracion, this.markerPoints, this.polyPoints, this.createdAt});
 
 
 

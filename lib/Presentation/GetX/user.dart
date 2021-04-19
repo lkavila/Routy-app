@@ -27,11 +27,13 @@ class UserX extends GetxController {
             .get();
       
         this.myUser = new MyUser.fromData(dc.data());
+        print("antes de routex");
         final routeX = Get.put(RouteX());
-        await routeX.getRutas();
+        print("here");
+        routeX.getRutas();
         update();
       } catch (e) { 
-        FirebaseAuth.instance.signOut();
+        salir();
         print("entro al catch");
         print(e.toString());
       }

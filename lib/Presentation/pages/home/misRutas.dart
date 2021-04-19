@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
+import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
-import 'package:routy_app_v102/models/route.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
 import 'package:routy_app_v102/Presentation/widgets/background_painter.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
@@ -77,7 +77,7 @@ Widget buildLoading() => Stack(
         ],
       );
 
-  Widget getRutas(List<MyRoute> rutas, BuildContext context)
+  Widget getRutas(List<RouteEntity> rutas, BuildContext context)
   {
     List<Widget> list = [];
     rutas.forEach((ruta) {
@@ -89,7 +89,7 @@ Widget buildLoading() => Stack(
       );
   }
 
-  Widget carWidget(MyRoute ruta, BuildContext context){
+  Widget carWidget(RouteEntity ruta, BuildContext context){
     final List<Color> _colors = [Colors.indigo[900], Colors.blue[800], Colors.cyanAccent[400]];
     final List<double> _stops = [0.0, 0.4, 1];
     return Container(

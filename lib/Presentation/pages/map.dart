@@ -1,20 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:routy_app_v102/Domain/entities/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/user.dart';
 import 'package:routy_app_v102/Presentation/widgets/dialog_marker.dart';
-import 'package:routy_app_v102/models/route.dart';
-import 'package:routy_app_v102/Data/datasources/hereGeocode.dart';
-import 'package:routy_app_v102/Data/datasources/networking.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 import 'package:routy_app_v102/Presentation/widgets/ruta_widget.dart';
-import 'package:uuid/uuid.dart';
 
 class MyMap extends StatefulWidget {
-  final MyRoute ruta;
+  final RouteEntity ruta;
   final int tipoMenu;
   const MyMap(this.ruta,this.tipoMenu, {Key key}): super(key: key);
   @override
@@ -23,18 +20,12 @@ class MyMap extends StatefulWidget {
 
 class _MyAppState extends State<MyMap> {
   final UserX userx = Get.find();
+  final RouteX routeX = Get.find();
   GoogleMapController mapController;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  List<LatLng> polyPoints = []; // For holding Co-ordinates as LatLng
-  List<LatLng> puntos = []; 
   final Set<Polyline> polyLines = {}; // For holding instance of Polyline
   final Set<Marker> markers = {}; // For holding instance of Marker
-  var data;
-  var uuid = Uuid();
-  MyRoute miRuta;
-  double onTapLat, onTapLng, distancia, duracion;
-  BitmapDescriptor start;
-  BitmapDescriptor finish;
+  BitmapDescriptor start, finish;
   bool dialog = false;
   Marker marker;
   // Dummy Start and Destination Points
@@ -42,82 +33,12 @@ class _MyAppState extends State<MyMap> {
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
-
-
-  void getJsonData(String circular) async {
-    // Create an instance of Class NetworkHelper which uses http package
-    // for requesting data to the server and receiving response as JSON format
-    OpenRoute openRoute = new OpenRoute(); 
-
-    try {
-      // getData() returns a json Decoded data
-      data = await openRoute.getPolylines(puntos, circular);
-      if(data!="YAPER"){
-        // We can reach to our desired JSON data manually as following
-        LineString ls =
-            LineString(data['features'][0]['geometry']['coordinates']);
-        print("antes de polylines");
-        for (int i = 0; i < ls.lineString.length; i++) {
-          polyPoints.add(LatLng(ls.lineString[i][1], ls.lineString[i][0]));
-        }
-
-        if (polyPoints.length == ls.lineString.length) {
-          print("antes de polylines");
-          setPolyLines();
-          print("despues de polylines");
-        }
-        
-        distancia = data['features'][0]['properties']['summary']["distance"];
-        duracion = data['features'][0]['properties']['summary']["duration"];
-      }
-    } catch (e) {
-      print(e);
-    }
-
-    List<String> dirOrigen = await GeoCodeReverse.fetchGeo(puntos.first.longitude, puntos.first.latitude);
-    List<String> dirDestino = await GeoCodeReverse.fetchGeo(puntos.last.longitude, puntos.last.latitude);
-
-    print(dirDestino);
-    print(dirOrigen);
-    if(dirDestino!=null && dirOrigen!=null){
-      String departamentoO = dirOrigen.last;
-      String departamentoD = dirDestino.last;
-      String departamentos;
-      if(departamentoO!=departamentoD){
-        departamentos = departamentoO+" "+departamentoD;
-      }else{
-        departamentos = departamentoD;
-      }
-
-      bool cir = circular=="true";
-
-      setState(() {
-        miRuta = new MyRoute(
-        id: uuid.v1(), 
-        userId: userx.myUser.id,
-        createdAt: Timestamp.now(),
-        origen: dirOrigen.first,
-        destino: dirDestino.first,
-        circular: cir,
-        distancia: distancia,
-        duracion: duracion,
-        departamentos: departamentos,
-        markerPoints: puntos,
-        polyPoints: polyPoints,
-        tipoCar: "driving-car"
-      );
-      });
-
-    }
-  }
-
-
   
   setPolyLines() {
     Polyline polyline = Polyline(
       polylineId: PolylineId("polyline"),
-      color: Colors.blue[800],
-      points: polyPoints,
+      color: Colors.blue[700],
+      points: routeX.polyPoints,
       width: 3,
     );
     polyLines.add(polyline);
@@ -142,20 +63,17 @@ class _MyAppState extends State<MyMap> {
     });
 
     if (widget.ruta!=null){
-      miRuta = widget.ruta;
-      polyPoints = widget.ruta.polyPoints;
+      routeX.ruta = widget.ruta;
+      routeX.polyPoints = widget.ruta.polyPoints;
       setPolyLines();
       widget.ruta.markerPoints.forEach((element) {
         createMarkers(element.latitude, element.longitude);
       });
-    
-    
     }
-    //getJsonData();
   }
 
     createMarkers(double lat, double lng) {
-      puntos.add(LatLng(lat, lng));
+      routeX.puntos.add(LatLng(lat, lng));
       if (markers.isEmpty){
       markers.add(
         Marker(
@@ -204,7 +122,7 @@ class _MyAppState extends State<MyMap> {
             setState(() {
               //marker = markers.where((element) => element.position==LatLng(lat, lng)).single;
               markers.removeWhere((element) => element.markerId==MarkerId(lat.toString()));
-              puntos.removeWhere((element) => (element == LatLng(lat, lng)));            
+              routeX.puntos.removeWhere((element) => (element == LatLng(lat, lng)));            
             });
           }
         ),
@@ -220,15 +138,13 @@ class _MyAppState extends State<MyMap> {
           onTap: (){
             setState(() {
               markers.removeWhere((element) => element.markerId==MarkerId(lat.toString()));
-              puntos.removeWhere((element) => (element == LatLng(lat, lng)));            
+              routeX.puntos.removeWhere((element) => (element == LatLng(lat, lng)));            
             });
 
           }
         ),
       );
-      setState(() {
-        
-      });
+      setState(() {});
     }
   @override
   Widget build(BuildContext context) {
@@ -249,8 +165,8 @@ class _MyAppState extends State<MyMap> {
             if(polyLines.isNotEmpty){
               setState(() {
                 polyLines.clear();
-                polyPoints.clear();
-                miRuta = null;
+                routeX.polyPoints.clear();
+                routeX.ruta = null;
               }); 
             }
             },
@@ -276,10 +192,10 @@ class _MyAppState extends State<MyMap> {
                   setState(() {
                     
                     polyLines.clear();
-                    polyPoints.clear();
-                    puntos.clear();
+                    routeX.polyPoints.clear();
+                    routeX.puntos.clear();
                     markers.clear();
-                    miRuta = null;               
+                    routeX.ruta = null;               
                   });
 
                 },
@@ -309,7 +225,7 @@ class _MyAppState extends State<MyMap> {
               ),
               child: GestureDetector(
                 onTap: (){
-                  if (puntos.length>1){
+                  if (routeX.puntos.length>1){
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -336,7 +252,8 @@ class _MyAppState extends State<MyMap> {
                     ).then((value) {
                         if (value!=null){
                           print("La opcion tomada fue: "+value.toString());
-                          getJsonData(value.toString());
+                          routeX.createRoute(value.toString());
+                          setPolyLines();
                         }else{print("La opcion tomada fue: Cancelar ");}
                        });
                   }else{
@@ -356,7 +273,6 @@ class _MyAppState extends State<MyMap> {
                     ); 
                   }
                   
-                  print("despues de llamado");
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -370,12 +286,13 @@ class _MyAppState extends State<MyMap> {
           ),
         ),
 
-          Builder(builder: (context){
-            
-            if(miRuta!=null){
-              return Ruta(miRuta, widget.tipoMenu);
+          GetBuilder<RouteX>(
+            builder: (_){
+            if(routeX.ruta!=null){
+              return Ruta(routeX.ruta, widget.tipoMenu);
             }else{return SizedBox();}
-          }),
+          }
+          ),
 
           Builder(builder: (context){
             if(dialog){
@@ -390,11 +307,4 @@ class _MyAppState extends State<MyMap> {
     );
 
   }
-}
-
-//Create a new class to hold the Co-ordinates we've received from the response data
-
-class LineString {
-  LineString(this.lineString);
-  List<dynamic> lineString;
 }
