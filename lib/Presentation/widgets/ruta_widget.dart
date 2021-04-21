@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
-import 'package:routy_app_v102/Presentation/GetX/map_route_controller.dart';
+import 'package:routy_app_v102/Domain/entities/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/Presentation/pages/home/elegir_vehiculo.dart';
 
@@ -11,7 +12,7 @@ class Ruta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RouteController rc = Get.find();
+    final MapController rc = Get.find();
     List<String> depar;
     Elegido elegido = Get.find();
     print(rc.ruta.departamentos);
@@ -21,11 +22,11 @@ class Ruta extends StatelessWidget {
       Align(
           alignment: Alignment.bottomLeft,
           child: Padding(
-            padding: EdgeInsets.all(0),
+            padding: EdgeInsets.all( MediaQuery.of(context).size.width*0.01,),
 
             child: Container(
-            width: MediaQuery.of(context).size.width*0.99,
-            height: 180,
+            width: MediaQuery.of(context).size.width*0.98,
+            height: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(22),
                 color: Color.fromRGBO(131,230,251,0.9),
@@ -34,16 +35,16 @@ class Ruta extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  SizedBox(width: 30,),
                   Builder(builder: (context){
                     
                     if(rc.ruta.departamentos.contains(" ")){
                       depar = rc.ruta.departamentos.split(" ");
       
-                      
                       return Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(width: 10,),
+                            SizedBox(width: 20,),
                             FaIcon(FontAwesomeIcons.mapMarkedAlt, color: Colors.orange[900], size: 18,),
                             SizedBox(width: 5,),
                             Text('Departamentos:', style:style(),),
@@ -77,7 +78,9 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 10,),
                       Text('Origen:', style:style(),),
                       SizedBox(width: 5,),
-                      Text('${rc.ruta.origen}',style:style2()),
+                      Flexible(
+                        child:Text('${rc.ruta.origen}',style:style2(), overflow: TextOverflow.clip,),
+                      ),
                     ],
                   ),
                   Row(
@@ -88,7 +91,10 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 10,),
                       Text('Destino:', style:style(),),
                       SizedBox(width: 5,),
-                      Text('${rc.ruta.destino}',style:style2()),
+                      Flexible(child: 
+                      Text('${rc.ruta.destino}',style:style2(), overflow: TextOverflow.fade,),
+                      ),
+                      
                     ],
                   ),
                   Row(
@@ -99,7 +105,12 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 10,),
                       Text('Distancia:', style:style(),),
                       SizedBox(width: 5,),
-                      Text('${ConvertirTD.convertDistancia(rc.ruta.distancia)}', style:style2()),
+                      Flexible(child: 
+                        Text(
+                          '${ConvertirTD.convertDistancia(rc.ruta.distancia)}',
+                          style:style2(),
+                          overflow: TextOverflow.fade,),
+                      ),
                     ],
                   ),
                   Row(
@@ -115,7 +126,7 @@ class Ruta extends StatelessWidget {
                   ),
                   Container(
                     width: 180,
-                    child: boton(rc.tipoMenu),
+                    child: boton(rc.tipoMenu, rc.ruta),
                   )
                 ],
                 )
@@ -141,12 +152,12 @@ class Ruta extends StatelessWidget {
     }
   }
 
- ElevatedButton boton(int tipoMenu){
+ ElevatedButton boton(int tipoMenu, RouteEntity ruta){
    switch (tipoMenu) {
      case 0:
             return  ElevatedButton(
                         onPressed: (){
-                          Get.to( () => ElegirVehiculo());
+                          Get.to( () => ElegirVehiculo(ruta, tipoMenu));
                         },
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(
@@ -161,7 +172,7 @@ class Ruta extends StatelessWidget {
      case 1:
             return  ElevatedButton(
                         onPressed: (){
-                          Get.to(ElegirVehiculo());
+                          Get.to( () => ElegirVehiculo(ruta, tipoMenu));
                         },
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(
@@ -176,7 +187,7 @@ class Ruta extends StatelessWidget {
      case 2:
             return  ElevatedButton(
                         onPressed: (){
-                          Get.to(ElegirVehiculo());
+                          Get.to( () => ElegirVehiculo(ruta, tipoMenu));
                         },
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(
@@ -192,7 +203,7 @@ class Ruta extends StatelessWidget {
      default:
             return  ElevatedButton(
                         onPressed: (){
-                          Get.to(ElegirVehiculo());
+                          Get.to( () => ElegirVehiculo(ruta, tipoMenu));
                         },
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(

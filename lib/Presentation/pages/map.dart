@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:routy_app_v102/Presentation/GetX/map_route_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/loading_widget.dart';
 import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
@@ -14,7 +14,7 @@ class MyMap extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 class _MyAppState extends State<MyMap> {
-  final RouteController routeX = Get.find();
+  final MapController routeX = Get.find();
   GoogleMapController mapController;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   void _onMapCreated(GoogleMapController controller) {
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyMap> {
       key: _scaffoldKey,
       drawer: DrawerMenu(),
       body: Stack(children: [
-        GetBuilder<RouteController>(
+        GetBuilder<MapController>(
           builder: (_) => GoogleMap(
             onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
@@ -174,7 +174,7 @@ class _MyAppState extends State<MyMap> {
           ),
         ),
 
-        GetBuilder<RouteController>(builder: (_) {
+        GetBuilder<MapController>(builder: (_) {
           if (routeX.ruta != null) {
             routeX.tipoMenu=0;
             return Ruta();

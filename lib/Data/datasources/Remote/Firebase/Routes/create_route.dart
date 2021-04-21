@@ -4,7 +4,7 @@ import 'package:routy_app_v102/Data/models/route.dart';
 
 class CreateRouteFirebase{
 
-  Future createRoute(String userId, String origen, String destino, String departamentos, bool circular, String tipoCar, double distancia, double duracion, List<LatLng> markerPoints, List<LatLng> polyPoints, Timestamp createdAt) async{
+  void createRoute(String userId, String origen, String destino, String departamentos, bool circular, String tipoCar, double distancia, double duracion, List<LatLng> markerPoints, List<LatLng> polyPoints, Timestamp createdAt){
     CollectionReference rutas = FirebaseFirestore.instance.collection('routes');
     RouteModel ruta = new RouteModel(
         userId: userId,
@@ -19,6 +19,6 @@ class CreateRouteFirebase{
         polyPoints: polyPoints,
         tipoCar: tipoCar
     );
-    return await rutas.add(ruta.toJson());
+    rutas.add(ruta.toJson());
   }
 }

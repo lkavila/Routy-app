@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
-import 'package:routy_app_v102/Presentation/GetX/map_route_controller.dart';
+import 'package:routy_app_v102/Domain/entities/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
@@ -9,7 +10,9 @@ import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class ElegirVehiculo extends StatefulWidget {
-  ElegirVehiculo({Key key}) : super(key: key);
+  final RouteEntity ruta;
+  final int tipoMenu;
+  ElegirVehiculo(this.ruta,this.tipoMenu,{Key key}) : super(key: key);
 
   @override
   _ElegirVehiculoState createState() => _ElegirVehiculoState();
@@ -89,8 +92,8 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
 
            ElevatedButton(
              onPressed:(){
-                if (rc.tipoMenu==0){
-                    rc.saveRoute(rc.ruta);
+                if (widget.tipoMenu==0){
+                    rc.saveRoute(widget.ruta);
                 }
                 Get.to( () => MyMap());
                   }, 
