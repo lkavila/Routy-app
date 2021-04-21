@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/Presentation/GetX/map_route_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

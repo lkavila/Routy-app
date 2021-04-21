@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Data/models/user.dart';
-import 'package:routy_app_v102/Presentation/GetX/map_route_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 
 class GetUserFirebase{
 

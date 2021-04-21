@@ -3,33 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
-import 'package:routy_app_v102/Domain/usecases/Routes/create_route.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/get_direction_from_geocode_reverse.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/get_polylines_from_ors.dart';
-import 'package:routy_app_v102/Domain/usecases/Routes/get_user_routes.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 
-class RouteController extends GetxController{
-  List<RouteEntity> misRutas = [];
+class MapController extends GetxController{
   List<LatLng> polyPoints = []; // For holding Co-ordinates as LatLng
   Set<Polyline> polyLines = {}; // For holding instance of Polyline
   Set<Marker> markers = {}; // For holding instance of Marker
   List<LatLng> puntos = []; 
-  RouteEntity ruta;
   int tipoMenu = 0;
+  RouteEntity ruta;
   BitmapDescriptor start, finish;
-  var cargandoRutas = false.obs;
   var cargandoDirecciones = false.obs;
   var cargandoPolylines = false.obs;
-
-
-  void getRutas() async{
-    final GetUserRoutesUseCase _getUserRoutes = GetUserRoutesUC();
-    cargandoRutas.value = true;
-    await _getUserRoutes.call().then((value) => misRutas = value);
-    update();
-    cargandoRutas.value = false;
-  }
 
   Future<void> createRoute(String circular) async{
     double distancia, duracion;
@@ -94,22 +81,6 @@ class RouteController extends GetxController{
     cargandoDirecciones.value = true;
     return await _getDirection.call(lon, lat);
     //cargandoDirecciones.value = false;
-  }
-
-  void saveRoute(RouteEntity ruta){
-    final CreateRouteUseCase _createRoute = CreateRoute();
-    print("saving route");
-    _createRoute.call(ruta.userId, ruta.origen, ruta.destino, ruta.departamentos, ruta.circular, ruta.tipoCar, ruta.distancia, ruta.duracion, ruta.markerPoints, ruta.polyPoints, ruta.createdAt);
-    print(ruta.createdAt);
-    misRutas.add(ruta);
-  }
-
-  void actualizarRutas(RouteEntity ruta){
-    misRutas.add(ruta);
-  }
-
-  limpiar(){
-    misRutas = [];
   }
 
   setPolyLines() {
@@ -227,8 +198,6 @@ class RouteController extends GetxController{
     super.onInit();
   }
 }
-
-
 
 //Create a new class to hold the Co-ordinates we've received from the response data
 class LineString {
