@@ -17,7 +17,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
   final nameInputController = new TextEditingController();
   final consumoInputController = new TextEditingController();
   String dropdownValue = 'Carro';
-
+  String dropdownValueC = 'Gasolina';
   @override
   Widget build(BuildContext context) {
     final carController = Get.put(CarController());
@@ -108,6 +108,54 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       'Motocicleta',
                       'Bicicleta',
                       'A pie'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            fontFamily: 'OpenSans-Bold',
+                            fontSize: 18,
+                            color: Colors.blue[700],
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Tipo de Combustible",
+                      style: TextStyle(
+                        fontFamily: 'OpenSans-Bold',
+                        fontSize: 18,
+                        color: Colors.blue[700],
+                      ),
+                    ),
+                  ),
+                  DropdownButton<String>(
+                    value: dropdownValueC,
+                    icon: const Icon(Icons.arrow_downward,
+                        color: Color.fromRGBO(25, 118, 210, 20)),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.blue),
+                    underline: Container(
+                      height: 2,
+                      width: 20,
+                      color: Colors.blue[700],
+                    ),
+                    onChanged: (value) => setState(() {
+                      dropdownValueC = value;
+                    }),
+                    items: <String>[
+                      'Gasolina',
+                      'Gas',
+                      'Diesel',
+                      'Otro',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
