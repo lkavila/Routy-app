@@ -29,9 +29,6 @@ class MisRutas extends StatelessWidget {
             ),
                     actions: [
             Icon(Icons.alt_route_rounded),
-            SizedBox(
-              width: 20,
-            ),
             TextButton.icon(onPressed: (){
               Get.back();
             }, icon: Icon(Icons.arrow_back_rounded), label: Text("atras"))
@@ -48,7 +45,28 @@ class MisRutas extends StatelessWidget {
           body: TabBarView(
             children: [
               //primer tab
-              Icon(Icons.watch),
+              GetBuilder<RouteController>(
+                builder: (_) {
+                  print("hay rutas guardadas?");
+                  if (routeX.cargandoRutas.value) {
+                    return Loading("Cargando rutas guardadas...");
+                  } else
+                    return Stack(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(0.0),
+                          child: Column(children: [
+                            Expanded(
+                              flex: 2,
+                              child: getRutas(routeX.misRutas.where((element) => element.frecuente==true).toList(), context),
+                            ),
+                          ]),
+                        ),
+                        goToMap(),
+                      ],
+                    );
+                },
+              ),
 
               //segundo tab
               GetBuilder<RouteController>(

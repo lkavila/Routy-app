@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:routy_app_v102/Data/models/route.dart';
+import 'package:routy_app_v102/Domain/entities/route.dart';
 
 class GetUserRoutes{
 
-  Future<List<RouteModel>> getRutas() async{
+  Future<List<RouteEntity>> getRutas() async{
     //final RouteX routeX = Get.find();
-    List<RouteModel> misRutas = [];
+    List<RouteEntity> misRutas = [];
     final user = FirebaseAuth.instance.currentUser;
     
     final String uid = user.uid;

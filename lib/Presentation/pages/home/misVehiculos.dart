@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';

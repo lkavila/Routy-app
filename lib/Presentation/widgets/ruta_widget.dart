@@ -12,10 +12,10 @@ class Ruta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MapController rc = Get.find();
+    final MapController mc = Get.find();
     List<String> depar;
     Elegido elegido = Get.find();
-    print(rc.ruta.departamentos);
+    print(mc.ruta.departamentos);
 
     return Container(
       child: 
@@ -38,8 +38,8 @@ class Ruta extends StatelessWidget {
                   SizedBox(width: 30,),
                   Builder(builder: (context){
                     
-                    if(rc.ruta.departamentos.contains(" ")){
-                      depar = rc.ruta.departamentos.split(" ");
+                    if(mc.ruta.departamentos.contains(" ")){
+                      depar = mc.ruta.departamentos.split(" ");
       
                       return Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -65,7 +65,7 @@ class Ruta extends StatelessWidget {
                           SizedBox(width: 10,),
                           Text('Departamento:', style:style(),),
                           SizedBox(width: 5,),
-                          Text('${rc.ruta.departamentos}',style:style2()),
+                          Text('${mc.ruta.departamentos}',style:style2()),
                         ],
                       );
                     }
@@ -79,7 +79,7 @@ class Ruta extends StatelessWidget {
                       Text('Origen:', style:style(),),
                       SizedBox(width: 5,),
                       Flexible(
-                        child:Text('${rc.ruta.origen}',style:style2(), overflow: TextOverflow.clip,),
+                        child:Text('${mc.ruta.origen}',style:style2(), overflow: TextOverflow.clip,),
                       ),
                     ],
                   ),
@@ -92,7 +92,7 @@ class Ruta extends StatelessWidget {
                       Text('Destino:', style:style(),),
                       SizedBox(width: 5,),
                       Flexible(child: 
-                      Text('${rc.ruta.destino}',style:style2(), overflow: TextOverflow.fade,),
+                      Text('${mc.ruta.destino}',style:style2(), overflow: TextOverflow.fade,),
                       ),
                       
                     ],
@@ -107,7 +107,7 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 5,),
                       Flexible(child: 
                         Text(
-                          '${ConvertirTD.convertDistancia(rc.ruta.distancia)}',
+                          '${ConvertirTD.convertDistancia(mc.ruta.distancia)}',
                           style:style2(),
                           overflow: TextOverflow.fade,),
                       ),
@@ -119,14 +119,37 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 10,),
                       FaIcon(FontAwesomeIcons.clock, color: Colors.orange[900], size: 18,),
                       SizedBox(width: 10,),
-                      texto(rc.tipoMenu, elegido.elegido),
+                      texto(mc.tipoMenu, elegido.elegido),
                       SizedBox(width: 5,),
-                      Text('${ConvertirTD.convertirTiempo(rc.ruta.duracion)}', style:style2() ),
+                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion)}', style:style2() ),
                     ],
                   ),
-                  Container(
-                    width: 180,
-                    child: boton(rc.tipoMenu, rc.ruta),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      
+                      boton(mc.tipoMenu, mc.ruta),
+                      GetBuilder<MapController>(builder: (_){
+                          if(mc.ruta.frecuente){
+                            return IconButton(icon: Icon(
+                              Icons.save, 
+                              color: Colors.lightBlueAccent,
+                              size: 40,), onPressed: (){
+                                mc.makeFrecuent();
+                                });
+                          }else{
+                            return IconButton(icon: Icon(
+                              Icons.save, 
+                              color: Colors.grey,
+                              size: 40,), onPressed: (){
+                                mc.makeFrecuent();
+                                
+                                });
+
+                          } 
+                      })
+
+                    ],
                   )
                 ],
                 )
@@ -159,12 +182,15 @@ class Ruta extends StatelessWidget {
                         onPressed: (){
                           Get.to( () => ElegirVehiculo(ruta, tipoMenu));
                         },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith((states) => Color.fromRGBO(255, 255, 255, 0.7))
+                        ),
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text("Elegir vehículo", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
+                            Text("Elegir vehículo", style: TextStyle(color: Colors.blue[900], fontSize: 16, fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.blue[900]),
                           ]
                         )
                     );
@@ -174,12 +200,15 @@ class Ruta extends StatelessWidget {
                         onPressed: (){
                           Get.to( () => ElegirVehiculo(ruta, tipoMenu));
                         },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith((states) => Color.fromRGBO(255, 255, 255, 0.7))
+                        ),
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text("En camino", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
+                            Text("En camino", style: TextStyle(color: Colors.blue[900], fontSize: 16, fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.blue[900]),
                           ]
                         )
                     );
@@ -189,12 +218,15 @@ class Ruta extends StatelessWidget {
                         onPressed: (){
                           Get.to( () => ElegirVehiculo(ruta, tipoMenu));
                         },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith((states) => Color.fromRGBO(255, 255, 255, 0.7))
+                        ),
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text("Finalizar", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
+                            Text("Finalizar", style: TextStyle(color: Colors.blue[900], fontSize: 16, fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.blue[900]),
                           ]
                         )
                     );
@@ -205,12 +237,15 @@ class Ruta extends StatelessWidget {
                         onPressed: (){
                           Get.to( () => ElegirVehiculo(ruta, tipoMenu));
                         },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith((states) => Color.fromRGBO(255, 255, 255, 0.7))
+                        ),
                         //style: ButtonStyle(minimumSize: MaterialStateProperty.resolveWith((state) => Size(100, 40))), 
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text("Elegir vehículo", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.white),
+                            Text("Elegir vehículo", style: TextStyle(color: Colors.blue[900], fontSize: 16, fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.handPointUp, color: Colors.blue[900]),
                           ]
                         )
                     );

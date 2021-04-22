@@ -16,14 +16,15 @@ class RouteController extends GetxController{
     update();
     
   }
-  void saveRoute(RouteEntity ruta){
+  Future<void> saveRoute(RouteEntity ruta)async{
     final CreateRouteUseCase _createRoute = CreateRoute();
     print("saving route");
-    _createRoute.call(ruta.userId, ruta.origen, ruta.destino, ruta.departamentos, ruta.circular, ruta.tipoCar, ruta.distancia, ruta.duracion, ruta.markerPoints, ruta.polyPoints, ruta.createdAt);
+    print(ruta.id);
+    _createRoute.call(ruta.id, ruta.userId, ruta.origen, ruta.destino, ruta.departamentos, ruta.circular, ruta.tipoCar, ruta.distancia, ruta.duracion, ruta.markerPoints, ruta.polyPoints, ruta.createdAt, ruta.frecuente);
     print(ruta.createdAt);
-    //misRutas.add(ruta); //Error type 'RouteEntity' is not a subtype of type 'RouteModel' of 'value'
-    getRutas();
-    print("final se save route");
+    misRutas.add(ruta); //Error type 'RouteEntity' is not a subtype of type 'RouteModel' of 'value'
+    //getRutas();
+    print("final se saving route");
   }
   
   void actualizarRutas(RouteEntity ruta){
