@@ -4,11 +4,11 @@ import 'package:routy_app_v102/Domain/entities/car.dart';
 class CarModel extends CarEntity {
   CarModel({
     final String id,
-    final String name,
-    final String tipoCar,
+    String name,
+    String tipoCar,
     String tipoCarApi,
     double recorrido,
-    final double consumo,
+    double consumo,
     double consumido,
     double uso,
     String tipoCombustible,

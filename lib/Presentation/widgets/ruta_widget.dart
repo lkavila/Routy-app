@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
-import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/Presentation/pages/home/elegir_vehiculo.dart';
 
 class Ruta extends StatelessWidget {
@@ -14,7 +14,7 @@ class Ruta extends StatelessWidget {
   Widget build(BuildContext context) {
     final MapController mc = Get.find();
     List<String> depar;
-    Elegido elegido = Get.find();
+    CarController elegido = Get.find();
     print(mc.ruta.departamentos);
 
     return Container(

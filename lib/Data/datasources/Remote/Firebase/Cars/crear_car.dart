@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 
 class CreateCarFirebase{
 
-  CarModel crearVe(String name, String tipo, double consumo){
+  CarModel crearVe(String name, String tipo, double consumo, String combustible){
     String tipoCarApi;
     switch (tipo) {
       case "Carro":
@@ -27,18 +27,13 @@ class CreateCarFirebase{
         break;
       default:
     }
-    return CarModel(id: Uuid().v1(), name: name, tipoCar: tipo, tipoCarApi: tipoCarApi, recorrido: 0, uso: 0, consumo: consumo, consumido: 0, createdAt: Timestamp.now());
+    return CarModel(id: Uuid().v1(), name: name, tipoCar: tipo, tipoCarApi: tipoCarApi, recorrido: 0, uso: 0, consumo: consumo, consumido: 0, createdAt: Timestamp.now(), tipoCombustible: combustible);
 
   }
 
- Future<void> crearVehiculo(String name, String tipo, double consumo){
+ Future<void> crearVehiculo(String name, String tipo, double consumo, String combustible){
    final UserController uc = Get.find();
-   if(uc.user.vehiculos.isNotEmpty){
-    if(uc.user.vehiculos.where((element) => element.name == name).isNotEmpty){//hay otro carro con el mismo nombre
-        name = name+"1";
-    }
-  }
-    CarModel carro = crearVe( name,  tipo,  consumo);
+    CarModel carro = crearVe( name,  tipo,  consumo, combustible);
     
     if(uc.user.vehiculos==null || uc.user.vehiculos.isEmpty){
       List<CarModel> primerCar= [carro];
@@ -49,7 +44,7 @@ class CreateCarFirebase{
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     Map<String, dynamic> map1 = {}; 
     uc.user.vehiculos.forEach((element) {
-      map1.addIf(true, element.name, element.toJson());
+      map1.addIf(true, element.id, element.toJson());
     });
     print(map1);
     return users
