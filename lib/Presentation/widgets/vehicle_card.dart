@@ -3,7 +3,7 @@ import 'package:routy_app_v102/Domain/entities/car.dart';
 
 class VehicleCard extends StatelessWidget {
   final CarEntity vehiculo;
-  const VehicleCard(this.vehiculo,{Key key}) : super(key: key);
+  const VehicleCard(this.vehiculo, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +72,16 @@ class VehicleCard extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     child: Text(
                       'Combustible consumido: ${vehiculo.consumido}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+                    child: Text(
+                      'Tipo de Combustible: ${vehiculo.tipoCombustible}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,

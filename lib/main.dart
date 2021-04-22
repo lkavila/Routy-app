@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.blue[900],
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
         primaryColorDark: Colors.grey,
         primarySwatch: Colors.blue,
         accentColor: Colors.blue,
-        
         fontFamily: "OpenSans",
       ),
       initialRoute: "/wrapper",

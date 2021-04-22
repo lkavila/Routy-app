@@ -5,13 +5,24 @@ class CarEntity {
   final String name;
   final String tipoCar;
   String tipoCarApi;
+  String tipoCombustible;
   double recorrido;
   final double consumo;
   double consumido;
   double uso;
   Timestamp createdAt;
 
-  CarEntity({this.id, this.name, this.tipoCar, this.tipoCarApi, this.recorrido, this.uso, this.consumo, this.consumido, this.createdAt});
+  CarEntity(
+      {this.id,
+      this.name,
+      this.tipoCar,
+      this.tipoCarApi,
+      this.recorrido,
+      this.uso,
+      this.consumo,
+      this.consumido,
+      this.createdAt,
+      this.tipoCombustible});
 
   Map<String, dynamic> toJson() {
     return {
@@ -24,7 +35,7 @@ class CarEntity {
       'consumo': consumo,
       'consumido': consumido,
       'uso': uso,
+      'tipoCombustible': tipoCombustible,
     };
   }
-
 }
