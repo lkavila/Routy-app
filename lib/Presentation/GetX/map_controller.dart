@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
+import 'package:routy_app_v102/Domain/usecases/Routes/create_route.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/get_direction_from_geocode_reverse.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/get_polylines_from_ors.dart';
+import 'package:routy_app_v102/Domain/usecases/Routes/make_frecuent.dart';
+import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
+import 'package:uuid/uuid.dart';
 
 class MapController extends GetxController{
   List<LatLng> polyPoints = []; // For holding Co-ordinates as LatLng
@@ -59,11 +63,13 @@ class MapController extends GetxController{
       bool cir = circular=="true";
       final UserController userx = Get.find();
       ruta = new RouteEntity(
+        id: Uuid().v1(),
         userId: userx.user.id,
         createdAt: Timestamp.now(),
         origen: dirOrigen.first,
         destino: dirDestino.first,
         circular: cir,
+        frecuente: false,
         distancia: distancia,
         duracion: duracion,
         departamentos: departamentos,
@@ -181,16 +187,43 @@ class MapController extends GetxController{
       createMarkers(element.latitude, element.longitude);
       });
   }
+
+  void makeFrecuent()async{
+    final RouteController _rc = Get.find();
+    if(_rc.misRutas.contains(ruta)){
+      RouteEntity route =_rc.misRutas.firstWhere((element) => element.id==ruta.id);
+      _rc.misRutas.remove(route);
+      final MakeFrecuentUseCase _makef = MakeFrecuent();
+      _makef.call(ruta.id, !ruta.frecuente);
+    }else{
+      final CreateRouteUseCase _createRoute = CreateRoute();
+      _createRoute.call(ruta.id, ruta.userId, ruta.origen, ruta.destino, ruta.departamentos, ruta.circular, ruta.tipoCar, ruta.distancia, ruta.duracion, ruta.markerPoints, ruta.polyPoints, ruta.createdAt, ruta.frecuente);
+      
+    }
+    ruta.frecuente = ruta.frecuente ? false : true;
+    update();
+    _rc.misRutas.add(ruta);
+
+
+      //sleep(Duration(milliseconds: 1500));
+    
+
+    
+    
+
+  }
+
+
   @override
   void onInit() {
     print("init state route");
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(size: Size(130, 130)), 'assets/images/map.png')
+            ImageConfiguration(size: Size(90, 90)), 'assets/images/map.png')
         .then((onValue) {
       finish = onValue;
     });
 
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(130, 130)),
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(90, 90)),
             'assets/images/location.png')
         .then((onValue) {
       start = onValue;

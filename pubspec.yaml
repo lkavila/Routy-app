@@ -91,6 +91,7 @@ flutter:
         - asset: fonts/OpenSans-SemiBold.ttf
         - asset: fonts/OpenSans-Bold.ttf
         - asset: fonts/OpenSans-Italic.ttf
+    
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,

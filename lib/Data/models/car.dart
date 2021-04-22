@@ -4,6 +4,7 @@ import 'package:routy_app_v102/Domain/entities/car.dart';
 class CarModel extends CarEntity{
 
   CarModel({
+  final String id,
   final String name,
   final String tipoCar,
   String tipoCarApi,
@@ -13,10 +14,11 @@ class CarModel extends CarEntity{
   double uso,
   Timestamp createdAt,
 
-  }) : super (name:name, tipoCar:tipoCar, tipoCarApi:tipoCarApi, recorrido:recorrido, uso:uso, consumo:consumo, consumido:consumido, createdAt:createdAt);
+  }) : super (id: id, name:name, tipoCar:tipoCar, tipoCarApi:tipoCarApi, recorrido:recorrido, uso:uso, consumo:consumo, consumido:consumido, createdAt:createdAt);
 
   factory CarModel.fromData(Map<String, dynamic> data){
       return CarModel (
+        id : data['id'],
         name : data['name'],
         tipoCar : data['tipoCar'],
         tipoCarApi : data['tipoCarApi'],

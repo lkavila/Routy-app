@@ -6,23 +6,25 @@ import 'package:routy_app_v102/Domain/entities/route.dart';
 class RouteModel extends RouteEntity{
 
   RouteModel({
-  String origen,
-  String destino,
-  List<LatLng> markerPoints,
-  List<LatLng> polyPoints,
-  double distancia,
-  String departamentos,
-  double duracion,
-  bool circular,
-  String userId,
-  Timestamp createdAt,
-  String tipoCar,
-  bool frecuente,
-  }): super (userId:userId, origen:origen, destino:destino, departamentos:departamentos, circular:circular, tipoCar:tipoCar, distancia:distancia, duracion:duracion, markerPoints:markerPoints, polyPoints:polyPoints, createdAt:createdAt);
+    String id,
+    String origen,
+    String destino,
+    List<LatLng> markerPoints,
+    List<LatLng> polyPoints,
+    double distancia,
+    String departamentos,
+    double duracion,
+    bool circular,
+    String userId,
+    Timestamp createdAt,
+    String tipoCar,
+    bool frecuente,
+  }): super (id:id, userId:userId, origen:origen, destino:destino, departamentos:departamentos, circular:circular, tipoCar:tipoCar, distancia:distancia, duracion:duracion, markerPoints:markerPoints, polyPoints:polyPoints, createdAt:createdAt, frecuente:frecuente);
 
 
   factory  RouteModel.fromData(Map<String,dynamic> data){
       return RouteModel(
+        id: data['id'],
         userId : data['userId'],
         createdAt : data['createdAt'],
         origen : data['origen'],
@@ -49,7 +51,7 @@ class RouteModel extends RouteEntity{
     });
     
     return {
-      
+      'id': id,
       'userId': userId,
       'tipoCar': tipoCar,
       'createdAt': createdAt,

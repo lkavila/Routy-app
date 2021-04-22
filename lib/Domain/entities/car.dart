@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CarEntity {
+  final String id;
   final String name;
   final String tipoCar;
   String tipoCarApi;
@@ -10,10 +11,11 @@ class CarEntity {
   double uso;
   Timestamp createdAt;
 
-  CarEntity({this.name, this.tipoCar, this.tipoCarApi, this.recorrido, this.uso, this.consumo, this.consumido, this.createdAt});
+  CarEntity({this.id, this.name, this.tipoCar, this.tipoCarApi, this.recorrido, this.uso, this.consumo, this.consumido, this.createdAt});
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'tipoCar': tipoCar,
       'tipoCarApi': tipoCarApi,
