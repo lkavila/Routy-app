@@ -110,6 +110,7 @@ class _MyAppState extends State<MyMap> {
                         context: context,
                         builder: (context) => AlertDialog(
                           backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
                           title: Text("¿Ruta circular?", style: TextStyle(color: Colors.white)),
                           content: Text(
                               "Despues de llegar al final ¿regresará al inicio?", style: TextStyle(color: Colors.white)),
@@ -145,6 +146,7 @@ class _MyAppState extends State<MyMap> {
                         context: context,
                         builder: (context) => AlertDialog(
                           backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
                           title: Text("No hay suficientes puntos", style: TextStyle(color: Colors.white)),
                           content: Text(
                               "Para poder calcular la mejor ruta debe haber al menos 2 puntos, para crear puntos debe hacer tap sobre el mapa",

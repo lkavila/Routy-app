@@ -5,6 +5,8 @@ import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
+import 'package:routy_app_v102/Presentation/pages/home/crearVehiculo.dart';
 import 'package:routy_app_v102/Presentation/pages/home/elegir_vehiculo.dart';
 
 class Ruta extends StatelessWidget {
@@ -13,6 +15,7 @@ class Ruta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MapController mc = Get.find();
+    final UserController uc = Get.find();
     List<String> depar;
     CarController elegido = Get.find();
     print(mc.ruta.departamentos);
@@ -217,7 +220,7 @@ class Ruta extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      boton(mc.tipoMenu, mc.ruta, context, mc),
+                      boton(mc.tipoMenu, mc.ruta, context, mc, uc),
                       GetBuilder<MapController>(builder: (_) {
                         if (mc.tipoMenu != 1) {
                           if (mc.ruta.frecuente) {
@@ -231,9 +234,12 @@ class Ruta extends StatelessWidget {
                                   showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
                                       title: Icon(
                                             Icons.save,
-                                            color: Colors.grey[800],
+                                            color: Colors.lightBlueAccent,
                                             size: 100,
                                           ),
                                       backgroundColor:
@@ -313,13 +319,44 @@ class Ruta extends StatelessWidget {
   }
 
   Widget boton(
-      int tipoMenu, RouteEntity ruta, BuildContext context, MapController mc) {
+      int tipoMenu, RouteEntity ruta, BuildContext context, MapController mc, UserController uc) {
     print("El tipo de menu es: " + tipoMenu.toString());
     switch (tipoMenu) {
       case 0:
         return ElevatedButton(
             onPressed: () {
-              Get.to(() => ElegirVehiculo());
+                    if(uc.user.vehiculos.isNotEmpty){
+                      Get.to(() => ElegirVehiculo());
+                    }else{
+                              showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+                                      title: Icon(
+                                            Icons.taxi_alert,
+                                            color: Colors.yellow,
+                                            size: 100,
+                                          ),
+                                      backgroundColor:
+                                          Color.fromRGBO(12, 55, 106, 0.95),
+                                      content: Text("No tienes registrado ningún vehículo", style: TextStyle(color: Colors.white),),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              mc.makeFrecuent();
+                                              Get.to(()=> CrearVehiculo());
+                                            },
+                                            child: Text("Crear uno")),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: Text("Cancelar")),
+                                      ],
+                                    ),
+                                  );
+                    }
+              
             },
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith(
@@ -352,7 +389,7 @@ class Ruta extends StatelessWidget {
                     context: context,
                     builder: (context) => AlertDialog(
                       title:Icon(Icons.cancel,color: Colors.red,size: 100, ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                       backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
                       content:Text("¿Esta seguro de que desea cancelar esta ruta?", style: TextStyle(color: Colors.white)),
                       actions: [
@@ -376,7 +413,7 @@ class Ruta extends StatelessWidget {
                     ),
                   );
                 }),
-            Padding(padding: EdgeInsets.fromLTRB(40, 5, 30, 0),
+            Padding(padding: EdgeInsets.fromLTRB(32, 5, 30, 0),
             child:
             Container(
               width: 150,
@@ -412,7 +449,7 @@ class Ruta extends StatelessWidget {
                             color: Colors.green,
                             size: 100,
                           ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                       backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
                       content:Text("¿Esta seguro de que desea marcar como finalizada esta ruta?", style: TextStyle(color: Colors.white)),
                       actions: [

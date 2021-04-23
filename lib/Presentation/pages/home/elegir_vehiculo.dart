@@ -48,14 +48,11 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
             'Elegir Vehiculo',
             style: TextStyle(
               fontFamily: 'pacifico',
-              fontSize: 25,
+              fontSize: 20,
             ),
           ),
           actions: [
             Icon(Icons.directions_car_rounded),
-            SizedBox(
-              width: 20,
-            ),
             TextButton.icon(
                 onPressed: () {
                   Get.back();
@@ -65,18 +62,15 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
           ],
         ),
         drawer: DrawerMenu(),
-        body: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 20.0),
+        body: Container(
+              padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Row(
+                  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Padding(padding: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),),
                         Text(
                           "Comparación",
                           style: TextStyle(
@@ -93,22 +87,20 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                         ),
                       ],
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
+                  
+                  Text(
                       "Nombre del vehiculo",
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.blue[700],
                       ),
                     ),
-                  ),
+                  
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: 140,
+                        width: 135,
                         height: 40,
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -157,12 +149,12 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
 
                       //the other dropdown
                       Container(
-                        width: 140,
+                        width: 135,
                         height: 40,
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Colors.grey[300],
                             borderRadius: BorderRadius.circular(10)),
 
                         // dropdown below..
@@ -194,6 +186,8 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                       )
                     ],
                   ),
+
+                  SizedBox(height: 35,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -205,6 +199,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                           color: Colors.blue[700],
                         ),
                       ),
+                      FaIcon(FontAwesomeIcons.route, color: Colors.grey[700]), 
                     ],
                   ),
                   Row(
@@ -220,6 +215,8 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                       )
                     ],
                   ),
+
+                  SizedBox(height: 35,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -231,13 +228,15 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                           color: Colors.blue[700],
                         ),
                       ),
+                      FaIcon(FontAwesomeIcons.gasPump, color: Colors.grey[700]), 
                     ],
                   ),
+
                   Builder(builder: (_){
                     if(mc.ruta!=null){
                       return Column(
-                        children: [
-                                            Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Card(
@@ -254,6 +253,8 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                       )
                     ],
                   ),
+
+                  SizedBox(height: 35,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -265,6 +266,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                           color: Colors.blue[700],
                         ),
                       ),
+                      FaIcon(FontAwesomeIcons.clock, color: Colors.grey[700]), 
                     ],
                   ),
                   Row(
@@ -280,6 +282,11 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                       )
                     ],
                   ),
+
+                  SizedBox(height: 35,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                   ElevatedButton(
                       onPressed: () {
                         if (mc.tipoMenu == 0) {
@@ -302,13 +309,11 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                                     fontWeight: FontWeight.bold)),
                             FaIcon(FontAwesomeIcons.playCircle,
                                 color: Colors.blue[900]),
-                          ])),
-                        ],
-                      );
-                    }else{return Text("No existe una ruta actual");}
-                  }),
+                          ]
+                          )
+                          ),
 
-                  ElevatedButton(
+                    ElevatedButton(
                       onPressed: () {
                         Get.to(() => MyMap());
                       },
@@ -325,11 +330,19 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                                     fontWeight: FontWeight.bold)),
                             Icon(Icons.cancel, color: Colors.red),
                           ])),
+                    ],
+                  )
+                  
+                        ],
+                      );
+                    }else{return Text("No existe una ruta actual");}
+                  }),
+
+                  
                 ],
               ),
             ),
-          ],
-        ));
+          );
   }
 
   asignarFactorVelocidad(String tipoCar) {

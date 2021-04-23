@@ -27,14 +27,11 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
               'Crear vehículo',
               style: TextStyle(
                 fontFamily: 'pacifico',
-                fontSize: 25,
+                fontSize: 20,
               ),
             ),
           actions: [
             Icon(Icons.directions_car_rounded),
-            SizedBox(
-              width: 20,
-            ),
             TextButton.icon(onPressed: (){
               Get.back();
             }, icon: Icon(Icons.arrow_back_rounded), label: Text("atras"))
@@ -43,10 +40,10 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       drawer: DrawerMenu(),
-      body: Stack(
+      body: ListView(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 20.0),
+            padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -75,7 +72,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Nombre del vehiculo",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.blue[700],
                       ),
                     ),
@@ -90,14 +87,14 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Tipo de vehiculo",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.blue[700],
                       ),
                     ),
@@ -107,7 +104,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     icon: const Icon(Icons.arrow_downward,
                         color: Color.fromRGBO(25, 118, 210, 20)),
                     iconSize: 24,
-                    elevation: 16,
+                    elevation: 3,
                     style: const TextStyle(color: Colors.blue),
                     underline: Container(
                       height: 2,
@@ -129,7 +126,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         child: Text(
                           value,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             color: Colors.blue[700],
                           ),
                         ),
@@ -144,7 +141,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     child: Text(
                       "Tipo de Combustible",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.blue[700],
                       ),
                     ),
@@ -154,7 +151,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     icon: const Icon(Icons.arrow_downward,
                         color: Color.fromRGBO(25, 118, 210, 20)),
                     iconSize: 24,
-                    elevation: 16,
+                    elevation: 3,
                     style: const TextStyle(color: Colors.blue),
                     underline: Container(
                       height: 2,
@@ -175,7 +172,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         child: Text(
                           value,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             color: Colors.blue[700],
                           ),
                         ),
@@ -190,7 +187,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     child: Text(
                       "Consumo (Galones/100Km)",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.blue[700],
                       ),
                     ),
@@ -206,7 +203,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 25,
                   ),
                   Align(
                     alignment: AlignmentDirectional.topEnd,

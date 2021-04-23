@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
         key: _scaffoldKey,
         drawerEnableOpenDragGesture: true,
         resizeToAvoidBottomInset: false,
-        body: Builder(builder: (_) { 
+        body: GetBuilder<UserController>(builder: (_) { 
               if (userController.isSigningIn) {
                 return buildLoading();
               } else if (FirebaseAuth.instance.currentUser!=null) {
