@@ -16,12 +16,11 @@ class VehicleCard extends StatelessWidget {
     final List<Color> _colors = [Colors.blue, Color.fromRGBO(11, 210, 181, 1)];
     final List<double> _stops = [0.4, 1];
     return Container(
-        width: 400,
-        height: 200,
+        width: 350,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
         ),
-        padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 0.0),
         child: Card(
             color: Colors.grey,
             elevation: 3.0,
@@ -99,7 +98,7 @@ class VehicleCard extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
                     child: Text(
                       'Uso: ${vehiculo.uso}',
                       style: TextStyle(

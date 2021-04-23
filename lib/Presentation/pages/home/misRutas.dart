@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
+import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
-import 'package:routy_app_v102/Presentation/GetX/vehiculo_elegido.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/loading_widget.dart';
@@ -15,7 +15,7 @@ class MisRutas extends StatelessWidget {
   final mapC = Get.put(MapController());
   @override
   Widget build(BuildContext context) {
-    Get.put(Elegido());
+    Get.put(CarController());
     final RouteController routeX = Get.find();
     return DefaultTabController(
       length: 2,

@@ -18,17 +18,14 @@ class MisVehiculos extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
                     title: Text(
-              'Mis vehiculos',
+              'Mis vehículos',
               style: TextStyle(
                 fontFamily: 'pacifico',
-                fontSize: 25,
+                fontSize: 20,
               ),
             ),
           actions: [
             Icon(Icons.directions_car_rounded),
-            SizedBox(
-              width: 20,
-            ),
             TextButton.icon(onPressed: (){
               Get.back();
             }, icon: Icon(Icons.arrow_back_rounded), label: Text("atras"))

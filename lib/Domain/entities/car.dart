@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CarEntity {
   final String id;
-  final String name;
-  final String tipoCar;
+  String name;
+  String tipoCar;
   String tipoCarApi;
   String tipoCombustible;
   double recorrido;
-  final double consumo;
+  double consumo;
   double consumido;
   double uso;
   Timestamp createdAt;

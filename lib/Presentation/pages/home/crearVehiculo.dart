@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
+import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
-import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class CrearVehiculo extends StatefulWidget {
   CrearVehiculo({Key key}) : super(key: key);
@@ -22,14 +22,28 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
   Widget build(BuildContext context) {
     final carController = Get.put(CarController());
     return Scaffold(
-      appBar: AppBar(),
+ appBar: AppBar(
+                    title: Text(
+              'Crear vehículo',
+              style: TextStyle(
+                fontFamily: 'pacifico',
+                fontSize: 20,
+              ),
+            ),
+          actions: [
+            Icon(Icons.directions_car_rounded),
+            TextButton.icon(onPressed: (){
+              Get.back();
+            }, icon: Icon(Icons.arrow_back_rounded), label: Text("atras"))
+          ],
+      ),
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       drawer: DrawerMenu(),
-      body: Stack(
+      body: ListView(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 20.0),
+            padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -37,7 +51,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Agregar Vehiculo",
+                        "Agregar Vehículo",
                         style: TextStyle(
                           fontFamily: 'Pacifico',
                           fontSize: 25,
@@ -58,8 +72,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Nombre del vehiculo",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.blue[700],
                       ),
                     ),
@@ -74,15 +87,14 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Tipo de vehiculo",
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.blue[700],
                       ),
                     ),
@@ -92,7 +104,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     icon: const Icon(Icons.arrow_downward,
                         color: Color.fromRGBO(25, 118, 210, 20)),
                     iconSize: 24,
-                    elevation: 16,
+                    elevation: 3,
                     style: const TextStyle(color: Colors.blue),
                     underline: Container(
                       height: 2,
@@ -114,8 +126,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         child: Text(
                           value,
                           style: TextStyle(
-                            fontFamily: 'OpenSans-Bold',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: Colors.blue[700],
                           ),
                         ),
@@ -130,8 +141,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     child: Text(
                       "Tipo de Combustible",
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.blue[700],
                       ),
                     ),
@@ -141,7 +151,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     icon: const Icon(Icons.arrow_downward,
                         color: Color.fromRGBO(25, 118, 210, 20)),
                     iconSize: 24,
-                    elevation: 16,
+                    elevation: 3,
                     style: const TextStyle(color: Colors.blue),
                     underline: Container(
                       height: 2,
@@ -162,8 +172,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         child: Text(
                           value,
                           style: TextStyle(
-                            fontFamily: 'OpenSans-Bold',
-                            fontSize: 18,
+                            fontSize: 14,
                             color: Colors.blue[700],
                           ),
                         ),
@@ -178,8 +187,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     child: Text(
                       "Consumo (Galones/100Km)",
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.blue[700],
                       ),
                     ),
@@ -195,7 +203,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 25,
                   ),
                   Align(
                     alignment: AlignmentDirectional.topEnd,
@@ -204,8 +212,9 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         carController.createCar(
                             nameInputController.text,
                             dropdownValue,
-                            double.parse(consumoInputController.text));
-                        Navigator.pushNamed(context, "/misVehiculos");
+                            double.parse(consumoInputController.text),
+                            dropdownValueC);
+                        Get.to(() => MisVehiculos());
                       },
                       child: Container(
                           width: 50,

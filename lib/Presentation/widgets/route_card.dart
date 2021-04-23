@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
@@ -121,11 +122,8 @@ class RouteCard extends StatelessWidget {
                       child: TextButton(
                           onPressed: () {
                             mapC.showChooseRouteOnMap(ruta);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyMap()),
-                            ); //4 significa que ya no hay que volver a crear la ruta
+                            mapC.tipoMenu=4;
+                            Get.to(() => MyMap()); //4 significa que ya no hay que volver a crear la ruta
                           },
                           child: Text(
                             "Ver en mapa",

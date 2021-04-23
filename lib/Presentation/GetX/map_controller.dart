@@ -22,6 +22,11 @@ class MapController extends GetxController{
   var cargandoDirecciones = false.obs;
   var cargandoPolylines = false.obs;
 
+  void actualizarMenu(int tipo){
+    tipoMenu = tipo;
+    update();
+  }
+
   Future<void> createRoute(String circular) async{
     double distancia, duracion;
     final GetPolylinesFromORSUseCase _getPolylines = GetPolylinesFromORS();

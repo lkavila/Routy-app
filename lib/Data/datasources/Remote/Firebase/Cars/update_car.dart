@@ -17,9 +17,9 @@ class UpdateCarFirebase{
     print(car.toJson());
     
     users.doc(uc.user.id)
-      .update({'vehiculos.${car.name}.uso': uso,
-              'vehiculos.${car.name}.consumido': consumido,
-              'vehiculos.${car.name}.recorrido': recorrido})
+      .update({'vehiculos.$id.uso': uso,
+              'vehiculos.$id.consumido': consumido,
+              'vehiculos.$id.recorrido': recorrido})
       .then((value) => print("car created Updated"))
       .catchError((error) => print("Failed to update user vehiculo: $error"));
   }
