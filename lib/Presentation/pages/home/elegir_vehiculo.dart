@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
-import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
@@ -11,9 +11,7 @@ import 'package:routy_app_v102/Presentation/pages/map.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 
 class ElegirVehiculo extends StatefulWidget {
-  final RouteEntity ruta;
-  final int tipoMenu;
-  ElegirVehiculo(this.ruta, this.tipoMenu, {Key key}) : super(key: key);
+  ElegirVehiculo({Key key}) : super(key: key);
 
   @override
   _ElegirVehiculoState createState() => _ElegirVehiculoState();
@@ -24,6 +22,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
   final UserController uc = Get.find();
   String dropdown1Value;
   String dropdown2Value;
+  double factorVelocidad1, factorVelocidad2;
   CarEntity value1, value2;
   @override
   void initState() {
@@ -31,6 +30,8 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
     dropdown2Value = uc.user.vehiculos.last.name;
     value1 = uc.user.vehiculos.first;
     value2 = uc.user.vehiculos.last;
+    factorVelocidad1 = asignarFactorVelocidad(uc.user.vehiculos.first.tipoCar);
+    factorVelocidad2 = asignarFactorVelocidad(uc.user.vehiculos.last.tipoCar);
     super.initState();
   }
 
@@ -71,32 +72,33 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Comparar",
-                        style: TextStyle(
-                          fontFamily: 'Pacifico',
-                          fontSize: 25,
-                          color: Colors.blue[700],
+                  Align(
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Comparación",
+                          style: TextStyle(
+                            fontFamily: 'Pacifico',
+                            fontSize: 25,
+                            color: Colors.blue[700],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Image(
-                          image: AssetImage('assets/images/comparar.png'),
-                          height: 100,
+                        Expanded(
+                          child: Image(
+                            image: AssetImage('assets/images/comparar.png'),
+                            height: 100,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Align(
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.center,
                     child: Text(
                       "Nombre del vehiculo",
-                      textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
                         fontSize: 18,
                         color: Colors.blue[700],
                       ),
@@ -105,50 +107,90 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      DropdownButton<CarEntity>(
-                        value: value1,
-                        icon: const Icon(Icons.arrow_downward),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.blue),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.indigoAccent,
+                      Container(
+                        width: 140,
+                        height: 40,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                            color: Colors.lightBlue[100],
+                            borderRadius: BorderRadius.circular(10)),
+
+                        // dropdown below..
+                        child: DropdownButton<CarEntity>(
+                          value: value1,
+                          icon: const Icon(Icons.arrow_downward),
+                          iconSize: 24,
+                          elevation: 4,
+                          iconDisabledColor: Colors.black,
+                          iconEnabledColor: Colors.blue[900],
+                          dropdownColor: Colors.lightBlueAccent[100],
+                          focusColor: Colors.lightBlueAccent[100],
+                          style: const TextStyle(
+                            color: Colors.blue,
+                          ),
+                          underline: Container(
+                            height: 0,
+                            color: Colors.indigoAccent,
+                          ),
+                          onChanged: (value) => setState(() {
+                            value1 = value;
+                            factorVelocidad1 =
+                                asignarFactorVelocidad(value1.tipoCar);
+                            elegido.actualizar(value1.name);
+                          }),
+                          items: uc.user.vehiculos
+                              .map<DropdownMenuItem<CarEntity>>(
+                                  (CarEntity value) {
+                            return DropdownMenuItem<CarEntity>(
+                              value: value,
+                              child: Text(
+                                value.name,
+                                style: TextStyle(
+                                    color: Colors.blue[900],
+                                    fontWeight: FontWeight.w900),
+                              ),
+                            );
+                          }).toList(),
                         ),
-                        onChanged: (value) => setState(() {
-                          value1 = value;
-                          elegido.actualizar(value1.name);
-                        }),
-                        items: uc.user.vehiculos
-                            .map<DropdownMenuItem<CarEntity>>(
-                                (CarEntity value) {
-                          return DropdownMenuItem<CarEntity>(
-                            value: value,
-                            child: Text(value.name),
-                          );
-                        }).toList(),
                       ),
-                      DropdownButton<CarEntity>(
-                        value: value2,
-                        icon: const Icon(Icons.arrow_downward),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.blue),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.indigoAccent,
+
+                      //the other dropdown
+                      Container(
+                        width: 140,
+                        height: 40,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+
+                        // dropdown below..
+                        child: DropdownButton<CarEntity>(
+                          value: value2,
+                          icon: const Icon(Icons.arrow_downward),
+                          iconSize: 24,
+                          elevation: 3,
+                          style: const TextStyle(color: Colors.blue),
+                          underline: Container(
+                            height: 0,
+                            color: Colors.indigoAccent,
+                          ),
+                          onChanged: (value) => setState(() {
+                            value2 = value;
+                            factorVelocidad2 =
+                                asignarFactorVelocidad(value2.tipoCar);
+                          }),
+                          items: uc.user.vehiculos
+                              .map<DropdownMenuItem<CarEntity>>(
+                                  (CarEntity value) {
+                            return DropdownMenuItem<CarEntity>(
+                              value: value,
+                              child: Text(value.name,
+                                  style: TextStyle(color: Colors.black)),
+                            );
+                          }).toList(),
                         ),
-                        onChanged: (value) => setState(() {
-                          value2 = value;
-                        }),
-                        items: uc.user.vehiculos
-                            .map<DropdownMenuItem<CarEntity>>(
-                                (CarEntity value) {
-                          return DropdownMenuItem<CarEntity>(
-                            value: value,
-                            child: Text(value.name),
-                          );
-                        }).toList(),
                       )
                     ],
                   ),
@@ -156,10 +198,9 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        "Distancia recorridos",
+                        "Distancia recorrida",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: 'OpenSans-Bold',
                           fontSize: 18,
                           color: Colors.blue[700],
                         ),
@@ -186,14 +227,17 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                         "Consumo de combustible",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: 'OpenSans-Bold',
                           fontSize: 18,
                           color: Colors.blue[700],
                         ),
                       ),
                     ],
                   ),
-                  Row(
+                  Builder(builder: (_){
+                    if(mc.ruta!=null){
+                      return Column(
+                        children: [
+                                            Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Card(
@@ -217,7 +261,6 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                         "Consumo de tiempo",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: 'OpenSans-Bold',
                           fontSize: 18,
                           color: Colors.blue[700],
                         ),
@@ -228,33 +271,90 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Card(
-                        child: Text(""),
+                        child: Text(ConvertirTD.convertirTiempo(
+                            mc.ruta.duracion * factorVelocidad1)),
                       ),
                       Card(
-                        child: Text(""),
+                        child: Text(ConvertirTD.convertirTiempo(
+                            mc.ruta.duracion * factorVelocidad2)),
                       )
                     ],
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        if (widget.tipoMenu == 0) {
-                          rc.saveRoute(widget.ruta);
+                        if (mc.tipoMenu == 0) {
+                          rc.saveRoute(mc.ruta);
                         }
+                        mc.tipoMenu=1;
+                        
                         Get.to(() => MyMap());
                       },
-                      child: Text("Iniciar ruta")),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                              (states) => Colors.lightBlueAccent)),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Iniciar ruta",
+                                style: TextStyle(
+                                    color: Colors.blue[900],
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold)),
+                            FaIcon(FontAwesomeIcons.playCircle,
+                                color: Colors.blue[900]),
+                          ])),
+                        ],
+                      );
+                    }else{return Text("No existe una ruta actual");}
+                  }),
+
                   ElevatedButton(
                       onPressed: () {
-                        if (widget.tipoMenu == 0) {
-                          rc.saveRoute(widget.ruta);
-                        }
                         Get.to(() => MyMap());
                       },
-                      child: Text("Cancelar")),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                              (states) => Color.fromRGBO(255, 255, 255, 0.7))),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Cancelar",
+                                style: TextStyle(
+                                    color: Colors.blue[900],
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold)),
+                            Icon(Icons.cancel, color: Colors.red),
+                          ])),
                 ],
               ),
             ),
           ],
         ));
+  }
+
+  asignarFactorVelocidad(String tipoCar) {
+    double factorVelocidad;
+    switch (tipoCar) {
+      case "Carro":
+        factorVelocidad = 1;
+        break;
+      case "Camión":
+        factorVelocidad = 1.55;
+        break;
+      case "Motocicleta":
+        factorVelocidad = 0.66;
+        break;
+      case "Bicicleta":
+        factorVelocidad = 1.5;
+        break;
+      case "A pie":
+        factorVelocidad = 10;
+
+        break;
+      default:
+        factorVelocidad = 1;
+        break;
+    }
+    return factorVelocidad;
   }
 }

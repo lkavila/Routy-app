@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
-import 'package:routy_app_v102/Presentation/widgets/menu_widget.dart';
 
 class CrearVehiculo extends StatefulWidget {
   CrearVehiculo({Key key}) : super(key: key);
@@ -23,7 +22,24 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
   Widget build(BuildContext context) {
     final carController = Get.put(CarController());
     return Scaffold(
-      appBar: AppBar(),
+ appBar: AppBar(
+                    title: Text(
+              'Crear vehículo',
+              style: TextStyle(
+                fontFamily: 'pacifico',
+                fontSize: 25,
+              ),
+            ),
+          actions: [
+            Icon(Icons.directions_car_rounded),
+            SizedBox(
+              width: 20,
+            ),
+            TextButton.icon(onPressed: (){
+              Get.back();
+            }, icon: Icon(Icons.arrow_back_rounded), label: Text("atras"))
+          ],
+      ),
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       drawer: DrawerMenu(),
@@ -38,7 +54,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Agregar Vehiculo",
+                        "Agregar Vehículo",
                         style: TextStyle(
                           fontFamily: 'Pacifico',
                           fontSize: 25,
@@ -59,7 +75,6 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Nombre del vehiculo",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
                         fontSize: 18,
                         color: Colors.blue[700],
                       ),
@@ -82,7 +97,6 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     child: Text(
                       "Tipo de vehiculo",
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
                         fontSize: 18,
                         color: Colors.blue[700],
                       ),
@@ -115,7 +129,6 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         child: Text(
                           value,
                           style: TextStyle(
-                            fontFamily: 'OpenSans-Bold',
                             fontSize: 18,
                             color: Colors.blue[700],
                           ),
@@ -131,7 +144,6 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     child: Text(
                       "Tipo de Combustible",
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
                         fontSize: 18,
                         color: Colors.blue[700],
                       ),
@@ -163,7 +175,6 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         child: Text(
                           value,
                           style: TextStyle(
-                            fontFamily: 'OpenSans-Bold',
                             fontSize: 18,
                             color: Colors.blue[700],
                           ),
@@ -179,7 +190,6 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     child: Text(
                       "Consumo (Galones/100Km)",
                       style: TextStyle(
-                        fontFamily: 'OpenSans-Bold',
                         fontSize: 18,
                         color: Colors.blue[700],
                       ),

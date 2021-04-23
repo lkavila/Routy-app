@@ -109,9 +109,10 @@ class _MyAppState extends State<MyMap> {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text("¿Ruta circular?"),
+                          backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
+                          title: Text("¿Ruta circular?", style: TextStyle(color: Colors.white)),
                           content: Text(
-                              "Despues de llegar al final ¿regresará al inicio?"),
+                              "Despues de llegar al final ¿regresará al inicio?", style: TextStyle(color: Colors.white)),
                           actions: [
                             TextButton(
                                 onPressed: () {
@@ -143,9 +144,11 @@ class _MyAppState extends State<MyMap> {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text("No hay suficientes puntos"),
+                          backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
+                          title: Text("No hay suficientes puntos", style: TextStyle(color: Colors.white)),
                           content: Text(
-                              "Para poder calcular la mejor ruta debe haber al menos 2 puntos, para crear puntos debe hacer tap sobre el mapa"),
+                              "Para poder calcular la mejor ruta debe haber al menos 2 puntos, para crear puntos debe hacer tap sobre el mapa",
+                               style: TextStyle(color: Colors.white)),
                           actions: [
                             TextButton(
                                 onPressed: () {
@@ -176,7 +179,6 @@ class _MyAppState extends State<MyMap> {
 
         GetBuilder<MapController>(builder: (_) {
           if (routeX.ruta != null) {
-            routeX.tipoMenu=0;
             return Ruta();
           } else {
             return SizedBox();
