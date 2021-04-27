@@ -9,7 +9,7 @@ import 'package:routy_app_v102/Presentation/widgets/vehicle_card.dart';
 class MisVehiculos extends StatelessWidget {
   MisVehiculos({Key key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  
+
   @override
   Widget build(BuildContext context) {
     final UserController uc = Get.find();
@@ -17,19 +17,22 @@ class MisVehiculos extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       appBar: AppBar(
-                    title: Text(
-              'Mis vehículos',
-              style: TextStyle(
-                fontFamily: 'pacifico',
-                fontSize: 20,
-              ),
-            ),
-          actions: [
-            Icon(Icons.directions_car_rounded),
-            TextButton.icon(onPressed: (){
-              Get.back();
-            }, icon: Icon(Icons.arrow_back_rounded), label: Text("atras"))
-          ],
+        title: Text(
+          'Mis vehículos',
+          style: TextStyle(
+            fontFamily: 'pacifico',
+            fontSize: 20,
+          ),
+        ),
+        actions: [
+          Icon(Icons.directions_car_rounded),
+          TextButton.icon(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(Icons.arrow_back_rounded),
+              label: Text("atras"))
+        ],
       ),
       drawer: DrawerMenu(),
       body: Stack(
@@ -41,14 +44,13 @@ class MisVehiculos extends StatelessWidget {
               ),
             ]),
           ),
-
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: EdgeInsets.fromLTRB(0.0, 0.0, 20.0, 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Get.to(()=> CrearVehiculo());
+                  Get.to(() => CrearVehiculo());
                 },
                 child: Container(
                     decoration: BoxDecoration(
@@ -78,7 +80,7 @@ class MisVehiculos extends StatelessWidget {
     } else {
       return Center(
         child: Padding(
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.20),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.20),
           child: Text(
             "Aún no ha agregado ningún vehículo",
             style: TextStyle(color: Colors.blue[800], fontSize: 18),
@@ -88,5 +90,4 @@ class MisVehiculos extends StatelessWidget {
       );
     }
   }
-
 }

@@ -22,20 +22,14 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
   Widget build(BuildContext context) {
     final carController = Get.put(CarController());
     return Scaffold(
- appBar: AppBar(
-                    title: Text(
-              'Crear vehículo',
-              style: TextStyle(
-                fontFamily: 'pacifico',
-                fontSize: 20,
-              ),
-            ),
-          actions: [
-            Icon(Icons.directions_car_rounded),
-            TextButton.icon(onPressed: (){
-              Get.back();
-            }, icon: Icon(Icons.arrow_back_rounded), label: Text("atras"))
-          ],
+      appBar: AppBar(
+        title: Text(
+          'Crear vehículo',
+          style: TextStyle(
+            fontFamily: 'pacifico',
+            fontSize: 20,
+          ),
+        ),
       ),
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
