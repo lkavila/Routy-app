@@ -15,6 +15,7 @@ class SignupButtonsWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: ([
             ElevatedButton.icon(
+              key: Key("login_with_google"),
               label: Text(
                 'Iniciar sesión con Google',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
@@ -26,6 +27,7 @@ class SignupButtonsWidget extends StatelessWidget {
               },
             ),
             ElevatedButton.icon(
+              key: Key("login_with_facebook"),
               label: Text(
                 'Iniciar sesión con Facebook',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),

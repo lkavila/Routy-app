@@ -11,6 +11,7 @@ import 'package:routy_app_v102/Presentation/widgets/route_card.dart';
 
 class MisRutas extends StatelessWidget {
   MisRutas({Key key}) : super(key: key);
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final mapC = Get.put(MapController());
   @override
@@ -41,6 +42,7 @@ class MisRutas extends StatelessWidget {
               ),
             ),
           ),
+          key: _scaffoldKey,
           drawer: DrawerMenu(),
           body: TabBarView(
             children: [

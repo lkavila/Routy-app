@@ -13,7 +13,7 @@ class CrearVehiculo extends StatefulWidget {
 }
 
 class _CrearVehiculoState extends State<CrearVehiculo> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final nameInputController = new TextEditingController();
   final consumoInputController = new TextEditingController();
   String dropdownValue = 'Carro';

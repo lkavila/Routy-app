@@ -18,7 +18,7 @@ class ElegirVehiculo extends StatefulWidget {
 }
 
 class _ElegirVehiculoState extends State<ElegirVehiculo> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final UserController uc = Get.find();
   String dropdown1Value;
   String dropdown2Value;

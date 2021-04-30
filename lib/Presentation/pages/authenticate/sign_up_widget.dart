@@ -16,6 +16,7 @@ class SignUpWidget extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Container(
+            key: Key("login"),
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,

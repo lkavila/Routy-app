@@ -7,13 +7,13 @@ import 'package:routy_app_v102/Presentation/pages/authenticate/sign_up_widget.da
 import 'package:routy_app_v102/Presentation/widgets/loading_widget.dart';
 
 class Wrapper extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
   final userController = Get.put(UserController());
   return Scaffold(
-        key: _scaffoldKey,
+        key: scaffoldKey,
         drawerEnableOpenDragGesture: true,
         resizeToAvoidBottomInset: false,
         body: GetBuilder<UserController>(builder: (_) { 

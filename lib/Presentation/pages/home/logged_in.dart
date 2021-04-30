@@ -16,7 +16,7 @@ class LoggedIn extends StatefulWidget {
 
 
 class _LoggedInState extends State<LoggedIn> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
     
 
   @override

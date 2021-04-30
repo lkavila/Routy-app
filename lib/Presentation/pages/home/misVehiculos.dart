@@ -8,7 +8,7 @@ import 'package:routy_app_v102/Presentation/widgets/vehicle_card.dart';
 
 class MisVehiculos extends StatelessWidget {
   MisVehiculos({Key key}) : super(key: key);
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {

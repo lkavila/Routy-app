@@ -9,7 +9,6 @@ class GetUserFirebase{
   Future<UserModel> getCurrentUser() async{
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      print("ESto es getuserXXX");
       try {
         DocumentSnapshot dc = await FirebaseFirestore.instance
             .collection("users")
@@ -17,9 +16,9 @@ class GetUserFirebase{
             .get();
       
         UserModel myuser = new UserModel.fromData(dc.data());
-        print("antes de routex");
+        
         final routeX = Get.put(RouteController());
-        print("here");
+        
         routeX.getRutas();
         return myuser;
       } catch (e) { 

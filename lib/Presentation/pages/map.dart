@@ -16,7 +16,7 @@ class MyMap extends StatefulWidget {
 class _MyAppState extends State<MyMap> {
   final MapController routeX = Get.find();
   GoogleMapController mapController;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
@@ -34,9 +34,11 @@ class _MyAppState extends State<MyMap> {
         GetBuilder<MapController>(
           builder: (_) => GoogleMap(
             onMapCreated: _onMapCreated,
+            myLocationEnabled: true,
+            trafficEnabled: false,
             initialCameraPosition: CameraPosition(
               target: const LatLng(10.90352, -74.79463),
-              zoom: 15,
+              zoom: 13,
             ),
             onTap: (data) {
               routeX.createMarkers(data.latitude, data.longitude);

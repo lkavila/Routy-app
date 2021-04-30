@@ -94,6 +94,7 @@ class DrawerMenu extends StatelessWidget {
                 },
               ),
               ListTile(
+                key: Key("LogOut"),
                 title: Text(
                   'Cerrar sesión',
                   style: myStyle(),

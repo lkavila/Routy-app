@@ -32,7 +32,9 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: isDarkMode
-            ? ThemeData.dark()
+            ? ThemeData.dark(
+              
+            )
             : ThemeData.light(
                 //primaryColor: Colors.blue[900],
                 //buttonColor: Colors.blue[900],
