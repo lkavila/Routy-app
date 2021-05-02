@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
+import 'package:routy_app_v102/Presentation/pages/home/configuraciones.dart';
+import 'package:routy_app_v102/Presentation/pages/home/logged_in.dart';
+import 'package:routy_app_v102/Presentation/pages/home/misRutas.dart';
+import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
+import 'package:routy_app_v102/Presentation/pages/map.dart';
 import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:routy_app_v102/Presentation/widgets/logo_widget.dart';
@@ -40,6 +45,7 @@ class DrawerMenu extends StatelessWidget {
                 ),
               ),
               ListTile(
+                key: Key("Inicio"),
                 title: Text(
                   'Inicio',
                   style: myStyle(),
@@ -47,7 +53,7 @@ class DrawerMenu extends StatelessWidget {
                 leading:
                     FaIcon(FontAwesomeIcons.mapMarkedAlt, color: Colors.white),
                 onTap: () {
-                  Navigator.pushNamed(context, '/map');
+                  Get.to(()=>MyMap());
                 },
               ),
               ListTile(
@@ -57,7 +63,7 @@ class DrawerMenu extends StatelessWidget {
                 ),
                 leading: FaIcon(FontAwesomeIcons.user, color: Colors.white),
                 onTap: () {
-                  Navigator.pushNamed(context, '/logged_in');
+                  Get.to( () => LoggedIn());
                 },
               ),
               ListTile(
@@ -67,7 +73,7 @@ class DrawerMenu extends StatelessWidget {
                 ),
                 leading: FaIcon(FontAwesomeIcons.route, color: Colors.white),
                 onTap: () {
-                  Navigator.pushNamed(context, '/misRutas');
+                  Get.to(()=>MisRutas());
                 },
               ),
               ListTile(
@@ -80,7 +86,7 @@ class DrawerMenu extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/misVehiculos');
+                  Get.to(()=>MisVehiculos());
                 },
               ),
               ListTile(
@@ -90,7 +96,7 @@ class DrawerMenu extends StatelessWidget {
                 ),
                 leading: Icon(Icons.settings, color: Colors.white),
                 onTap: () {
-                  Navigator.pushNamed(context, '/configuraciones');
+                  Get.to(()=>Configuracion());
                 },
               ),
               ListTile(

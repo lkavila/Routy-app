@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:routy_app_v102/Presentation/pages/home/crearVehiculo.dart';
-import 'package:routy_app_v102/Presentation/pages/home/logged_in.dart';
-import 'package:routy_app_v102/Presentation/pages/home/misRutas.dart';
-import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
-import 'package:routy_app_v102/Presentation/pages/map.dart';
 import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_config/flutter_config.dart';
-
-import 'Presentation/pages/home/configuraciones.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +36,7 @@ class MyApp extends StatelessWidget {
                 //accentColor: Colors.blue,
                 //fontFamily: "OpenSans",
                 ),
-        initialRoute: "/wrapper",
+        /*initialRoute: "/wrapper",
         routes: {
           "/wrapper": (context) => Wrapper(),
           "/misRutas": (context) => MisRutas(),
@@ -52,7 +45,8 @@ class MyApp extends StatelessWidget {
           "/crearVehiculo": (context) => CrearVehiculo(),
           "/map": (context) => MyMap(),
           "/configuraciones": (context) => Configuracion(),
-        },
+        },*/
+        home: Wrapper(),
       );
     });
   }

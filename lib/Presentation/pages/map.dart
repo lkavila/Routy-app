@@ -33,6 +33,7 @@ class _MyAppState extends State<MyMap> {
       body: Stack(children: [
         GetBuilder<MapController>(
           builder: (_) => GoogleMap(
+            key: Key("Mapa"),
             onMapCreated: _onMapCreated,
             myLocationEnabled: true,
             trafficEnabled: false,

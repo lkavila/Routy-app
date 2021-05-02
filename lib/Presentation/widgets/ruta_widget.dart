@@ -21,6 +21,7 @@ class Ruta extends StatelessWidget {
     print(mc.ruta.departamentos);
     double padd = MediaQuery.of(context).size.width * 0.01;
     return Container(
+      key: Key("RutaCalculada"),
       child: Align(
         alignment: Alignment.bottomLeft,
         child: Padding(
@@ -324,6 +325,7 @@ class Ruta extends StatelessWidget {
     switch (tipoMenu) {
       case 0:
         return ElevatedButton(
+          key: Key("Elegir vehiculo"),
             onPressed: () {
                     if(uc.user.vehiculos.isNotEmpty){
                       Get.to(() => ElegirVehiculo());
@@ -388,12 +390,14 @@ class Ruta extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
+                      key: Key("Alert Dialog cancel"),
                       title:Icon(Icons.cancel,color: Colors.red,size: 100, ),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                       backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
                       content:Text("¿Esta seguro de que desea cancelar esta ruta?", style: TextStyle(color: Colors.white)),
                       actions: [
                         TextButton(
+                            key: Key("Cancelar ruta"),
                             onPressed: () {
                               mc.actualizarMenu(0);
                               Get.back();
@@ -416,6 +420,7 @@ class Ruta extends StatelessWidget {
             Padding(padding: EdgeInsets.fromLTRB(32, 5, 30, 0),
             child:
             Container(
+              key: Key("En camino"),
               width: 150,
               height: 40,
               decoration: BoxDecoration(
@@ -454,6 +459,7 @@ class Ruta extends StatelessWidget {
                       content:Text("¿Esta seguro de que desea marcar como finalizada esta ruta?", style: TextStyle(color: Colors.white)),
                       actions: [
                         TextButton(
+                          key: Key("Finalizar camino"),
                             onPressed: () {
                               
                               mc.polyLines.clear();

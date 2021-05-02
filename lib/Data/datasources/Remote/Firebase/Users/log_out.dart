@@ -6,11 +6,16 @@ class LogOutFirebase{
 
   
   Future<void> logOut(String signinWith, GoogleSignIn googleSignIn, FacebookLogin facebookSignIn) async {
-    if (signinWith == "Google") {
-      await googleSignIn.disconnect();
+    try {
+      if (signinWith == "Google") {
+        await googleSignIn.disconnect();
     } else if (signinWith == "Facebook") {
-      await facebookSignIn.logOut();
+        await facebookSignIn.logOut();
     }
+    } catch (e) {
+      print(e);
+    }
+
     FirebaseAuth.instance.signOut();
   }
 }
