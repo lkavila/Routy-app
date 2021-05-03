@@ -18,7 +18,7 @@ class Ruta extends StatelessWidget {
   Widget build(BuildContext context) {
     final MapController mc = Get.find();
     final UserController uc = Get.find();
-    List<String> depar;
+    //List<String> depar;
     CarController elegido = Get.find();
     print(mc.ruta.departamentos);
     double padd = MediaQuery.of(context).size.width * 0.01;
@@ -30,18 +30,18 @@ class Ruta extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(padd, padd, padd, 0),
           child: Container(
               width: MediaQuery.of(context).size.width * 0.98,
-              height: 200,
+              height: 160,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(22),
                 color: Color.fromRGBO(131, 230, 251, 0.9),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     width: 30,
                   ),
-                  Builder(builder: (context) {
+                  /*Builder(builder: (context) {
                     if (mc.ruta.departamentos.contains(" ")) {
                       depar = mc.ruta.departamentos.split(" ");
 
@@ -107,7 +107,7 @@ class Ruta extends StatelessWidget {
                         ],
                       );
                     }
-                  }),
+                  }),*/
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -207,7 +207,7 @@ class Ruta extends StatelessWidget {
                                   
                                   return Flexible(
                                   child: Text(
-                                    '${ConvertirTD.convertDistancia(dis*1.4)}',
+                                    '${ConvertirTD.convertDistancia(dis*1.25)}',
                                     style: style2(),
                                     overflow: TextOverflow.fade,
                                   ),
@@ -235,7 +235,7 @@ class Ruta extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion*1.2)}',
+                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion*1.25)}',
                           style: style2()),
                     ],
                   ),

@@ -8,4 +8,6 @@ abstract class CarRepository{
 
   void deleteCar(String id);
 
+  void deleteAllCars(String userId);
+
 }

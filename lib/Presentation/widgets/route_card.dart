@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 
@@ -17,6 +18,7 @@ class RouteCard extends StatelessWidget {
     );
   }
   Widget routeCardWidget(RouteEntity ruta, BuildContext context) {
+    final RouteController _rc = Get.find();
     final List<Color> _colors = [
       Colors.indigo[900],
       Colors.blue[800],
@@ -24,7 +26,7 @@ class RouteCard extends StatelessWidget {
     ];
     final List<double> _stops = [0.0, 0.4, 1];
     return Container(
-        width: 350,
+        width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
         ),
@@ -67,8 +69,38 @@ class RouteCard extends StatelessWidget {
                         child: GestureDetector(
                           child: Image.asset(
                             'assets/images/eliminar.png',
+                            width: 20,
+                            height: 40,
                           ),
-                          onTap: () {},
+                          onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+                                      title: Icon(
+                                            Icons.report_outlined,
+                                            color: Colors.yellow,
+                                            size: 100,
+                                          ),
+                                      backgroundColor:
+                                          Color.fromRGBO(12, 55, 106, 0.95),
+                                      content: Text("Está seguro de querer eliminar esta ruta", style: TextStyle(color: Colors.white),),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              _rc.deleteRoute(ruta.id);
+                                            },
+                                            child: Text("Si")),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: Text("Cancelar")),
+                                      ],
+                                    ),
+                                  );
+                            
+                          },
                         ),
                       )
                     ],

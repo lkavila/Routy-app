@@ -52,9 +52,9 @@ class DrawerMenu extends StatelessWidget {
                 ),
                 leading:
                     FaIcon(FontAwesomeIcons.mapMarkedAlt, color: Colors.white),
-                onTap: () async{
-                  await uc.getCurrentLocation();
-                  Get.to(()=>MyMap());
+                onTap: (){
+                  uc.getCurrentLocation().whenComplete(() => Get.to(()=>MyMap()));
+                  
                 },
               ),
               ListTile(

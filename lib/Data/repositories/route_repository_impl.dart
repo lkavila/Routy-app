@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Apis/calculate_best_way.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Routes/create_route.dart';
+import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Routes/delete_all_routes.dart';
+import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Routes/delete_route.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Routes/get_user_routes.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Apis/HereGeocode.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Apis/networking.dart';
@@ -44,5 +46,16 @@ class RouteRepositoryImpl implements RouteRepository{
   void makeFrecuent(String id, bool frecuente){
     final RouteMakeFrecuentFirebase _createRoute = RouteMakeFrecuentFirebase();
     _createRoute.makeFrecuent(id, frecuente);
+  }
+  @override
+  void deleteRoute(String id){
+     final DeleteRouteFirebase _deleteRoute = DeleteRouteFirebase();
+     _deleteRoute.deleteRoute(id);
+  }
+
+  @override
+  void deleteAllRoutes(String uid){
+     final DeleteAllRoutesFirebase _deleteAllRoutes = DeleteAllRoutesFirebase();
+     _deleteAllRoutes.deleteAllRoutes(uid);
   }
 }

@@ -19,6 +19,7 @@ class UserController extends GetxController {
   UserEntity user;
   bool _isSigningIn = false;
   String _signinWith;
+  Location location = new Location();
   LocationData currentLocation;
   StreamController<LocationData> position = StreamController.broadcast();
   bool get isSigningIn => this._isSigningIn;
@@ -71,12 +72,10 @@ class UserController extends GetxController {
     _createAccount.call(email, password, name);
   }
 
-  getCurrentLocation(){
+  Future getCurrentLocation() async{
     //final GetCurrentLocationUseCase _getCurrent = GetCurrentLocation();
     //currentLocation = _getCurrent.call();
-      Location location = new Location();
-      
-
+      location.changeSettings(interval: 3000);
       location.serviceEnabled().then((value) { 
       if (!value) {location.requestService();}});
 
@@ -86,9 +85,12 @@ class UserController extends GetxController {
         if (value == PermissionStatus.granted){
             location.getLocation().then((value){
               location.onLocationChanged.listen((LocationData currentLocation) {
-              position.add(currentLocation);
-              this.currentLocation = currentLocation;
-              print(this.currentLocation.latitude);
+                if (currentLocation.speed>2){
+                  print(currentLocation.speed);
+                  position.add(currentLocation);
+                  this.currentLocation = currentLocation;
+                  print(this.currentLocation.latitude);
+                }
               });
           });
           }
@@ -97,16 +99,31 @@ class UserController extends GetxController {
         }else if (value == PermissionStatus.granted) {
             location.getLocation().then((value){
               location.onLocationChanged.listen((LocationData currentLocation) {
-              position.add(currentLocation);
-              this.currentLocation = currentLocation;
-              print(this.currentLocation.latitude);
+                if (currentLocation.speed>2){
+                                    print(currentLocation.speed);
+
+                  position.add(currentLocation);
+                  this.currentLocation = currentLocation;
+                  print(this.currentLocation.latitude);
+                }
+
               });
           });
         }
       });
+  }
 
+
+  deleteCarFromList(String id){
+    user.vehiculos.removeWhere((element) => element.id == id);
     update();
   }
+
+  deleteAllCarsFromList(){
+    user.vehiculos = [];
+    update();
+  }
+
 
   Future logOut() async {
     final LogOutUseCase _logOut = LogOut();

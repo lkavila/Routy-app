@@ -43,7 +43,6 @@ dependencies:
   integration_test: ^1.0.2+3
   uuid: ^2.0.0
   equatable: ^2.0.0
-  permission_handler: ^7.1.0
   location: ^4.1.1
   geolocator: ^7.0.3
 

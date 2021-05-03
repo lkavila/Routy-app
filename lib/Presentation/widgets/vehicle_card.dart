@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
+import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 
 class VehicleCard extends StatelessWidget {
   final CarEntity vehiculo;
   const VehicleCard(this.vehiculo, {Key key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: carWidget(vehiculo),
+      child: carWidget(vehiculo, context),
     );
   }
 
-  Widget carWidget(CarEntity vehiculo) {
+  Widget carWidget(CarEntity vehiculo, BuildContext context) {
+    final CarController carController = Get.find();
     final List<Color> _colors = [Colors.blue, Color.fromRGBO(11, 210, 181, 1)];
     final List<double> _stops = [0.4, 1];
     return Container(
-        width: 350,
+        width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
         ),
@@ -41,15 +45,67 @@ class VehicleCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ListTile(
-                    title: Text(
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+                    child: Text(
                       "Nombre: ${vehiculo.name}",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w600),
                     ),
-                    subtitle: Text(
+                  ),
+
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 10, 5.0, 5.0),
+                        child: GestureDetector(
+                          child: Image.asset(
+                            'assets/images/eliminar.png',
+                            width: 20,
+                            height: 40,
+                          ),
+                          onTap: () {
+
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+                                      title: Icon(
+                                            Icons.taxi_alert,
+                                            color: Colors.yellow,
+                                            size: 100,
+                                          ),
+                                      backgroundColor:
+                                          Color.fromRGBO(12, 55, 106, 0.95),
+                                      content: Text("Está seguro de querer eliminar este vihículo", style: TextStyle(color: Colors.white),),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              carController.deleteCar(vehiculo.id);
+                                            },
+                                            child: Text("Si")),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: Text("Cancelar")),
+                                      ],
+                                    ),
+                                  );
+                            
+                          },
+                        ),
+                      ),
+                  
+                  ]
+                  ),
+                      
+                   Padding(
+                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+                    child: Text(
                       'Tipo: ${vehiculo.tipoCar}',
                       style: TextStyle(
                         color: Colors.white,
@@ -57,16 +113,29 @@ class VehicleCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     child: Text(
-                      'Kilometros recorridos: ${vehiculo.recorrido}',
+                      'Km recorridos: ${vehiculo.recorrido}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 5.0),
+                    child:FaIcon(FontAwesomeIcons.route, color: Colors.grey[800], size: 13,), 
+                  ),
+
+                  ]),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     child: Text(
@@ -78,6 +147,15 @@ class VehicleCard extends StatelessWidget {
                     ),
                   ),
                   Padding(
+                    padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 5.0),
+                    child:FaIcon(FontAwesomeIcons.weight, color: Colors.grey[800], size: 13,), 
+                  )
+                  ]),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  Padding(
                     padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     child: Text(
                       'Tipo de Combustible: ${vehiculo.tipoCombustible}',
@@ -87,6 +165,16 @@ class VehicleCard extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 5.0),
+                    child:FaIcon(FontAwesomeIcons.gasPump, color: Colors.grey[800], size: 13,), 
+                  )
+                ]),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     child: Text(
@@ -97,6 +185,16 @@ class VehicleCard extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10.0, 0, 13.0, 5.0),
+                    child:FaIcon(FontAwesomeIcons.tint, color: Colors.grey[800], size: 13,), 
+                  )
+                  ]),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
                     child: Text(
@@ -107,6 +205,14 @@ class VehicleCard extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 5.0),
+                    child:FaIcon(FontAwesomeIcons.clock, color: Colors.grey[800], size: 13,), 
+                  )
+                ],)
+
+
                 ],
               ),
             )));

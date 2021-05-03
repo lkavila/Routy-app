@@ -15,4 +15,8 @@ abstract class RouteRepository{
   Future<void> createRoute(String id,String userId, String origen, String destino, String departamentos, bool circular, String tipoCar, double distancia, double duracion, List<LatLng> markerPoints, List<LatLng> polyPoints, Timestamp createdAt, bool frecuente);
   
   void makeFrecuent(String id, bool frecuente);
+
+  void deleteRoute(String id);
+
+  void deleteAllRoutes(String uid);
 }

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/create_route.dart';
+import 'package:routy_app_v102/Domain/usecases/Routes/delete_all_routes.dart';
+import 'package:routy_app_v102/Domain/usecases/Routes/delete_route.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/get_user_routes.dart';
 
 class RouteController extends GetxController{
@@ -27,6 +29,20 @@ class RouteController extends GetxController{
     //getRutas();
     }
     print("final se saving route");
+  }
+
+  void deleteRoute(String id){
+    final DeleteRouteUseCase _deleteRoute = DeleteRoute(); 
+    _deleteRoute.call(id);
+    misRutas.removeWhere((element) => element.id==id);
+    update();
+  }
+
+  void deleteAllRoutes(String uid){
+    final DeleteAllRoutesUseCase _deleteRoute = DeleteAllRoutes(); 
+    _deleteRoute.call(uid);
+    misRutas.removeWhere((element) => element.userId == uid);
+    update();
   }
   
   void actualizarRutas(RouteEntity ruta){

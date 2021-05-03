@@ -1,4 +1,5 @@
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Cars/crear_car.dart';
+import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Cars/delete_all_cars.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Cars/delete_car.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Cars/edit_car.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Cars/update_car.dart';
@@ -28,5 +29,11 @@ class CarRepositoryImpl implements CarRepository{
   void deleteCar(String id){
     final DelteCarFirebase _deleteCar = DelteCarFirebase();
     _deleteCar.deleteCar(id);
+  }
+
+  @override
+  void deleteAllCars(String userId){
+    final DelteAllCarsFirebase _deleteCar = DelteAllCarsFirebase();
+    _deleteCar.deleteAllCars(userId);
   }
 }
