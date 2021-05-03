@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
@@ -187,13 +189,32 @@ class Ruta extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Flexible(
-                        child: Text(
-                          '${ConvertirTD.convertDistancia(mc.ruta.distancia)}',
-                          style: style2(),
-                          overflow: TextOverflow.fade,
-                        ),
-                      ),
+
+                      StreamBuilder<LocationData>(
+                        stream: uc.position.stream,
+                        builder: (context, stream){
+
+                          if (stream.data==null){
+                              return Flexible(
+                                  child: Text(
+                                    '${ConvertirTD.convertDistancia(mc.ruta.distancia)}',
+                                    style: style2(),
+                                    overflow: TextOverflow.fade,
+                                  ),
+                                  );                            
+                          }else{
+                            double dis = Geolocator.distanceBetween(stream.data.latitude, stream.data.longitude, mc.puntos.last.latitude, mc.puntos.last.longitude);
+                                  
+                                  return Flexible(
+                                  child: Text(
+                                    '${ConvertirTD.convertDistancia(dis*1.4)}',
+                                    style: style2(),
+                                    overflow: TextOverflow.fade,
+                                  ),
+                            );
+                          }
+                      })
+
                     ],
                   ),
                   Row(
@@ -214,7 +235,7 @@ class Ruta extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion)}',
+                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion*1.2)}',
                           style: style2()),
                     ],
                   ),
@@ -305,17 +326,21 @@ class Ruta extends StatelessWidget {
         fontWeight: FontWeight.normal);
   }
 
-  Text texto(int tipoMenu, String elegido) {
+  Flexible texto(int tipoMenu, String elegido) {
     if (tipoMenu == 0 || tipoMenu == 4) {
-      return Text(
-        'Tiempo en carro:',
+      return Flexible(child: 
+      Text(
+        'Tiempo aprox carro:',
         style: style(),
-      );
+        overflow: TextOverflow.fade,
+      ));
     } else {
-      return Text(
-        'Tiempo en $elegido:',
+      return Flexible(child: Text(
+        'Tiempo aprox $elegido:',
         style: style(),
-      );
+        overflow: TextOverflow.fade,
+
+      ));
     }
   }
 

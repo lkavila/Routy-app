@@ -8,6 +8,8 @@ abstract class RouteRepository{
 
   Future getPolylines(List<LatLng> lugares, String circular);
 
+  Future getBestWay(List<LatLng> lugares, String circular);
+
   Future<List<RouteEntity>> getUserRoutes();
 
   Future<void> createRoute(String id,String userId, String origen, String destino, String departamentos, bool circular, String tipoCar, double distancia, double duracion, List<LatLng> markerPoints, List<LatLng> polyPoints, Timestamp createdAt, bool frecuente);

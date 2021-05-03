@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:routy_app_v102/Data/datasources/Remote/Apis/networking.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/create_route.dart';
+import 'package:routy_app_v102/Domain/usecases/Routes/get_best_way.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/get_direction_from_geocode_reverse.dart';
-import 'package:routy_app_v102/Domain/usecases/Routes/get_polylines_from_ors.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/make_frecuent.dart';
 import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
@@ -27,9 +28,33 @@ class MapController extends GetxController{
     update();
   }
 
+  Future<double> distanciaFaltante(double lat, double lon)async{
+    OpenRoute _op = new OpenRoute();
+    List<dynamic> pun = [];
+    List<double> dou = [];
+    List<double> dou2 = [];
+    dou.add(lon);
+    dou.add(lat);
+    pun.add(dou);
+    dou2.add(puntos.last.longitude);
+    dou2.add(puntos.last.latitude);
+    pun.add(dou2);
+    var data = await _op.getPolylines(pun, 'false');
+    try {
+      if(data!=null){
+        print(data['features'][0]['properties']['summary']["distance"]);
+        return data['features'][0]['properties']['summary']["distance"];
+      }
+    } catch (e) {
+      print(e);
+      print("Yaper");
+    }
+    return null;
+  }
+
   Future<void> createRoute(String circular) async{
     double distancia, duracion;
-    final GetPolylinesFromORSUseCase _getPolylines = GetPolylinesFromORS();
+    final GetBestWayUseCase _getPolylines = GetBestWay();
     cargandoPolylines.value = true;
     var data = await _getPolylines.call(puntos, circular);
     try {
@@ -209,14 +234,19 @@ class MapController extends GetxController{
     update();
     _rc.misRutas.add(ruta);
 
-
-      //sleep(Duration(milliseconds: 1500));
-    
-
-    
-    
-
   }
+
+/*  Future checkpermission() async{
+    var locationStatus = _getStatus();
+    print(locationStatus);
+    locationStatus.whenComplete(() => Permission.location.request());
+  }
+
+  Future<bool> _getStatus() async{
+    var locationStatus = Permission.locationWhenInUse;
+    return await locationStatus.isGranted;
+  }
+*/
 
 
   @override

@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:location/location.dart';
+import 'package:routy_app_v102/Data/datasources/Local/device_location.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Users/create_account.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Users/get_user.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Users/log_out.dart';
@@ -39,6 +43,11 @@ class UserRepositoryImpl implements UserRepository{
   Future<void> createAccount(String email, String password, String name) async{
     final CreateAccountFirebase _createAccount = CreateAccountFirebase();
     await _createAccount.createAccount(email, password, name);
+  }
+
+  LocationData getCurrentLocation(){
+    final DeviceLocation _deviceLocation = DeviceLocation();
+    return _deviceLocation.currentLocation;
   }
   
 }

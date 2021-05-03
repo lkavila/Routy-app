@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:routy_app_v102/Data/datasources/Remote/Apis/calculate_best_way.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Routes/create_route.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Routes/get_user_routes.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Apis/HereGeocode.dart';
@@ -20,6 +21,12 @@ class RouteRepositoryImpl implements RouteRepository{
   Future getPolylines(List<LatLng> lugares, String circular) async{
     final OpenRoute _op = OpenRoute();
     return await _op.getPolylines(lugares, circular);
+  }
+
+  @override
+  Future getBestWay(List<LatLng> lugares, String circular)async{
+    final CalculateBestWay _cbw = CalculateBestWay();
+    return await _cbw.getBestWay(lugares, circular);
   }
 
   @override
