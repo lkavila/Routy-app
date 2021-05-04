@@ -32,15 +32,24 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: isDarkMode
-            ? ThemeData.dark()
-            : ThemeData.light(
-                //primaryColor: Colors.blue[900],
-                //buttonColor: Colors.blue[900],
-                //primaryColorDark: Colors.grey,
-                //primarySwatch: Colors.blue,
-                //accentColor: Colors.blue,
-                //fontFamily: "OpenSans",
-                ),
+            ? ThemeData(
+                //brightness: Brightness.dark,
+
+                appBarTheme: AppBarTheme(color: Colors.blueGrey[900]),
+                fontFamily: "OpenSans",
+                buttonColor: Colors.blue[900],
+                dialogBackgroundColor: Colors.blue[900],
+                scaffoldBackgroundColor: Colors.blueGrey[800],
+              )
+            : ThemeData(
+                brightness: Brightness.light,
+                appBarTheme: AppBarTheme(color: Colors.blue),
+                primaryColor: Colors.blue[500],
+                buttonColor: Colors.blue[500],
+                primaryColorLight: Colors.white,
+                accentColor: Colors.blue[700],
+                fontFamily: "OpenSans",
+              ),
         initialRoute: "/wrapper",
         routes: {
           "/wrapper": (context) => Wrapper(),

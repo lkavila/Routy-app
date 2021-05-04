@@ -13,6 +13,7 @@ class MyMap extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+
 class _MyAppState extends State<MyMap> {
   final MapController routeX = Get.find();
   GoogleMapController mapController;
@@ -20,6 +21,7 @@ class _MyAppState extends State<MyMap> {
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
+
   @override
   void initState() {
     super.initState();
@@ -57,7 +59,7 @@ class _MyAppState extends State<MyMap> {
         Align(
           alignment: Alignment.topRight,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 40, 10, 0),
+            padding: EdgeInsets.fromLTRB(0, 40, 20, 0),
             child: Container(
               width: 95,
               height: 40,
@@ -83,7 +85,7 @@ class _MyAppState extends State<MyMap> {
                         'Limpiar',
                         style: TextStyle(
                             color: Colors.grey[800],
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -110,10 +112,14 @@ class _MyAppState extends State<MyMap> {
                         context: context,
                         builder: (context) => AlertDialog(
                           backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
-                          title: Text("¿Ruta circular?", style: TextStyle(color: Colors.white)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          title: Text("¿Ruta circular?",
+                              style: TextStyle(color: Colors.white)),
                           content: Text(
-                              "Despues de llegar al final ¿regresará al inicio?", style: TextStyle(color: Colors.white)),
+                              "Despues de llegar al final ¿regresará al inicio?",
+                              style: TextStyle(color: Colors.white)),
                           actions: [
                             TextButton(
                                 onPressed: () {
@@ -146,11 +152,14 @@ class _MyAppState extends State<MyMap> {
                         context: context,
                         builder: (context) => AlertDialog(
                           backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
-                          title: Text("No hay suficientes puntos", style: TextStyle(color: Colors.white)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          title: Text("No hay suficientes puntos",
+                              style: TextStyle(color: Colors.white)),
                           content: Text(
                               "Para poder calcular la mejor ruta debe haber al menos 2 puntos, para crear puntos debe hacer tap sobre el mapa",
-                               style: TextStyle(color: Colors.white)),
+                              style: TextStyle(color: Colors.white)),
                           actions: [
                             TextButton(
                                 onPressed: () {
@@ -170,7 +179,7 @@ class _MyAppState extends State<MyMap> {
                         'Ver ruta óptima',
                         style: TextStyle(
                             color: Colors.grey[800],
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold),
                       ),
                     ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
@@ -14,6 +15,8 @@ class Ruta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appdata = GetStorage();
+    bool isDarkMode = appdata.read('darkmode');
     final MapController mc = Get.find();
     final UserController uc = Get.find();
     List<String> depar;
@@ -238,13 +241,16 @@ class Ruta extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(30),
                                       ),
                                       title: Icon(
-                                            Icons.save,
-                                            color: Colors.lightBlueAccent,
-                                            size: 100,
-                                          ),
+                                        Icons.save,
+                                        color: Colors.lightBlueAccent,
+                                        size: 100,
+                                      ),
                                       backgroundColor:
                                           Color.fromRGBO(12, 55, 106, 0.95),
-                                      content: Text("¿Esta seguro de que desea quitar esta ruta de la lista de rutas guardadas?", style: TextStyle(color: Colors.white),),
+                                      content: Text(
+                                        "¿Esta seguro de que desea quitar esta ruta de la lista de rutas guardadas?",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                       actions: [
                                         TextButton(
                                             onPressed: () {
@@ -318,45 +324,48 @@ class Ruta extends StatelessWidget {
     }
   }
 
-  Widget boton(
-      int tipoMenu, RouteEntity ruta, BuildContext context, MapController mc, UserController uc) {
+  Widget boton(int tipoMenu, RouteEntity ruta, BuildContext context,
+      MapController mc, UserController uc) {
     print("El tipo de menu es: " + tipoMenu.toString());
     switch (tipoMenu) {
       case 0:
         return ElevatedButton(
             onPressed: () {
-                    if(uc.user.vehiculos.isNotEmpty){
-                      Get.to(() => ElegirVehiculo());
-                    }else{
-                              showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
-                                      title: Icon(
-                                            Icons.taxi_alert,
-                                            color: Colors.yellow,
-                                            size: 100,
-                                          ),
-                                      backgroundColor:
-                                          Color.fromRGBO(12, 55, 106, 0.95),
-                                      content: Text("No tienes registrado ningún vehículo", style: TextStyle(color: Colors.white),),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () {
-                                              mc.makeFrecuent();
-                                              Get.to(()=> CrearVehiculo());
-                                            },
-                                            child: Text("Crear uno")),
-                                        TextButton(
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                            child: Text("Cancelar")),
-                                      ],
-                                    ),
-                                  );
-                    }
-              
+              if (uc.user.vehiculos.isNotEmpty) {
+                Get.to(() => ElegirVehiculo());
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    title: Icon(
+                      Icons.taxi_alert,
+                      color: Colors.yellow,
+                      size: 100,
+                    ),
+                    backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
+                    content: Text(
+                      "No tienes registrado ningún vehículo",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            mc.makeFrecuent();
+                            Get.to(() => CrearVehiculo());
+                          },
+                          child: Text("Crear uno")),
+                      TextButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Text("Cancelar")),
+                    ],
+                  ),
+                );
+              }
             },
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith(
@@ -378,7 +387,7 @@ class Ruta extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              padding: EdgeInsets.all(0),
+                padding: EdgeInsets.all(0),
                 icon: (Icon(
                   Icons.cancel,
                   color: Colors.red,
@@ -388,10 +397,17 @@ class Ruta extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title:Icon(Icons.cancel,color: Colors.red,size: 100, ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      title: Icon(
+                        Icons.cancel,
+                        color: Colors.red,
+                        size: 100,
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
-                      content:Text("¿Esta seguro de que desea cancelar esta ruta?", style: TextStyle(color: Colors.white)),
+                      content: Text(
+                          "¿Esta seguro de que desea cancelar esta ruta?",
+                          style: TextStyle(color: Colors.white)),
                       actions: [
                         TextButton(
                             onPressed: () {
@@ -413,28 +429,29 @@ class Ruta extends StatelessWidget {
                     ),
                   );
                 }),
-            Padding(padding: EdgeInsets.fromLTRB(32, 5, 30, 0),
-            child:
-            Container(
-              width: 150,
-              height: 40,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text("En camino",
-                        style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold)),
-                    FaIcon(FontAwesomeIcons.truckMoving,
-                        color: Colors.blue[900]),
-                  ]),
-            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(32, 5, 30, 0),
+              child: Container(
+                width: 150,
+                height: 40,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text("En camino",
+                          style: TextStyle(
+                              color: Colors.blue[900],
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
+                      FaIcon(FontAwesomeIcons.truckMoving,
+                          color: Colors.blue[900]),
+                    ]),
+              ),
             ),
             IconButton(
-              padding: EdgeInsets.all(0),
+                padding: EdgeInsets.all(0),
                 icon: Icon(
                   Icons.check_circle_rounded,
                   color: Colors.green,
@@ -445,17 +462,19 @@ class Ruta extends StatelessWidget {
                     context: context,
                     builder: (context) => AlertDialog(
                       title: Icon(
-                            Icons.check_circle_outline_outlined,
-                            color: Colors.green,
-                            size: 100,
-                          ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                        Icons.check_circle_outline_outlined,
+                        color: Colors.green,
+                        size: 100,
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
                       backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
-                      content:Text("¿Esta seguro de que desea marcar como finalizada esta ruta?", style: TextStyle(color: Colors.white)),
+                      content: Text(
+                          "¿Esta seguro de que desea marcar como finalizada esta ruta?",
+                          style: TextStyle(color: Colors.white)),
                       actions: [
                         TextButton(
                             onPressed: () {
-                              
                               mc.polyLines.clear();
                               mc.polyPoints.clear();
                               mc.puntos.clear();
