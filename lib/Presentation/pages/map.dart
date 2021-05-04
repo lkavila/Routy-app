@@ -148,6 +148,7 @@ class _MyAppState extends State<MyMap> {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
+                          key: Key("Not Enough Routes"),
                           backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
                           title: Text("No hay suficientes puntos", style: TextStyle(color: Colors.white)),

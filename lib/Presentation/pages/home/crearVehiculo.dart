@@ -21,6 +21,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
   @override
   Widget build(BuildContext context) {
     final carController = Get.put(CarController());
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(

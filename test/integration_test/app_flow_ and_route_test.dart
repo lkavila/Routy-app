@@ -64,6 +64,8 @@ void main() {
       await tester.pumpAndSettle(Duration(seconds: 5));
       await tester.tap(find.text('Ver ruta óptima'));
       await tester.pumpAndSettle();
+
+      expect(find.byKey(Key("Not Enough Routes")), findsNothing);
       
       await tester.tap(find.text("No"));
       await tester.pumpAndSettle(Duration(seconds: 5));

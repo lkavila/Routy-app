@@ -58,6 +58,7 @@ class DrawerMenu extends StatelessWidget {
                 },
               ),
               ListTile(
+                key: Key("Perfil"),
                 title: Text(
                   'Perfil',
                   style: myStyle(),
@@ -68,6 +69,7 @@ class DrawerMenu extends StatelessWidget {
                 },
               ),
               ListTile(
+                key: Key("Mis rutas"),
                 title: Text(
                   'Mis rutas',
                   style: myStyle(),
@@ -78,6 +80,7 @@ class DrawerMenu extends StatelessWidget {
                 },
               ),
               ListTile(
+                key: Key("Mis vehículos"),
                 title: Text(
                   'Mis vehículos',
                   style: myStyle(),

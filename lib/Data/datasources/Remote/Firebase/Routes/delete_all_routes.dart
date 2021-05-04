@@ -8,7 +8,7 @@ class DeleteAllRoutesFirebase{
     //  .catchError((error) => print("Failed to delete user's vehicles: $error"));
     //});
 
-    var rutas = FirebaseFirestore.instance.collection('routes').where('userId'==uid);
+    var rutas = FirebaseFirestore.instance.collection('routes').where('userId', isEqualTo: uid);
     rutas.get().then((querySnapshot) {
       querySnapshot.docs.forEach((element) {
         element.reference.delete();

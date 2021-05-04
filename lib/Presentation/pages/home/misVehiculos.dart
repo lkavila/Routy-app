@@ -80,10 +80,12 @@ class MisVehiculos extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 20.0),
               child: GestureDetector(
+                key: Key("Boton eliminar"),
                 onTap: () {
                                 showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
+                                      key: Key("Eliminar todos alert"),
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
                                       title: Icon(
                                             Icons.taxi_alert,
@@ -95,6 +97,7 @@ class MisVehiculos extends StatelessWidget {
                                       content: Text("¿Está seguro de querer eliminar todos los vehículos? Luego no podrá recuperarlos", style: TextStyle(color: Colors.white),),
                                       actions: [
                                         TextButton(
+                                          key: Key("Eliminar todos"),
                                             onPressed: () {
                                               uc.deleteAllCarsFromList();
                                               cc.deleteAllCars(uc.user.id);
@@ -102,6 +105,7 @@ class MisVehiculos extends StatelessWidget {
                                             },
                                             child: Text("Si")),
                                         TextButton(
+
                                             onPressed: () {
                                               Get.back();
                                             },
