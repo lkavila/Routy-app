@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 
 class VehicleCard extends StatelessWidget {
   final CarEntity vehiculo;
@@ -17,6 +18,7 @@ class VehicleCard extends StatelessWidget {
 
   Widget carWidget(CarEntity vehiculo, BuildContext context) {
     final CarController carController = Get.find();
+    final UserController userController = Get.find();
     final List<Color> _colors = [Colors.blue, Color.fromRGBO(11, 210, 181, 1)];
     final List<double> _stops = [0.4, 1];
     return Container(
@@ -80,11 +82,13 @@ class VehicleCard extends StatelessWidget {
                                           ),
                                       backgroundColor:
                                           Color.fromRGBO(12, 55, 106, 0.95),
-                                      content: Text("Está seguro de querer eliminar este vihículo", style: TextStyle(color: Colors.white),),
+                                      content: Text("¿Está seguro de querer eliminar este vihículo?", style: TextStyle(color: Colors.white),),
                                       actions: [
                                         TextButton(
                                             onPressed: () {
+                                              userController.deleteCarFromList(vehiculo.id);
                                               carController.deleteCar(vehiculo.id);
+                                               Get.back();
                                             },
                                             child: Text("Si")),
                                         TextButton(

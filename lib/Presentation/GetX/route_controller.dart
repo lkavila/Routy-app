@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
+import 'package:routy_app_v102/Domain/entities/routeDTO.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/create_route.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/delete_all_routes.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/delete_route.dart';
@@ -7,13 +8,20 @@ import 'package:routy_app_v102/Domain/usecases/Routes/get_user_routes.dart';
 
 class RouteController extends GetxController{
   List<RouteEntity> misRutas = [];
+
+ setMisRutas(List<RouteEntity> misRutas) { 
+   this.misRutas = misRutas;
+ }
+
+  List<RouteDTO> misRutasDTO = [];
   var cargandoRutas = false.obs;
+
 
 
   void getRutas() async{
     final GetUserRoutesUseCase _getUserRoutes = GetUserRoutesUC();
     cargandoRutas.value = true;
-    await _getUserRoutes.call().then((value) => misRutas = value);
+    await _getUserRoutes.call().then((value) => setMisRutas(value));
     cargandoRutas.value = false;
     update();
     
@@ -49,7 +57,12 @@ class RouteController extends GetxController{
     misRutas.add(ruta);
   }
 
+  RouteEntity getRouteForMap(String id){
+    return misRutas.where((element) => element.id == id).first;
+  }
+
   limpiar(){
     misRutas = [];
+    misRutasDTO = [];
   }
 }

@@ -6,7 +6,7 @@ class DelteAllCarsFirebase{
     
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     users.doc(userId)
-      .update({'vehiculos': []})
+      .update({'vehiculos': {}})
       .then((value) => print("cars deleted"))
       .catchError((error) => print("Failed to delete user's vehicles: $error"));
   }

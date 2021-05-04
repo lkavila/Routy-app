@@ -15,10 +15,11 @@ class MisRutas extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final UserController userC = Get.find();
   final mapC = Get.put(MapController());
+  final RouteController routeX = Get.find();
   @override
   Widget build(BuildContext context) {
     Get.put(CarController());
-    final RouteController routeX = Get.find();
+    
     
     
     return DefaultTabController(
@@ -67,6 +68,8 @@ class MisRutas extends StatelessWidget {
                           ]),
                         ),
                         goToMap(),
+
+                        deleteAllroutes(context),
                       ],
                     );
                 },
@@ -90,6 +93,8 @@ class MisRutas extends StatelessWidget {
                           ]),
                         ),
                         goToMap(),
+
+                        deleteAllroutes(context),
                       ],
                     );
                 },
@@ -124,9 +129,60 @@ class MisRutas extends StatelessWidget {
     );
   }
 
+  Widget deleteAllroutes(BuildContext context){
+    return         Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 20.0),
+              child: GestureDetector(
+                onTap: () {
+                        showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+                                      title: Icon(
+                                            Icons.room_outlined,
+                                            color: Colors.orange[900],
+                                            size: 100,
+                                          ),
+                                      backgroundColor:
+                                          Color.fromRGBO(12, 55, 106, 0.95),
+                                      content: Text("¿Está seguro de querer eliminar todos las rutas? Luego no podrá recuperarlas", style: TextStyle(color: Colors.white),),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              routeX.deleteAllRoutes(userC.user.id);
+                                              Get.back();
+                                            },
+                                            child: Text("Si")),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: Text("Cancelar")),
+                                      ],
+                                    ),
+                                  );
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red,
+                    ),
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Colors.indigo[900],
+                      size: 40,
+                    )),
+              ),
+            ),
+          );
+  }
+
   Widget getRutas(List<RouteEntity> rutas, BuildContext context) {
     if (rutas.isNotEmpty) {
       List<Widget> list = [];
+      print(rutas.first.origen);
       rutas.sort((a, b) => b.createdAt
           .compareTo(a.createdAt)); //la rura mas reciente se muestra primero
       rutas.forEach((ruta) {

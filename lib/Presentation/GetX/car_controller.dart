@@ -33,11 +33,13 @@ class CarController extends GetxController{
   deleteCar(String id){
     final DeleteCarUseCase _delete = DeleteCar();
     _delete.call(id);
+    update();
   }
 
   deleteAllCars(String userId){
     final DeleteAllCarUseCase _deleteAll = DeleteAllCar();
     _deleteAll.call(userId);
+    update();
   }
   
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
+import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/crearVehiculo.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
@@ -13,6 +14,7 @@ class MisVehiculos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserController uc = Get.find();
+    final CarController cc = Get.find();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
@@ -37,13 +39,20 @@ class MisVehiculos extends StatelessWidget {
       drawer: DrawerMenu(),
       body: Stack(
         children: [
-          Container(
+
+
+          GetBuilder<CarController>(builder: (controller) {
+            return Container(
             child: Column(children: [
               Expanded(
                 child: getVehiculos(uc.user.vehiculos, context),
               ),
             ]),
+          );
+          }
           ),
+
+
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
@@ -64,7 +73,58 @@ class MisVehiculos extends StatelessWidget {
                     )),
               ),
             ),
+          ),
+
+        Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 20.0),
+              child: GestureDetector(
+                onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+                                      title: Icon(
+                                            Icons.taxi_alert,
+                                            color: Colors.orange[900],
+                                            size: 100,
+                                          ),
+                                      backgroundColor:
+                                          Color.fromRGBO(12, 55, 106, 0.95),
+                                      content: Text("¿Está seguro de querer eliminar todos los vehículos? Luego no podrá recuperarlos", style: TextStyle(color: Colors.white),),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              uc.deleteAllCarsFromList();
+                                              cc.deleteAllCars(uc.user.id);
+                                              Get.back();
+                                            },
+                                            child: Text("Si")),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: Text("Cancelar")),
+                                      ],
+                                    ),
+                                  );
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red,
+                    ),
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Colors.indigo[900],
+                      size: 40,
+                    )),
+              ),
+            ),
           )
+
+
         ],
       ),
     );

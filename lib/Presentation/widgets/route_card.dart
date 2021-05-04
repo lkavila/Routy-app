@@ -89,6 +89,7 @@ class RouteCard extends StatelessWidget {
                                         TextButton(
                                             onPressed: () {
                                               _rc.deleteRoute(ruta.id);
+                                               Get.back();
                                             },
                                             child: Text("Si")),
                                         TextButton(
@@ -153,7 +154,7 @@ class RouteCard extends StatelessWidget {
                           0.0),
                       child: TextButton(
                           onPressed: () {
-                            mapC.showChooseRouteOnMap(ruta);
+                            mapC.showChooseRouteOnMap(_rc.getRouteForMap(ruta.id));
                             mapC.tipoMenu=4;
                             Get.to(() => MyMap()); //4 significa que ya no hay que volver a crear la ruta
                           },
