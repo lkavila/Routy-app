@@ -13,6 +13,7 @@ class MyMap extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+
 class _MyAppState extends State<MyMap> {
   final MapController routeX = Get.find();
   GoogleMapController mapController;
@@ -20,6 +21,7 @@ class _MyAppState extends State<MyMap> {
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +44,7 @@ class _MyAppState extends State<MyMap> {
               zoom: 13,
             ),
             onTap: (data) {
-              routeX.createMarkers(data.latitude, data.longitude);
+              routeX.createMarkers(data.latitude, data.longitude, routeX.markerImage(), routeX.markers.length);
               print(routeX.markers.last.position);
               if (routeX.polyLines.isNotEmpty) {
                 setState(() {
@@ -57,66 +59,35 @@ class _MyAppState extends State<MyMap> {
           ),
         ),
 
-        Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 40, 10, 0),
-            child: Container(
-              width: 95,
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Color.fromRGBO(131, 230, 251, 0.5),
-              ),
-              child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      routeX.polyLines.clear();
-                      routeX.polyPoints.clear();
-                      routeX.puntos.clear();
-                      routeX.markers.clear();
-                      routeX.ruta = null;
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FaIcon(FontAwesomeIcons.broom, color: Colors.indigo),
-                      Text(
-                        'Limpiar',
-                        style: TextStyle(
-                            color: Colors.grey[800],
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  )),
-            ),
-          ),
-        ),
 
         Align(
-          alignment: Alignment.bottomLeft,
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(10, 0, 0, 30),
-            child: Container(
-              width: 160,
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Color.fromRGBO(131, 230, 251, 0.5),
-              ),
-              child: GestureDetector(
-                  onTap: () {
+              alignment: Alignment.centerRight,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                     FloatingActionButton(
+                    onPressed: (){
+                      if(routeX.ruta!=null){
+                          setState(() {
+                            routeX.polyLines.clear();
+                            routeX.polyPoints.clear();
+                            routeX.puntos.clear();
+                            routeX.markers.clear();
+                            routeX.ruta = null;
+                          });
+                      }else{
                     if (routeX.puntos.length > 1) {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
-                          title: Text("¿Ruta circular?", style: TextStyle(color: Colors.white)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          title: Text("¿Ruta circular?",
+                              style: TextStyle(color: Colors.white)),
                           content: Text(
-                              "Despues de llegar al final ¿regresará al inicio?", style: TextStyle(color: Colors.white)),
+                              "Despues de llegar al final ¿regresará al inicio?",
+                              style: TextStyle(color: Colors.white)),
                           actions: [
                             TextButton(
                                 onPressed: () {
@@ -149,12 +120,14 @@ class _MyAppState extends State<MyMap> {
                         context: context,
                         builder: (context) => AlertDialog(
                           key: Key("Not Enough Routes"),
-                          backgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
-                          title: Text("No hay suficientes puntos", style: TextStyle(color: Colors.white)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          title: Text("No hay suficientes puntos",
+                              style: TextStyle(color: Colors.white)),
                           content: Text(
                               "Para poder calcular la mejor ruta debe haber al menos 2 puntos, para crear puntos debe hacer tap sobre el mapa",
-                               style: TextStyle(color: Colors.white)),
+                              style: TextStyle(color: Colors.white)),
                           actions: [
                             TextButton(
                                 onPressed: () {
@@ -164,24 +137,33 @@ class _MyAppState extends State<MyMap> {
                           ],
                         ),
                       );
+                      }
                     }
+                    } ,
+                    tooltip: routeX.ruta!=null ? 'ruta stop' : 'ruta start',
+                    child: routeX.ruta!=null ? new Icon(Icons.stop, size: 30,) : new FaIcon(FontAwesomeIcons.route, color: Colors.white),
+                ),
+                  SizedBox(height: 10),
+                  FloatingActionButton(
+                    onPressed: _followMe,
+                    child: Icon(Icons.gps_fixed, size: 30,)
+                    ),
+
+                  SizedBox(height: 10),
+                  FloatingActionButton(onPressed: (){
+                          setState(() {
+                            routeX.polyLines.clear();
+                            routeX.polyPoints.clear();
+                            routeX.puntos.clear();
+                            routeX.markers.clear();
+                            routeX.ruta = null;
+                          });
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FaIcon(FontAwesomeIcons.route, color: Colors.indigo),
-                      Text(
-                        'Ver ruta óptima',
-                        style: TextStyle(
-                            color: Colors.grey[800],
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  )),
+                  child: FaIcon(FontAwesomeIcons.broom, color: Colors.white),)
+                  
+                  ],
+                )
             ),
-          ),
-        ),
 
         GetBuilder<MapController>(builder: (_) {
           if (routeX.ruta != null) {
@@ -202,5 +184,16 @@ class _MyAppState extends State<MyMap> {
         Menu(_scaffoldKey), //este es el menu que abre el drawer
       ]),
     );
+
+
   }
+
+  Future<void> _followMe() async {
+    CameraPosition _kLake = new CameraPosition(
+      target: LatLng(routeX.lat, routeX.lon),
+      zoom: 15);
+    mapController.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+
+  }
+
 }

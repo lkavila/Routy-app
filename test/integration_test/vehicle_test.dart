@@ -27,7 +27,7 @@ void main() {
       Widget w = await createHomeScreen();
       await tester.pumpWidget(w);
 
-      expect(find.byKey(Key("login")), findsOneWidget);
+      expect(find.byKey(Key("login")), findsOneWidget); //en caso de que se necesite loguearse
 
       await tester.tap(find.byKey(Key("login_with_google")));
 
@@ -54,10 +54,16 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(Key("Boton eliminar")));
 
-      expect(find.byKey(Key("Eliminar todos alert")), findsOneWidget);
+      await tester.pumpAndSettle(Duration(seconds: 2));
+      expect(find.text("Si, eliminar"), findsOneWidget);
 
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(Key("Eliminar todos")));
+      await tester.pumpAndSettle(Duration(seconds: 2));
+      await tester.tap(find.text("Si, eliminar"));
+
+      await tester.pumpAndSettle(Duration(seconds: 2));
+      expect(find.byType(ListView), findsNothing);
+
+
 
 
 

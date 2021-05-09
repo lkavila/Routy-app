@@ -25,27 +25,25 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: isDarkMode
-            ? ThemeData.dark(
-              
-            )
-            : ThemeData.light(
-                //primaryColor: Colors.blue[900],
-                //buttonColor: Colors.blue[900],
-                //primaryColorDark: Colors.grey,
-                //primarySwatch: Colors.blue,
-                //accentColor: Colors.blue,
-                //fontFamily: "OpenSans",
-                ),
-        /*initialRoute: "/wrapper",
-        routes: {
-          "/wrapper": (context) => Wrapper(),
-          "/misRutas": (context) => MisRutas(),
-          "/logged_in": (context) => LoggedIn(),
-          "/misVehiculos": (context) => MisVehiculos(),
-          "/crearVehiculo": (context) => CrearVehiculo(),
-          "/map": (context) => MyMap(),
-          "/configuraciones": (context) => Configuracion(),
-        },*/
+            ? ThemeData(
+                //brightness: Brightness.dark,
+
+                appBarTheme: AppBarTheme(color: Colors.indigo[900]),
+                fontFamily: "OpenSans",
+                buttonColor: Colors.blue[900],
+                dialogBackgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
+                scaffoldBackgroundColor: Colors.grey[900],
+              )
+            : ThemeData(
+                brightness: Brightness.light,
+                appBarTheme: AppBarTheme(color: Colors.blue),
+                primaryColor: Colors.blue[500],
+                buttonColor: Colors.blue[500],
+                primaryColorLight: Colors.white,
+                dialogBackgroundColor: Colors.blue[800],
+                accentColor: Colors.blue[700],
+                fontFamily: "OpenSans",
+              ),
         home: Wrapper(),
       );
     });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/configuraciones.dart';
@@ -22,6 +23,7 @@ class DrawerMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserController uc = Get.find();
     final RouteController rutax = Get.find();
+    final MapController mapController = Get.find();
     return Container(
       width: MediaQuery.of(context).size.width *
           0.7, // 75% of screen will be occupied
@@ -53,8 +55,7 @@ class DrawerMenu extends StatelessWidget {
                 leading:
                     FaIcon(FontAwesomeIcons.mapMarkedAlt, color: Colors.white),
                 onTap: (){
-                  uc.getCurrentLocation().whenComplete(() => Get.to(()=>MyMap()));
-                  
+                  mapController.getCurrentLocation().whenComplete(() => Get.to(()=>MyMap()));
                 },
               ),
               ListTile(

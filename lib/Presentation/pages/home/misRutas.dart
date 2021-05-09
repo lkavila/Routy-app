@@ -6,6 +6,7 @@ import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
+import 'package:routy_app_v102/Presentation/widgets/color_mode.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/loading_widget.dart';
 import 'package:routy_app_v102/Presentation/widgets/route_card.dart';
@@ -112,7 +113,7 @@ class MisRutas extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(0.0, 0.0, 20.0, 20.0),
         child: GestureDetector(
           onTap: () {
-            userC.getCurrentLocation().whenComplete(() => Get.to(()=>MyMap()));
+            mapC.getCurrentLocation().whenComplete(() => Get.to(()=>MyMap()));
           },
           child: Container(
               decoration: BoxDecoration(
@@ -145,8 +146,7 @@ class MisRutas extends StatelessWidget {
                                             color: Colors.orange[900],
                                             size: 100,
                                           ),
-                                      backgroundColor:
-                                          Color.fromRGBO(12, 55, 106, 0.95),
+                                          
                                       content: Text("¿Está seguro de querer eliminar todos las rutas? Luego no podrá recuperarlas", style: TextStyle(color: Colors.white),),
                                       actions: [
                                         TextButton(
@@ -198,7 +198,7 @@ class MisRutas extends StatelessWidget {
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.20),
           child: Text(
             "Aún no ha agregado ninguna ruta",
-            style: TextStyle(color: Colors.blue[800], fontSize: 18),
+            style: TextStyle(color: colorMode(), fontSize: 18),
             textAlign: TextAlign.center,
           ),
         ),

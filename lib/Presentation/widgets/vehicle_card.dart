@@ -80,8 +80,6 @@ class VehicleCard extends StatelessWidget {
                                             color: Colors.yellow,
                                             size: 100,
                                           ),
-                                      backgroundColor:
-                                          Color.fromRGBO(12, 55, 106, 0.95),
                                       content: Text("¿Está seguro de querer eliminar este vihículo?", style: TextStyle(color: Colors.white),),
                                       actions: [
                                         TextButton(

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
+import 'package:routy_app_v102/Presentation/widgets/color_mode.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 
 class CrearVehiculo extends StatefulWidget {
@@ -50,7 +51,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         style: TextStyle(
                           fontFamily: 'Pacifico',
                           fontSize: 25,
-                          color: Colors.blue[700],
+                          color: colorMode(),
                         ),
                       ),
                       Expanded(
@@ -68,10 +69,11 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.blue[700],
+                        color: colorMode()
                       ),
                     ),
                   ),
+                  SizedBox(height: 10,),
                   TextField(
                     controller: nameInputController,
                     decoration: InputDecoration(
@@ -90,7 +92,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Tipo de vehiculo",
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.blue[700],
+                        color: colorMode(),
                       ),
                     ),
                   ),
@@ -104,7 +106,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     underline: Container(
                       height: 2,
                       width: 20,
-                      color: Colors.blue[700],
+                      
                     ),
                     onChanged: (value) => setState(() {
                       dropdownValue = value;
@@ -122,7 +124,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                           value,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.blue[700],
+                            color: colorMode(),
                           ),
                         ),
                       );
@@ -137,7 +139,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Tipo de Combustible",
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.blue[700],
+                        color: colorMode(),
                       ),
                     ),
                   ),
@@ -151,7 +153,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     underline: Container(
                       height: 2,
                       width: 20,
-                      color: Colors.blue[700],
+                      
                     ),
                     onChanged: (value) => setState(() {
                       dropdownValueC = value;
@@ -168,7 +170,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                           value,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.blue[700],
+                            color: colorMode(),
                           ),
                         ),
                       );
@@ -183,10 +185,11 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Consumo (Galones/100Km)",
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.blue[700],
+                        color: colorMode(),
                       ),
                     ),
                   ),
+                  SizedBox(height: 10,),
                   TextField(
                     keyboardType: TextInputType.number,
                     controller: consumoInputController,
@@ -212,20 +215,20 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         Get.to(() => MisVehiculos());
                       },
                       child: Container(
-                          width: 50,
-                          height: 50,
-                          padding: EdgeInsets.fromLTRB(10.0, 5.0, 0, 0),
+                          width: 40,
+                          height: 40,
+                          padding: EdgeInsets.fromLTRB(5.0, 5.0, 0, 0),
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: Color.fromRGBO(0, 128, 0, 20)),
                             shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(20),
                             color: Colors.green,
                           ),
                           child: FaIcon(
                             FontAwesomeIcons.check,
                             color: Colors.white,
-                            size: 30,
+                            size: 27,
                           )),
                     ),
                   ),

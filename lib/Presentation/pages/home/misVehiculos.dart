@@ -92,8 +92,6 @@ class MisVehiculos extends StatelessWidget {
                                             color: Colors.orange[900],
                                             size: 100,
                                           ),
-                                      backgroundColor:
-                                          Color.fromRGBO(12, 55, 106, 0.95),
                                       content: Text("¿Está seguro de querer eliminar todos los vehículos? Luego no podrá recuperarlos", style: TextStyle(color: Colors.white),),
                                       actions: [
                                         TextButton(
@@ -103,7 +101,7 @@ class MisVehiculos extends StatelessWidget {
                                               cc.deleteAllCars(uc.user.id);
                                               Get.back();
                                             },
-                                            child: Text("Si")),
+                                            child: Text("Si, eliminar")),
                                         TextButton(
 
                                             onPressed: () {

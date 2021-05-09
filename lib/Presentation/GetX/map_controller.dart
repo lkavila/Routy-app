@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Apis/networking.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/create_route.dart';
@@ -22,7 +25,11 @@ class MapController extends GetxController{
   BitmapDescriptor start, finish;
   var cargandoDirecciones = false.obs;
   var cargandoPolylines = false.obs;
-
+  double lat;
+  double lon;
+  Location location = new Location();
+  LocationData currentLocation;
+  StreamController<LocationData> position = StreamController.broadcast();
   void actualizarMenu(int tipo){
     tipoMenu = tipo;
     update();
@@ -107,9 +114,16 @@ class MapController extends GetxController{
         polyPoints: polyPoints,
         tipoCar: "driving-car"
       );
+
+      Marker lastMarker = markers.last;
+      markers.remove(lastMarker);
+      Marker newLastMarker = doCreateMarker(lastMarker.position.latitude, lastMarker.position.longitude, finish, markers.length+1);
+      markers.add(newLastMarker);
       update();
       
     }
+
+
   }
 
   Future<List<String>> getDirection(double lon, double lat) async{
@@ -131,16 +145,23 @@ class MapController extends GetxController{
   }
 
 
-    createMarkers(double lat, double lng) {
+    createMarkers(double lat, double lng, BitmapDescriptor img, int cont) {
       puntos.add(LatLng(lat, lng));
-      if (markers.isEmpty){
+      
       markers.add(
-        Marker(
-          markerId: MarkerId("1"),
+        doCreateMarker(lat, lng, img, cont)
+      );       
+      
+      update();
+    }
+
+  Marker doCreateMarker(double lat, double lng, BitmapDescriptor img, int cont){
+        return Marker(
+          markerId: MarkerId(cont.toString()),
           position: LatLng(lat, lng),
-          icon: start,
+          icon: img,
           infoWindow: InfoWindow(
-            title: "Home",
+            title: cont.toString(),
           ),
           onTap: (){
               /*showDialog(
@@ -180,28 +201,14 @@ class MapController extends GetxController{
             ).then((value) => null); */
             
               //marker = markers.where((element) => element.position==LatLng(lat, lng)).single;
-              markers.removeWhere((element) => element.markerId==MarkerId(lat.toString()));
-              puntos.removeWhere((element) => (element == LatLng(lat, lng)));            
+              
+              //markers.removeWhere((element) => element.markerId==MarkerId(lat.toString()));
+              //puntos.removeWhere((element) => (element == LatLng(lat, lng)));            
          
           }
-        ),
-      );       
-      }else markers.add(
-        Marker(
-          markerId: MarkerId(lat.toString()),
-          position: LatLng(lat, lng),
-          infoWindow: InfoWindow(
-            title: "Home",
-            snippet: "lat: "+lat.toString(),
-          ),
-          onTap: (){
-              markers.removeWhere((element) => element.markerId==MarkerId(lat.toString()));
-              puntos.removeWhere((element) => (element == LatLng(lat, lng)));     
-          }
-        ),
-      );
-      update();
-    }
+        );
+  }
+
 
   showChooseRouteOnMap(RouteEntity ruta){
     this.ruta = null;
@@ -213,9 +220,28 @@ class MapController extends GetxController{
     this.polyPoints = ruta.polyPoints;
     setPolyLines();
     print("crear markers");
+    int cont = 1;
     this.ruta.markerPoints.forEach((element) {
-      createMarkers(element.latitude, element.longitude);
+      if (markers.isEmpty){
+        createMarkers(element.latitude, element.longitude, start, cont);
+      }else{
+        if (markers.length == this.ruta.markerPoints.length-1){
+            createMarkers(element.latitude, element.longitude, finish, cont);
+        }else{
+            createMarkers(element.latitude, element.longitude, BitmapDescriptor.defaultMarker, cont);
+        }        
+      }
+
+      cont++;
       });
+  }
+
+  BitmapDescriptor markerImage(){
+      if (markers.isEmpty){
+        return start;
+      }else{
+        return BitmapDescriptor.defaultMarker;
+      }
   }
 
   void makeFrecuent()async{
@@ -236,19 +262,6 @@ class MapController extends GetxController{
 
   }
 
-/*  Future checkpermission() async{
-    var locationStatus = _getStatus();
-    print(locationStatus);
-    locationStatus.whenComplete(() => Permission.location.request());
-  }
-
-  Future<bool> _getStatus() async{
-    var locationStatus = Permission.locationWhenInUse;
-    return await locationStatus.isGranted;
-  }
-*/
-
-
   @override
   void onInit() {
     print("init state route");
@@ -265,7 +278,55 @@ class MapController extends GetxController{
     });
     super.onInit();
   }
+
+  Future getCurrentLocation() async{
+    //final GetCurrentLocationUseCase _getCurrent = GetCurrentLocation();
+    //currentLocation = _getCurrent.call();
+    final MapController mapController = Get.find();
+      location.changeSettings(interval: 4000);
+      location.serviceEnabled().then((value) { 
+      if (!value) {location.requestService();}});
+
+    location.hasPermission().then((value){ 
+    if (value == PermissionStatus.denied) {
+      location.requestPermission().then((value) { 
+        if (value == PermissionStatus.granted){
+            location.getLocation().then((value){
+              location.onLocationChanged.listen((LocationData currentLocation) {
+                if (currentLocation.speed>2){
+                  print(currentLocation.speed);
+                  position.add(currentLocation);
+                  this.currentLocation = currentLocation;
+                  mapController.lat = currentLocation.latitude;
+                  mapController.lon = currentLocation.longitude;
+                }
+              });
+          });
+          }
+      
+        });
+        }else if (value == PermissionStatus.granted) {
+            location.getLocation().then((value){
+              location.onLocationChanged.listen((LocationData currentLocation) {
+                if (currentLocation.speed>2){
+                  position.add(currentLocation);
+                  this.currentLocation = currentLocation;
+                  print(this.currentLocation.latitude);
+                  mapController.lat = currentLocation.latitude;
+                  mapController.lon = currentLocation.longitude;
+                }
+
+              });
+          });
+        }
+      });
+
+  }
+
+
 }
+
+
 
 //Create a new class to hold the Co-ordinates we've received from the response data
 class LineString {
