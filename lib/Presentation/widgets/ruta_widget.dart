@@ -3,7 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
+import 'package:routy_app_v102/Presentation/GetX/dark_mode_controller.dart';
+import 'package:routy_app_v102/utils/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
@@ -14,14 +15,15 @@ import 'package:routy_app_v102/Presentation/pages/home/elegir_vehiculo.dart';
 class Ruta extends StatelessWidget {
   const Ruta({Key key}) : super(key: key);
 
+  
   @override
   Widget build(BuildContext context) {
     final MapController mc = Get.find();
     final UserController uc = Get.find();
-    //List<String> depar;
-    CarController elegido = Get.find();
-    print(mc.ruta.departamentos);
+    final DarkModeController _darkMode = Get.find();
+    final CarController elegido = Get.find();
     double padd = MediaQuery.of(context).size.width * 0.01;
+    print("build of Ruta_Widget");
     return Container(
       key: Key("RutaCalculada"),
       child: Align(
@@ -32,8 +34,8 @@ class Ruta extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.98,
               height: 160,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(22),
-                color: Color.fromRGBO(131, 230, 251, 0.9),
+                borderRadius: BorderRadius.circular(15),
+                color: _darkMode.colorRuta(),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,29 +113,14 @@ class Ruta extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      FaIcon(
-                        FontAwesomeIcons.mapMarkerAlt,
-                        color: Colors.orange[900],
-                        size: 18,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Origen:',
-                        style: style(),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      SizedBox(width: 10,),
+                      FaIcon(FontAwesomeIcons.mapMarkerAlt,color: Colors.orange[900],size: 18,),
+                      SizedBox(width: 10,),
+                      Text('Origen:',style: style(_darkMode),),
+                      SizedBox(width: 5,),
                       Flexible(
                         child: Text(
-                          '${mc.ruta.origen}',
-                          style: style2(),
-                          overflow: TextOverflow.clip,
+                          '${mc.ruta.origen}',style: style2(_darkMode),overflow: TextOverflow.clip,
                         ),
                       ),
                     ],
@@ -141,54 +128,27 @@ class Ruta extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      FaIcon(
-                        FontAwesomeIcons.mapMarkerAlt,
-                        color: Colors.orange[900],
-                        size: 18,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Destino:',
-                        style: style(),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      SizedBox(width: 10,),
+                      FaIcon( FontAwesomeIcons.mapMarkerAlt,color: Colors.orange[900],size: 18,),
+                      SizedBox(width: 10,),
+                      Text('Destino:',style: style(_darkMode), ),
+                      SizedBox(width: 5,),
                       Flexible(
                         child: Text(
-                          '${mc.ruta.destino}',
-                          style: style2(),
-                          overflow: TextOverflow.fade,
+                          '${mc.ruta.destino}',style: style2(_darkMode),overflow: TextOverflow.fade,
                         ),
                       ),
                     ],
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      FaIcon(
-                        FontAwesomeIcons.route,
-                        color: Colors.orange[900],
-                        size: 18,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Distancia:',
-                        style: style(),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      SizedBox(width: 10,),
+                      FaIcon(FontAwesomeIcons.route,color: Colors.orange[900], size: 18,),
+                      SizedBox(width: 10,),
+                      Text('Distancia:',style: style(_darkMode),),
+                      SizedBox( width: 5,),
 
                       StreamBuilder<LocationData>(
                         stream: mc.position.stream,
@@ -198,52 +158,41 @@ class Ruta extends StatelessWidget {
                               return Flexible(
                                   child: Text(
                                     '${ConvertirTD.convertDistancia(mc.ruta.distancia)}',
-                                    style: style2(),
+                                    style: style2(_darkMode),
                                     overflow: TextOverflow.fade,
                                   ),
                                   );                            
                           }else{
-                            double dis = Geolocator.distanceBetween(stream.data.latitude, stream.data.longitude, mc.puntos.last.latitude, mc.puntos.last.longitude);
-                                  
-                                  return Flexible(
-                                  child: Text(
-                                    '${ConvertirTD.convertDistancia(dis*1.25)}',
-                                    style: style2(),
+                            double dis = Geolocator.distanceBetween(stream.data.latitude, stream.data.longitude, mc.puntos.last.latitude, mc.puntos.last.longitude);      
+                            return Flexible(
+                                child: Text(
+                                  '${ConvertirTD.convertDistancia(dis*1.25)}',
+                                    style: style2(_darkMode),
                                     overflow: TextOverflow.fade,
                                   ),
                             );
                           }
                       })
-
                     ],
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      FaIcon(
-                        FontAwesomeIcons.clock,
-                        color: Colors.orange[900],
-                        size: 18,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      texto(mc.tipoMenu, elegido.elegido),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion*1.25)}',
-                          style: style2()),
+                      SizedBox(width: 10,),
+                      FaIcon(FontAwesomeIcons.clock,color: Colors.orange[900],size: 18,),
+                      SizedBox(width: 10,),
+                      texto(mc.tipoMenu, elegido.elegido, _darkMode),
+                      SizedBox(width: 5,),
+                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion*1.25)}',style: style2(_darkMode)),
                     ],
                   ),
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       boton(mc.tipoMenu, mc.ruta, context, mc, uc),
-                      GetBuilder<MapController>(builder: (_) {
+                      Builder(builder: (_) {
                         if (mc.tipoMenu != 1) {
                           if (mc.ruta.frecuente) {
                             return IconButton(
@@ -313,32 +262,32 @@ class Ruta extends StatelessWidget {
     );
   }
 
-  TextStyle style() {
+  TextStyle style(DarkModeController _darkMode) {
     return TextStyle(
-        color: Color.fromRGBO(12, 55, 106, 1),
+        color: _darkMode.colorMode(),
         fontSize: 14,
         fontWeight: FontWeight.w800);
   }
 
-  TextStyle style2() {
+  TextStyle style2(DarkModeController _darkMode) {
     return TextStyle(
-        color: Color.fromRGBO(12, 55, 106, 1),
+        color: _darkMode.colorMode(),
         fontSize: 14,
         fontWeight: FontWeight.normal);
   }
 
-  Flexible texto(int tipoMenu, String elegido) {
+  Flexible texto(int tipoMenu, String elegido, DarkModeController _darkMode) {
     if (tipoMenu == 0 || tipoMenu == 4) {
       return Flexible(child: 
       Text(
         'Tiempo aprox carro:',
-        style: style(),
+        style: style(_darkMode),
         overflow: TextOverflow.fade,
       ));
     } else {
       return Flexible(child: Text(
         'Tiempo aprox $elegido:',
-        style: style(),
+        style: style(_darkMode),
         overflow: TextOverflow.fade,
 
       ));

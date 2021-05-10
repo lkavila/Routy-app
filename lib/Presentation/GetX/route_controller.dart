@@ -8,15 +8,19 @@ import 'package:routy_app_v102/Domain/usecases/Routes/get_user_routes.dart';
 
 class RouteController extends GetxController{
   List<RouteEntity> misRutas = [];
+  List<RouteDTO> misRutasDto = [];
+  var cargandoRutas = false.obs;
 
  setMisRutas(List<RouteEntity> misRutas) { 
    this.misRutas = misRutas;
+   _setMisRutasDto(misRutas);
  }
-
-  List<RouteDTO> misRutasDTO = [];
-  var cargandoRutas = false.obs;
-
-
+  
+  _setMisRutasDto(List<RouteEntity> misRutas){
+    misRutas.forEach((e) {
+      misRutasDto.add(new RouteDTO(id: e.id, tipoCar: e.tipoCar, circular: e.circular, frecuente: e.frecuente, departamentos: e.departamentos, origen: e.origen, destino: e.destino, distancia: e.distancia, duracion: e.duracion, userId: e.userId, createdAt: e.createdAt));
+    });
+  }
 
   void getRutas() async{
     final GetUserRoutesUseCase _getUserRoutes = GetUserRoutesUC();
@@ -24,8 +28,8 @@ class RouteController extends GetxController{
     await _getUserRoutes.call().then((value) => setMisRutas(value));
     cargandoRutas.value = false;
     update();
-    
   }
+
   Future<void> saveRoute(RouteEntity ruta)async{
     final CreateRouteUseCase _createRoute = CreateRoute();
     print("saving route");
@@ -34,6 +38,7 @@ class RouteController extends GetxController{
     print(ruta.createdAt);
     if(!misRutas.contains(ruta)){
       misRutas.add(ruta); //Error type 'RouteEntity' is not a subtype of type 'RouteModel' of 'value'
+      misRutasDto.add(new RouteDTO(id: ruta.id, tipoCar: ruta.tipoCar, circular: ruta.circular, frecuente: ruta.frecuente, departamentos: ruta.departamentos, origen: ruta.origen, destino: ruta.destino, distancia: ruta.distancia, duracion: ruta.duracion, userId: ruta.userId, createdAt: ruta.createdAt));
     //getRutas();
     }
     print("final se saving route");
@@ -43,18 +48,22 @@ class RouteController extends GetxController{
     final DeleteRouteUseCase _deleteRoute = DeleteRoute(); 
     _deleteRoute.call(id);
     misRutas.removeWhere((element) => element.id==id);
+    misRutasDto.removeWhere((element) => element.id==id);
     update();
   }
 
   void deleteAllRoutes(String uid){
     final DeleteAllRoutesUseCase _deleteRoute = DeleteAllRoutes(); 
     _deleteRoute.call(uid);
-    misRutas.removeWhere((element) => element.userId == uid);
+    misRutas.clear();
+    misRutasDto.clear();
     update();
   }
   
   void actualizarRutas(RouteEntity ruta){
     misRutas.add(ruta);
+    misRutasDto.add(new RouteDTO(id: ruta.id, tipoCar: ruta.tipoCar, circular: ruta.circular, frecuente: ruta.frecuente, departamentos: ruta.departamentos, origen: ruta.origen, destino: ruta.destino, distancia: ruta.distancia, duracion: ruta.duracion, userId: ruta.userId, createdAt: ruta.createdAt));
+
   }
 
   RouteEntity getRouteForMap(String id){
@@ -63,6 +72,6 @@ class RouteController extends GetxController{
 
   limpiar(){
     misRutas = [];
-    misRutasDTO = [];
+    misRutasDto = [];
   }
 }

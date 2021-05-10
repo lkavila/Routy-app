@@ -27,9 +27,16 @@ class MapController extends GetxController{
   var cargandoPolylines = false.obs;
   double lat;
   double lon;
+  bool trafficMode = false;
   Location location = new Location();
   LocationData currentLocation;
   StreamController<LocationData> position = StreamController.broadcast();
+
+  void actualizarTrafficMode(){
+    trafficMode = trafficMode ? false : true;
+    update(); 
+  }
+
   void actualizarMenu(int tipo){
     tipoMenu = tipo;
     update();
@@ -74,7 +81,7 @@ class MapController extends GetxController{
         }
         setPolyLines();
         distancia = data['features'][0]['properties']['summary']["distance"];
-        duracion = data['features'][0]['properties']['summary']["duration"];
+        duracion = data['features'][0]['properties']['summary']["duration"]*1.2;
       }
     } catch (e) {
       print(e);
@@ -136,9 +143,9 @@ class MapController extends GetxController{
   setPolyLines() {
     Polyline polyline = Polyline(
       polylineId: PolylineId("polyline"),
-      color: Colors.blue[700],
+      color: Colors.blue,
       points: polyPoints,
-      width: 3,
+      width: 5,
     );
     polyLines.add(polyline);
     update();
@@ -321,6 +328,15 @@ class MapController extends GetxController{
         }
       });
 
+  }
+
+  limpiar(){
+    polyLines.clear();
+    polyPoints.clear();
+    puntos.clear();
+    markers.clear();
+    ruta = null;
+    update();
   }
 
 

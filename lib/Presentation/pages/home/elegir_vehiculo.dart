@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/Controllers/convertir_tiempo_distancia.dart';
+import 'package:routy_app_v102/utils/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
@@ -127,9 +127,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                           ),
                           onChanged: (value) => setState(() {
                             value1 = value;
-                            factorVelocidad1 =
-                                asignarFactorVelocidad(value1.tipoCar);
-                            elegido.actualizar(value1.name);
+                            factorVelocidad1 = asignarFactorVelocidad(value1.tipoCar);
                           }),
                           items: uc.user.vehiculos
                               .map<DropdownMenuItem<CarEntity>>(
@@ -293,7 +291,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                           rc.saveRoute(mc.ruta);
                         }
                         mc.tipoMenu=1;
-                        
+                        elegido.actualizar(value1.name);
                         Get.to(() => MyMap());
                       },
                       style: ButtonStyle(

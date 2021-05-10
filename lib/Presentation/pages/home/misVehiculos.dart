@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/dark_mode_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/crearVehiculo.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
+import 'package:routy_app_v102/Presentation/widgets/routes/mode_dark_switcher.dart';
 import 'package:routy_app_v102/Presentation/widgets/vehicle_card.dart';
 
 class MisVehiculos extends StatelessWidget {
   MisVehiculos({Key key}) : super(key: key);
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final UserController uc = Get.find();
+  final CarController cc = Get.find();
+  final DarkModeController darkModeController = Get.find();
   @override
   Widget build(BuildContext context) {
-    final UserController uc = Get.find();
-    final CarController cc = Get.find();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
@@ -43,45 +46,33 @@ class MisVehiculos extends StatelessWidget {
 
           GetBuilder<CarController>(builder: (controller) {
             return Container(
-            child: Column(children: [
-              Expanded(
-                child: getVehiculos(uc.user.vehiculos, context),
-              ),
-            ]),
-          );
-          }
-          ),
-
-
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 20.0, 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(() => CrearVehiculo());
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.lightBlueAccent,
+            child: 
+              GetBuilder<DarkModeController>(
+              builder: (_) {
+                return Column(children: [
+                    
+                    Expanded(
+                      child: getVehiculos(uc.user.vehiculos, context),
                     ),
-                    child: Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.indigo[900],
-                      size: 40,
-                    )),
-              ),
-            ),
-          ),
+              ]);
+              }
+          )
+          
+          );
+          }),
 
-        Align(
-            alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 20.0),
-              child: GestureDetector(
+        ],
+      ),
+    );
+
+  }
+  Widget headerOptions(BuildContext context){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        FloatingActionButton(
                 key: Key("Boton eliminar"),
-                onTap: () {
+                onPressed: () {
                                 showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
@@ -112,29 +103,39 @@ class MisVehiculos extends StatelessWidget {
                                     ),
                                   );
                 },
-                child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red,
-                    ),
-                    child: Icon(
+                child: Icon(
                       Icons.delete_forever,
                       color: Colors.indigo[900],
-                      size: 40,
-                    )),
+                      size: 35,
+                    ),
+                mini: true,
+                backgroundColor: Colors.red,
+                heroTag: "DeleteAllVehicles",
               ),
-            ),
-          )
 
+          GradientsSwitcher(),
 
-        ],
-      ),
-    );
+          FloatingActionButton(
+                onPressed: () {Get.to(() => CrearVehiculo());},
+                child: Icon(
+                      Icons.add_circle_outline,
+                      color: Colors.indigo[900],
+                      size: 35,
+                    ),
+                mini: true,
+                backgroundColor: Colors.lightBlueAccent,
+                heroTag: "CrearVehículo",
+              ),
+
+        ],);
+
   }
-
   Widget getVehiculos(List<CarEntity> vehis, BuildContext context) {
     if (vehis != null && !vehis.isBlank) {
       List<Widget> list = [];
+
+      list.add(headerOptions(context));
+
       for (CarEntity vehi in vehis) {
         list.add(VehicleCard(vehi));
       }

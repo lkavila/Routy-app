@@ -37,8 +37,9 @@ class _MyAppState extends State<MyMap> {
           builder: (_) => GoogleMap(
             key: Key("Mapa"),
             onMapCreated: _onMapCreated,
+            myLocationButtonEnabled: false,
             myLocationEnabled: true,
-            trafficEnabled: false,
+            trafficEnabled: routeX.trafficMode,
             initialCameraPosition: CameraPosition(
               target: const LatLng(10.90352, -74.79463),
               zoom: 13,
@@ -65,16 +66,14 @@ class _MyAppState extends State<MyMap> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    GetBuilder<MapController>(
+                    builder: (_) => 
                      FloatingActionButton(
+                       mini: true,
                     onPressed: (){
                       if(routeX.ruta!=null){
-                          setState(() {
-                            routeX.polyLines.clear();
-                            routeX.polyPoints.clear();
-                            routeX.puntos.clear();
-                            routeX.markers.clear();
-                            routeX.ruta = null;
-                          });
+                          routeX.limpiar();
+                          routeX.actualizarMenu(0);
                       }else{
                     if (routeX.puntos.length > 1) {
                       showDialog(
@@ -137,29 +136,45 @@ class _MyAppState extends State<MyMap> {
                           ],
                         ),
                       );
+                      
                       }
                     }
                     } ,
+                    heroTag: "verRutaOptima",
                     tooltip: routeX.ruta!=null ? 'ruta stop' : 'ruta start',
-                    child: routeX.ruta!=null ? new Icon(Icons.stop, size: 30,) : new FaIcon(FontAwesomeIcons.route, color: Colors.white),
+                    child: routeX.ruta!=null ? new Icon(Icons.stop, size: 20,) : new FaIcon(FontAwesomeIcons.route, color: Colors.white, size: 20,),
+                ),
                 ),
                   SizedBox(height: 10),
                   FloatingActionButton(
                     onPressed: _followMe,
-                    child: Icon(Icons.gps_fixed, size: 30,)
+                    heroTag: "ubicarme",
+                    mini: true,
+                    child: Icon(Icons.gps_fixed, size: 25,)
                     ),
 
                   SizedBox(height: 10),
+                  GetBuilder<MapController>(
+                  builder: (_) =>
+                      FloatingActionButton(
+                        onPressed: (){
+                        routeX.actualizarTrafficMode();
+                      },
+                      heroTag: "activarTrafico",
+                      mini: true,
+                      child: routeX.trafficMode ? 
+                        FaIcon(FontAwesomeIcons.trafficLight, color: Colors.grey[900], size: 20,) :
+                        FaIcon(FontAwesomeIcons.trafficLight, color: Colors.white, size: 20,)),
+                  ),
+
+                  SizedBox(height: 10),
                   FloatingActionButton(onPressed: (){
-                          setState(() {
-                            routeX.polyLines.clear();
-                            routeX.polyPoints.clear();
-                            routeX.puntos.clear();
-                            routeX.markers.clear();
-                            routeX.ruta = null;
-                          });
+                    routeX.limpiar();
+                    routeX.actualizarMenu(0);
                   },
-                  child: FaIcon(FontAwesomeIcons.broom, color: Colors.white),)
+                  heroTag: "limpiarPantalla",
+                  mini: true,
+                  child: FaIcon(FontAwesomeIcons.broom, color: Colors.white, size: 20,),)
                   
                   ],
                 )

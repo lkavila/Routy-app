@@ -14,7 +14,7 @@ class Loading extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(child: CircularProgressIndicator(backgroundColor: Colors.blue[800], semanticsLabel: mensaje,)),
-                Text(mensaje, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Pacifico'),),
+                Text(mensaje, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.cyanAccent),),
               ],
             ),
           ),

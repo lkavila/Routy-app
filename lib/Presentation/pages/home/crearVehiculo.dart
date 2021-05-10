@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/dark_mode_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
-import 'package:routy_app_v102/Presentation/widgets/color_mode.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 
 class CrearVehiculo extends StatefulWidget {
@@ -17,6 +17,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final nameInputController = new TextEditingController();
   final consumoInputController = new TextEditingController();
+  final DarkModeController darkModeController = Get.find();
   String dropdownValue = 'Carro';
   String dropdownValueC = 'Gasolina';
   @override
@@ -51,7 +52,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         style: TextStyle(
                           fontFamily: 'Pacifico',
                           fontSize: 25,
-                          color: colorMode(),
+                          color: darkModeController.colorMode(),
                         ),
                       ),
                       Expanded(
@@ -69,7 +70,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 15,
-                        color: colorMode()
+                        color: darkModeController.colorMode()
                       ),
                     ),
                   ),
@@ -92,7 +93,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Tipo de vehiculo",
                       style: TextStyle(
                         fontSize: 15,
-                        color: colorMode(),
+                        color: darkModeController.colorMode(),
                       ),
                     ),
                   ),
@@ -124,7 +125,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                           value,
                           style: TextStyle(
                             fontSize: 14,
-                            color: colorMode(),
+                            color: darkModeController.colorMode(),
                           ),
                         ),
                       );
@@ -139,7 +140,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Tipo de Combustible",
                       style: TextStyle(
                         fontSize: 15,
-                        color: colorMode(),
+                        color: darkModeController.colorMode(),
                       ),
                     ),
                   ),
@@ -170,7 +171,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                           value,
                           style: TextStyle(
                             fontSize: 14,
-                            color: colorMode(),
+                            color: darkModeController.colorMode(),
                           ),
                         ),
                       );
@@ -185,7 +186,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                       "Consumo (Galones/100Km)",
                       style: TextStyle(
                         fontSize: 15,
-                        color: colorMode(),
+                        color: darkModeController.colorMode(),
                       ),
                     ),
                   ),

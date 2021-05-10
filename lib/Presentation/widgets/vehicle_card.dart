@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/dark_mode_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 
 class VehicleCard extends StatelessWidget {
@@ -19,8 +20,8 @@ class VehicleCard extends StatelessWidget {
   Widget carWidget(CarEntity vehiculo, BuildContext context) {
     final CarController carController = Get.find();
     final UserController userController = Get.find();
-    final List<Color> _colors = [Colors.blue, Color.fromRGBO(11, 210, 181, 1)];
-    final List<double> _stops = [0.4, 1];
+    final DarkModeController _darkModeController = Get.find();
+    final List<double> _stops = [0.0, 0.44, 1];
     return Container(
         width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
@@ -38,9 +39,9 @@ class VehicleCard extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: _colors,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: _darkModeController.colorsGradient(_darkModeController.gradientColors),
                   stops: _stops,
                 ),
               ),
@@ -104,17 +105,28 @@ class VehicleCard extends StatelessWidget {
                   
                   ]
                   ),
-                      
+                  
+                Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                    Padding(
                     padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     child: Text(
                       'Tipo: ${vehiculo.tipoCar}',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.5,
                       ),
                     ),
                   ),
+
+                   Padding(
+                    padding: EdgeInsets.fromLTRB(12.0, 0, 8.0, 5.0),
+                    child:FaIcon(FontAwesomeIcons.carSide, color: Colors.grey[800], size: 13,), 
+                  ),
+
+                  ]),
+
                 Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -124,7 +136,7 @@ class VehicleCard extends StatelessWidget {
                       'Km recorridos: ${vehiculo.recorrido}',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.5,
                       ),
                     ),
                   ),
@@ -144,7 +156,7 @@ class VehicleCard extends StatelessWidget {
                       'Combustible consumido: ${vehiculo.consumido}',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.5,
                       ),
                     ),
                   ),
@@ -163,7 +175,7 @@ class VehicleCard extends StatelessWidget {
                       'Tipo de Combustible: ${vehiculo.tipoCombustible}',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.5,
                       ),
                     ),
                   ),
@@ -183,7 +195,7 @@ class VehicleCard extends StatelessWidget {
                       'Consumo: ${vehiculo.consumo} Galones/100Km',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.5,
                       ),
                     ),
                   ),
@@ -203,7 +215,7 @@ class VehicleCard extends StatelessWidget {
                       'Uso: ${vehiculo.uso}',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.5,
                       ),
                     ),
                   ),
