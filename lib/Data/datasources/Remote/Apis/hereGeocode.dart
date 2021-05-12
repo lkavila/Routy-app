@@ -23,17 +23,25 @@ class GeoCodeReverse {
       var pro = dir['items'][0]['address'];
       String street = pro['street'];
       List<String> list;
-      if (street.contains(" ")){
-        list = street.split(" ");
-      } else {
-        list = [street];
+      List<String> direccion;
+
+      if(street!=null){
+        if (street.contains(" ")){
+          list = street.split(" ");
+        } else {
+          list = [street];
+        } 
+        if (list.length==3){
+          street = list[0]+" "+list[1]+" "+"#"+list[2];
+        }
+        direccion = [street+", "+pro["city"]];
+        direccion.add(pro["county"]);
+        return direccion;
+      }else{
+        direccion = [pro["district"]+", "+pro["city"]];
+        direccion.add(pro["county"]);
+        return direccion;
       }
-      if (list.length==3){
-        street = list[0]+" "+list[1]+" "+"#"+list[2];
-      }
-      List<String> direccion = [street+", "+pro["city"]];
-      direccion.add(pro["county"]);
-      return direccion;
     
   }else{
       print(response.statusCode);

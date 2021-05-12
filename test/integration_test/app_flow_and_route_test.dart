@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 Future<Widget> createHomeScreen() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseAuth.instance.signOut();
   await GetStorage.init();
   await FlutterConfig.loadEnvVariables();
   return GetMaterialApp(home: Wrapper());
@@ -58,11 +60,11 @@ void main() {
       await tester.pumpAndSettle(Duration(seconds: 5));
       await tester.drag(find.byKey(Key("Mapa")), Offset(-10, 290));
 
-      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.pumpAndSettle(Duration(seconds: 7));
       await tester.tap(find.byKey(Key("Mapa")));
 
-      await tester.pumpAndSettle(Duration(seconds: 5));
-      await tester.tap(find.text('Ver ruta óptima'));
+      await tester.pumpAndSettle(Duration(seconds: 7));
+      await tester.tap(find.byKey(Key("Ver ruta optima")));
       await tester.pumpAndSettle();
 
       expect(find.byKey(Key("Not Enough Routes")), findsNothing);
@@ -72,10 +74,10 @@ void main() {
 
       expect(find.byKey(Key("RutaCalculada")), findsOneWidget);
 
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(Duration(seconds: 2));
       await tester.tap(find.byKey(Key("Elegir vehiculo")));
 
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(Duration(seconds: 2));
       await tester.tap(find.text("Iniciar ruta"));
 
       await tester.pumpAndSettle(Duration(seconds: 3));
@@ -87,11 +89,10 @@ void main() {
       await tester.pumpAndSettle(Duration(seconds: 3));
       await tester.tap(find.byKey(Key("Cancelar ruta")));
 
-      await tester.pumpAndSettle();
-      expect(find.byKey(Key("Elegir vehiculo")), findsOneWidget);
       await tester.pumpAndSettle(Duration(seconds: 3));
+      expect(find.byKey(Key("Elegir vehiculo")), findsOneWidget);
 
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(Duration(seconds: 3));
       await tester.tap(find.byKey(Key("Elegir vehiculo")));
 
       await tester.pumpAndSettle(Duration(seconds: 3));

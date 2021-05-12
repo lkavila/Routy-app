@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Apis/networking.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
+import 'package:routy_app_v102/Domain/entities/routeDTO.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/create_route.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/get_best_way.dart';
 import 'package:routy_app_v102/Domain/usecases/Routes/get_direction_from_geocode_reverse.dart';
@@ -81,7 +82,7 @@ class MapController extends GetxController{
         }
         setPolyLines();
         distancia = data['features'][0]['properties']['summary']["distance"];
-        duracion = data['features'][0]['properties']['summary']["duration"]*1.2;
+        duracion = data['features'][0]['properties']['summary']["duration"]*1.3;
       }
     } catch (e) {
       print(e);
@@ -122,10 +123,6 @@ class MapController extends GetxController{
         tipoCar: "driving-car"
       );
 
-      Marker lastMarker = markers.last;
-      markers.remove(lastMarker);
-      Marker newLastMarker = doCreateMarker(lastMarker.position.latitude, lastMarker.position.longitude, finish, markers.length+1);
-      markers.add(newLastMarker);
       update();
       
     }
@@ -145,24 +142,32 @@ class MapController extends GetxController{
       polylineId: PolylineId("polyline"),
       color: Colors.blue,
       points: polyPoints,
-      width: 5,
+      width: 3,
     );
     polyLines.add(polyline);
-    update();
   }
 
 
     createMarkers(double lat, double lng, BitmapDescriptor img, int cont) {
       puntos.add(LatLng(lat, lng));
-      
-      markers.add(
-        doCreateMarker(lat, lng, img, cont)
-      );       
-      
-      update();
+      markers.add(doCreateMarker(lat, lng, img, cont));       
+    }
+
+    createMarkerFromTap(double lat, double lng, BitmapDescriptor img, int cont) {
+      puntos.add(LatLng(lat, lng));
+      if(markers.length>1){
+        Marker lastMarker = markers.last;
+        markers.remove(lastMarker);
+        Marker newLastMarker = doCreateMarker(lastMarker.position.latitude, lastMarker.position.longitude, BitmapDescriptor.defaultMarker, markers.length);
+        markers.add(newLastMarker);
+      }
+      markers.add(doCreateMarker(lat, lng, img, cont));
+
+      update();       
     }
 
   Marker doCreateMarker(double lat, double lng, BitmapDescriptor img, int cont){
+
         return Marker(
           markerId: MarkerId(cont.toString()),
           position: LatLng(lat, lng),
@@ -219,16 +224,16 @@ class MapController extends GetxController{
 
   showChooseRouteOnMap(RouteEntity ruta){
     this.ruta = null;
-    this.polyLines.clear();
-    this.polyPoints.clear();
-    this.markers.clear();
-    this.puntos.clear();
+    this.polyLines = {};
+    this.polyPoints = [];
+    this.markers = {};
+    this.puntos = [];
     this.ruta = ruta;
     this.polyPoints = ruta.polyPoints;
     setPolyLines();
     print("crear markers");
     int cont = 1;
-    this.ruta.markerPoints.forEach((element) {
+    ruta.markerPoints.forEach((element) {
       if (markers.isEmpty){
         createMarkers(element.latitude, element.longitude, start, cont);
       }else{
@@ -241,13 +246,14 @@ class MapController extends GetxController{
 
       cont++;
       });
+      //update();
   }
 
   BitmapDescriptor markerImage(){
       if (markers.isEmpty){
         return start;
       }else{
-        return BitmapDescriptor.defaultMarker;
+        return finish;
       }
   }
 
@@ -256,16 +262,19 @@ class MapController extends GetxController{
     if(_rc.misRutas.contains(ruta)){
       RouteEntity route =_rc.misRutas.firstWhere((element) => element.id==ruta.id);
       _rc.misRutas.remove(route);
+      RouteDTO routeDto =_rc.misRutasDto.firstWhere((element) => element.id==ruta.id);
+      _rc.misRutasDto.remove(routeDto);
       final MakeFrecuentUseCase _makef = MakeFrecuent();
       _makef.call(ruta.id, !ruta.frecuente);
+
     }else{
       final CreateRouteUseCase _createRoute = CreateRoute();
       _createRoute.call(ruta.id, ruta.userId, ruta.origen, ruta.destino, ruta.departamentos, ruta.circular, ruta.tipoCar, ruta.distancia, ruta.duracion, ruta.markerPoints, ruta.polyPoints, ruta.createdAt, ruta.frecuente);
       
     }
     ruta.frecuente = ruta.frecuente ? false : true;
+    _rc.actualizarRutas(ruta);
     update();
-    _rc.misRutas.add(ruta);
 
   }
 
@@ -289,23 +298,26 @@ class MapController extends GetxController{
   Future getCurrentLocation() async{
     //final GetCurrentLocationUseCase _getCurrent = GetCurrentLocation();
     //currentLocation = _getCurrent.call();
-    final MapController mapController = Get.find();
       location.changeSettings(interval: 4000);
       location.serviceEnabled().then((value) { 
       if (!value) {location.requestService();}});
 
+    print("Asking for location");
     location.hasPermission().then((value){ 
     if (value == PermissionStatus.denied) {
       location.requestPermission().then((value) { 
         if (value == PermissionStatus.granted){
+          print("Getting location");
             location.getLocation().then((value){
+                lat = value.latitude;
+                lon = value.longitude;
               location.onLocationChanged.listen((LocationData currentLocation) {
                 if (currentLocation.speed>2){
                   print(currentLocation.speed);
                   position.add(currentLocation);
                   this.currentLocation = currentLocation;
-                  mapController.lat = currentLocation.latitude;
-                  mapController.lon = currentLocation.longitude;
+                  lat = currentLocation.latitude;
+                  lon = currentLocation.longitude;
                 }
               });
           });
@@ -314,13 +326,15 @@ class MapController extends GetxController{
         });
         }else if (value == PermissionStatus.granted) {
             location.getLocation().then((value){
+                lat = value.latitude;
+                lon = value.longitude;
               location.onLocationChanged.listen((LocationData currentLocation) {
                 if (currentLocation.speed>2){
                   position.add(currentLocation);
                   this.currentLocation = currentLocation;
                   print(this.currentLocation.latitude);
-                  mapController.lat = currentLocation.latitude;
-                  mapController.lon = currentLocation.longitude;
+                  lat = currentLocation.latitude;
+                  lon = currentLocation.longitude;
                 }
 
               });
@@ -331,10 +345,10 @@ class MapController extends GetxController{
   }
 
   limpiar(){
-    polyLines.clear();
-    polyPoints.clear();
-    puntos.clear();
-    markers.clear();
+    polyLines = {};
+    polyPoints = [];
+    puntos = [];
+    markers = {};
     ruta = null;
     update();
   }

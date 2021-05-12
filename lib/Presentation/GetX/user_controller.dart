@@ -19,6 +19,7 @@ class UserController extends GetxController {
   bool _isSigningIn = false;
   String _signinWith;
   bool get isSigningIn => this._isSigningIn;
+  bool noRepeat=true;
 
  set isSigningIn(bool value) {
     this._isSigningIn = value;
@@ -42,25 +43,31 @@ class UserController extends GetxController {
   
   Future loginWithGoogle() async {
     isSigningIn = true;
+    update();
     final LoginWithGoogleUseCase _loginGoogle = LoginWithGoogle();
     await _loginGoogle.call(googleSignIn);
     _signinWith = "Google";
     isSigningIn = false;
+    update();
     
   }
   Future loginWithFacebook() async {
     isSigningIn = true;
+    update();
     final LoginWithFacebookUseCase _loginFacebook = LoginWithFacebook();
     await _loginFacebook.call(facebookSignIn);
     _signinWith = "Facebook";
     isSigningIn = false;
+    update();
   }
 
   Future loginWithEmail(String email, String password) async {
     isSigningIn = true;
+    update();
     final LoginWithEmailUseCase _loginEmail = LoginWithEmail();
     await _loginEmail.call(email, password);
     isSigningIn = false;
+    update();
   }
 
   Future createAccount(String email, String password, String name) async {
@@ -83,6 +90,7 @@ class UserController extends GetxController {
   Future logOut() async {
     final LogOutUseCase _logOut = LogOut();
     await _logOut.call(signinWith, googleSignIn, facebookSignIn);
+    user = null;
   }
 
   Future salir() async {

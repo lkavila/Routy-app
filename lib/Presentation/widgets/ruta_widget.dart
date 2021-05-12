@@ -32,7 +32,7 @@ class Ruta extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(padd, padd, padd, 0),
           child: Container(
               width: MediaQuery.of(context).size.width * 0.98,
-              height: 160,
+              height: 165,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: _darkMode.colorRuta(),
@@ -184,7 +184,7 @@ class Ruta extends StatelessWidget {
                       SizedBox(width: 10,),
                       texto(mc.tipoMenu, elegido.elegido, _darkMode),
                       SizedBox(width: 5,),
-                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion*1.25)}',style: style2(_darkMode)),
+                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion)}',style: style2(_darkMode)),
                     ],
                   ),
                   
@@ -441,12 +441,8 @@ class Ruta extends StatelessWidget {
                         TextButton(
                           key: Key("Finalizar camino"),
                             onPressed: () {
-                              mc.polyLines.clear();
-                              mc.polyPoints.clear();
-                              mc.puntos.clear();
-                              mc.markers.clear();
-                              mc.ruta = null;
                               mc.actualizarMenu(0);
+                              mc.limpiar();
                               Get.back();
                             },
                             child: Text("Si")),

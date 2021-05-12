@@ -25,6 +25,7 @@ class Menu extends StatelessWidget {
             child: Column(
               children: [
                 IconButton(
+                  key: Key("OpenCustumDrawer"),
                 icon: const Icon(Icons.menu, color: Colors.transparent,),
                 onPressed: () => _scaffoldKey.currentState.openDrawer(),
               ),

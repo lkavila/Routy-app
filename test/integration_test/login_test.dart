@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 Future<Widget> createHomeScreen() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseAuth.instance.signOut();
   await GetStorage.init();
   await FlutterConfig.loadEnvVariables();
   return GetMaterialApp(home: Wrapper());
@@ -50,7 +52,6 @@ void main() {
 
       await tester.pumpAndSettle();
       
-
 
     });
 

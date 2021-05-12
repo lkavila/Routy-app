@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
 
 class GoToMap extends StatelessWidget {
@@ -15,10 +14,10 @@ class GoToMap extends StatelessWidget {
   }
 
   Widget goToMap() {
-    final MapController _mapController = Get.find();
     return FloatingActionButton(
+              key: Key("GoToMpap"),
               onPressed:() {
-                _mapController.getCurrentLocation().whenComplete(() => Get.to(() => MyMap()));
+                Get.to(() => MyMap());
               }, 
               child: Icon(
                 Icons.add_circle_outline,

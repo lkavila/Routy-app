@@ -20,17 +20,17 @@ class Wrapper extends StatelessWidget {
               if (userController.isSigningIn) {
                 return buildLoading();
               } else if (FirebaseAuth.instance.currentUser!=null) {
-                return GetBuilder<UserController>(
-                        builder: (_) {
-                          if(userController.user==null){
+                
+                          if(userController.user==null && userController.noRepeat){
+                            print("Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                             userController.getUser();
+                            userController.noRepeat=false;
                             return buildLoading();
                           }else {
+                              userController.noRepeat=true;
                               return MisRutas();
                               }
-                            }
-                          );
-                      
+                            
               } else {
                 return  SignUpWidget();
                 }

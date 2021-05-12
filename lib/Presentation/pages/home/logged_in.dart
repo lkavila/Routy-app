@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';
+import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 import 'package:routy_app_v102/Presentation/widgets/background_painter.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
-
-import 'misVehiculos.dart';
 
 class LoggedIn extends StatefulWidget {
   LoggedIn({Key key}) : super(key: key);
@@ -86,18 +85,30 @@ class _LoggedInState extends State<LoggedIn> {
                     SizedBox(height: 8),
                     ElevatedButton(
                       onPressed: () async {
-                        await uc.logOut();
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MisVehiculos()),
-                            (route) => route.isFirst);
                       },
                       child: Text(
                         'Vehiculos',
                         style: TextStyle(color: Colors.white, fontSize: 15),
                       ),
                     ),
+  
+                    SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await uc.logOut();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Wrapper()),
+                            (route) => route.isFirst);
+                      },
+                      child: Text(
+                        'Cerrar sesión',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+
+
                   ]),
             ),
 

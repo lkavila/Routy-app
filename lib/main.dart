@@ -27,12 +27,11 @@ class MyApp extends StatelessWidget {
         theme: isDarkMode
             ? ThemeData(
                 //brightness: Brightness.dark,
-
                 appBarTheme: AppBarTheme(color: Colors.indigo[900]),
                 fontFamily: "OpenSans",
                 buttonColor: Colors.blue[900],
                 dialogBackgroundColor: Color.fromRGBO(12, 55, 106, 0.95),
-                scaffoldBackgroundColor: Colors.grey[900],
+                scaffoldBackgroundColor: Colors.grey[850],
               )
             : ThemeData(
                 brightness: Brightness.light,

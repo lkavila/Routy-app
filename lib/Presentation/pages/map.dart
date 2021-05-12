@@ -24,6 +24,7 @@ class _MyAppState extends State<MyMap> {
 
   @override
   void initState() {
+    routeX.getCurrentLocation();
     super.initState();
   }
 
@@ -45,7 +46,7 @@ class _MyAppState extends State<MyMap> {
               zoom: 13,
             ),
             onTap: (data) {
-              routeX.createMarkers(data.latitude, data.longitude, routeX.markerImage(), routeX.markers.length);
+              routeX.createMarkerFromTap(data.latitude, data.longitude, routeX.markerImage(), routeX.markers.length);
               print(routeX.markers.last.position);
               if (routeX.polyLines.isNotEmpty) {
                 setState(() {
@@ -69,13 +70,13 @@ class _MyAppState extends State<MyMap> {
                     GetBuilder<MapController>(
                     builder: (_) => 
                      FloatingActionButton(
+                       key: Key("Ver ruta optima"),
                        mini: true,
-                    onPressed: (){
-                      if(routeX.ruta!=null){
-                          routeX.limpiar();
-                          routeX.actualizarMenu(0);
-                      }else{
-                    if (routeX.puntos.length > 1) {
+                      onPressed: (){
+                        if(routeX.ruta!=null){
+                          //si ya existe una ruta no hace nada
+                        }else{
+                      if (routeX.ruta==null && routeX.puntos.length > 1) {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
@@ -141,8 +142,8 @@ class _MyAppState extends State<MyMap> {
                     }
                     } ,
                     heroTag: "verRutaOptima",
-                    tooltip: routeX.ruta!=null ? 'ruta stop' : 'ruta start',
-                    child: routeX.ruta!=null ? new Icon(Icons.stop, size: 20,) : new FaIcon(FontAwesomeIcons.route, color: Colors.white, size: 20,),
+                    tooltip: routeX.ruta!=null ? 'la ruta ya fue calculada' : 'Calcular ruta óptima entre los puntos',
+                    child: routeX.ruta!=null ? FaIcon(FontAwesomeIcons.route, color: Colors.grey[900], size: 20,) : new FaIcon(FontAwesomeIcons.route, color: Colors.white, size: 20,),
                 ),
                 ),
                   SizedBox(height: 10),
@@ -150,6 +151,7 @@ class _MyAppState extends State<MyMap> {
                     onPressed: _followMe,
                     heroTag: "ubicarme",
                     mini: true,
+                    tooltip: "Ver mi posición actual",
                     child: Icon(Icons.gps_fixed, size: 25,)
                     ),
 
@@ -161,6 +163,7 @@ class _MyAppState extends State<MyMap> {
                         routeX.actualizarTrafficMode();
                       },
                       heroTag: "activarTrafico",
+                      tooltip: "Ver el trafico en tiempo real",
                       mini: true,
                       child: routeX.trafficMode ? 
                         FaIcon(FontAwesomeIcons.trafficLight, color: Colors.grey[900], size: 20,) :
@@ -168,11 +171,13 @@ class _MyAppState extends State<MyMap> {
                   ),
 
                   SizedBox(height: 10),
-                  FloatingActionButton(onPressed: (){
-                    routeX.limpiar();
-                    routeX.actualizarMenu(0);
-                  },
+                  FloatingActionButton(
+                    onPressed: (){
+                      routeX.limpiar();
+                      routeX.actualizarMenu(0);
+                    },
                   heroTag: "limpiarPantalla",
+                  tooltip: "Limpiar pantalla/Quitar ruta",
                   mini: true,
                   child: FaIcon(FontAwesomeIcons.broom, color: Colors.white, size: 20,),)
                   
@@ -181,7 +186,7 @@ class _MyAppState extends State<MyMap> {
             ),
 
         GetBuilder<MapController>(builder: (_) {
-          if (routeX.ruta != null) {
+          if (!routeX.cargandoPolylines.value && routeX.ruta != null) {
             return Ruta();
           } else {
             return SizedBox();

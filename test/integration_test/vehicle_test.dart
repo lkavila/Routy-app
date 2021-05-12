@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
 Future<Widget> createHomeScreen() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseAuth.instance.signOut();
   await GetStorage.init();
   await FlutterConfig.loadEnvVariables();
   return GetMaterialApp(home: Wrapper());
@@ -63,20 +65,16 @@ void main() {
       await tester.pumpAndSettle(Duration(seconds: 2));
       expect(find.byType(ListView), findsNothing);
 
-
-
-
-
     });
-/*
-    testWidgets('login with facebook', (tester) async {
+
+    testWidgets('create new car', (tester) async {
 
       Widget w = await createHomeScreen();
       await tester.pumpWidget(w);
 
-      expect(find.byKey(Key("login")), findsOneWidget);
+      expect(find.byKey(Key("login")), findsOneWidget); //en caso de que se necesite loguearse
 
-      await tester.tap(find.byKey(Key("login_with_facebook")));
+      await tester.tap(find.byKey(Key("login_with_google")));
 
       await tester.pumpAndSettle(Duration(seconds: 5));
       
@@ -90,19 +88,27 @@ void main() {
       
       expect(find.byType(ListTile), findsNWidgets(6));
 
-      expect(find.byKey(Key("LogOut")), findsOneWidget);
+      expect(find.byKey(Key("Mis vehículos")), findsOneWidget);
 
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(Key("LogOut")));
-      
+      await tester.tap(find.byKey(Key("Mis vehículos")));
       await tester.pumpAndSettle();
-      
 
+      expect(find.text('Mis vehículos'), findsOneWidget);
+
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(Key("Boton eliminar")));
+
+      await tester.pumpAndSettle(Duration(seconds: 2));
+      expect(find.text("Si, eliminar"), findsOneWidget);
+
+      await tester.pumpAndSettle(Duration(seconds: 2));
+      await tester.tap(find.text("Si, eliminar"));
+
+      await tester.pumpAndSettle(Duration(seconds: 2));
+      expect(find.byType(ListView), findsNothing);
 
     });
-
-    */
-
     
   });
 }

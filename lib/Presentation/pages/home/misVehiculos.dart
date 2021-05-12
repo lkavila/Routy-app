@@ -35,8 +35,8 @@ class MisVehiculos extends StatelessWidget {
               onPressed: () {
                 Get.back();
               },
-              icon: Icon(Icons.arrow_back_rounded),
-              label: Text("atras"))
+              icon: Icon(Icons.arrow_back_rounded, color: Colors.white,),
+              label: Text("atras", style: TextStyle(color: Colors.white),))
         ],
       ),
       drawer: DrawerMenu(),
@@ -115,7 +115,14 @@ class MisVehiculos extends StatelessWidget {
 
           GradientsSwitcher(),
 
-          FloatingActionButton(
+          goToCrearVehiculo()
+
+        ],);
+
+  }
+
+Widget goToCrearVehiculo(){
+  return FloatingActionButton(
                 onPressed: () {Get.to(() => CrearVehiculo());},
                 child: Icon(
                       Icons.add_circle_outline,
@@ -125,32 +132,49 @@ class MisVehiculos extends StatelessWidget {
                 mini: true,
                 backgroundColor: Colors.lightBlueAccent,
                 heroTag: "CrearVehículo",
-              ),
+              );
+}
 
-        ],);
-
-  }
   Widget getVehiculos(List<CarEntity> vehis, BuildContext context) {
     if (vehis != null && !vehis.isBlank) {
       List<Widget> list = [];
 
+      list.add(SizedBox(height: 20,));
       list.add(headerOptions(context));
+      list.add(SizedBox(height: 5,));
 
       for (CarEntity vehi in vehis) {
         list.add(VehicleCard(vehi));
       }
       return new ListView(children: list);
     } else {
-      return Center(
-        child: Padding(
+      return Stack(
+
+        children: [
+          Center(
+            child:Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.20),
           child: Text(
-            "Aún no ha agregado ningún vehículo",
-            style: TextStyle(color: Colors.blue[800], fontSize: 18),
+            "Aún no ha agregado ninguna ruta",
+            style:
+                TextStyle(color: darkModeController.colorMode(), fontSize: 18),
             textAlign: TextAlign.center,
           ),
         ),
+          ),
+        
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 20, 20),
+          child: goToCrearVehiculo()
+          )
+        )
+        ]
       );
+
     }
+  
+
   }
 }

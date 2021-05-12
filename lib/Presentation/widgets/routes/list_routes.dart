@@ -67,6 +67,7 @@ class GetRouteList extends StatelessWidget {
       backgroundColor: Colors.red,
       heroTag: tag,
       mini: true,
+      key: Key(tag),
     );
   }
 
@@ -82,8 +83,10 @@ class GetRouteList extends StatelessWidget {
     if (rutas.isNotEmpty) {
       List<Widget> list = [];
       print(rutas.first.origen);
-
+      
+      list.add(SizedBox(height: 20,));
       list.add(headerOptions(context));
+      list.add(SizedBox(height: 5,));
 
       rutas.sort((a, b) => b.createdAt
           .compareTo(a.createdAt)); //la rura mas reciente se muestra primero
@@ -95,8 +98,11 @@ class GetRouteList extends StatelessWidget {
         children: list,
       );
     } else {
-      return Center(
-        child: Padding(
+      return Stack(
+
+        children: [
+          Center(
+            child:Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.20),
           child: Text(
             "Aún no ha agregado ninguna ruta",
@@ -105,6 +111,16 @@ class GetRouteList extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
+          ),
+        
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 20, 20),
+          child: GoToMap(tagMap)
+          )
+        )
+        ]
       );
     }
   }

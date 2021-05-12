@@ -45,10 +45,10 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text(
-            'Elegir Vehiculo',
+            'Elegir Vehículo',
             style: TextStyle(
               fontFamily: 'pacifico',
-              fontSize: 20,
+              fontSize: 19,
             ),
           ),
           actions: [
@@ -57,8 +57,8 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                 onPressed: () {
                   Get.back();
                 },
-                icon: Icon(Icons.arrow_back_rounded),
-                label: Text("atras"))
+                icon: Icon(Icons.arrow_back_rounded, color: Colors.white,),
+                label: Text("atras", style: TextStyle(color: Colors.white),))
           ],
         ),
         drawer: DrawerMenu(),
