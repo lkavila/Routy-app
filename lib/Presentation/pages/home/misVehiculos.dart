@@ -123,6 +123,7 @@ class MisVehiculos extends StatelessWidget {
 
 Widget goToCrearVehiculo(){
   return FloatingActionButton(
+                key: Key("GoToCrearVehiculo"),
                 onPressed: () {Get.to(() => CrearVehiculo());},
                 child: Icon(
                       Icons.add_circle_outline,

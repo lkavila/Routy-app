@@ -40,7 +40,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
       body: ListView(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
+            padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -76,6 +76,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                   ),
                   SizedBox(height: 10,),
                   TextField(
+                    key: Key("NombreVehículo"),
                     controller: nameInputController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -192,6 +193,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                   ),
                   SizedBox(height: 10,),
                   TextField(
+                    key: Key("Combustible"),
                     keyboardType: TextInputType.number,
                     controller: consumoInputController,
                     decoration: InputDecoration(
@@ -206,8 +208,9 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                   ),
                   Align(
                     alignment: AlignmentDirectional.topEnd,
-                    child: GestureDetector(
-                      onTap: () {
+                    child: FloatingActionButton(
+                      key: Key("CrearNuevoVehiculo"),
+                      onPressed: () {
                         carController.createCar(
                             nameInputController.text,
                             dropdownValue,
@@ -215,22 +218,14 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                             dropdownValueC);
                         Get.to(() => MisVehiculos());
                       },
-                      child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: EdgeInsets.fromLTRB(5.0, 5.0, 0, 0),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Color.fromRGBO(0, 128, 0, 20)),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.green,
-                          ),
-                          child: FaIcon(
+                      heroTag: "CrearNuevoVehiculo",
+                      mini: true,
+                      backgroundColor: Colors.green,
+                      child: FaIcon(
                             FontAwesomeIcons.check,
                             color: Colors.white,
                             size: 27,
-                          )),
+                          )
                     ),
                   ),
                 ]),

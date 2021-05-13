@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:routy_app_v102/Presentation/pages/wrapper.dart';
+import 'package:routy_app_v102/Presentation/widgets/vehicle_card.dart';
 
 Future<Widget> createHomeScreen() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -97,16 +98,19 @@ void main() {
       expect(find.text('Mis vehículos'), findsOneWidget);
 
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(Key("Boton eliminar")));
+      await tester.tap(find.byKey(Key("GoToCrearVehiculo")));
+
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(Key("NombreVehículo")), 'A new vehicle');
+
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(Key("Combustible")), '5');
 
       await tester.pumpAndSettle(Duration(seconds: 2));
-      expect(find.text("Si, eliminar"), findsOneWidget);
+      await tester.tap(find.byKey(Key("CrearNuevoVehiculo")));
 
       await tester.pumpAndSettle(Duration(seconds: 2));
-      await tester.tap(find.text("Si, eliminar"));
-
-      await tester.pumpAndSettle(Duration(seconds: 2));
-      expect(find.byType(ListView), findsNothing);
+      expect(find.byType(VehicleCard), findsOneWidget);
 
     });
     
