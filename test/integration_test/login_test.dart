@@ -64,7 +64,7 @@ void main() {
 
       await tester.tap(find.byKey(Key("login_with_facebook")));
 
-      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.pumpAndSettle(Duration(seconds: 8));
       
       expect(find.byType(TabBarView), findsOneWidget);
 

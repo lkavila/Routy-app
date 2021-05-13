@@ -20,9 +20,9 @@ class CarRepositoryImpl implements CarRepository{
   }
 
   @override
-  Future<void> editCar(String id, String name, String tipoCombustible, double consumo, String tipoCar, String tipoApiCar)async{
+  Future<void> editCar(String userId, String carId, String name, String tipoCombustible, double consumo, String tipoCar, String tipoApiCar)async{
     final EditCarFirebase _editCar = EditCarFirebase();
-    await _editCar.editCar(id, name, tipoCombustible, consumo, tipoCar, tipoApiCar);
+    await _editCar.editCar(userId, carId, name, tipoCombustible, consumo, tipoCar, tipoApiCar);
   }
 
   @override

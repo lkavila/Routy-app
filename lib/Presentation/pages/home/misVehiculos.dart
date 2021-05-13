@@ -144,8 +144,11 @@ Widget goToCrearVehiculo(){
       list.add(headerOptions(context));
       list.add(SizedBox(height: 5,));
 
+      vehis.sort((a, b) => b.createdAt.compareTo(a.createdAt)); //el vehiculo creado mas reciente se muestra primero
+      int cont = 1;
       for (CarEntity vehi in vehis) {
-        list.add(VehicleCard(vehi));
+        list.add(VehicleCard(vehi, cont));
+        cont++;
       }
       return new ListView(children: list);
     } else {

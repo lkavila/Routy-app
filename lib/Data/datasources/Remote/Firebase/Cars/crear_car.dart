@@ -50,7 +50,7 @@ class CreateCarFirebase{
     return users
       .doc(uc.user.id)
       .update({'vehiculos': map1})
-      .then((value) => print("car created Updated"))
-      .catchError((error) => print("Failed to update user vehiculo: $error"));
+      .then((value) => print("car created"))
+      .catchError((error) => print("Failed to create user vehiculo: $error"));
   }
 }
