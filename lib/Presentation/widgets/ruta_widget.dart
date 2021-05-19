@@ -11,7 +11,7 @@ import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/crearVehiculo.dart';
-import 'package:routy_app_v102/Presentation/pages/home/elegir_vehiculo.dart';
+import 'package:routy_app_v102/Presentation/pages/home/elegirVehiculo.dart';
 
 class Ruta extends StatelessWidget {
   const Ruta({Key key}) : super(key: key);

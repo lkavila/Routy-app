@@ -1,25 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:routy_app_v102/Domain/entities/car.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/dark_mode_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 
-class CrearVehiculo extends StatefulWidget {
-  CrearVehiculo({Key key}) : super(key: key);
+class EditarVehiculo extends StatefulWidget {
+  final CarEntity myCar;
+  EditarVehiculo(this.myCar, {Key key}) : super(key: key);
 
   @override
-  _CrearVehiculoState createState() => _CrearVehiculoState();
+  _EditarVehiculoState createState() => _EditarVehiculoState();
 }
 
-class _CrearVehiculoState extends State<CrearVehiculo> {
+class _EditarVehiculoState extends State<EditarVehiculo> {
+  List<String> tiposCombustible = ['Gasolina', 'Gas', 'Diesel','Otro'].toList();
+  List<String> combistibleSelect = [];
+  List<String> tiposVehiculos = ['Carro','Camión','Motocicleta','Bicicleta','A pie'].toList();
+  List<String> vehiculoSelect = [];
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final nameInputController = new TextEditingController();
-  final consumoInputController = new TextEditingController();
+  var nameInputController;
+  var consumoInputController;
   final DarkModeController darkModeController = Get.find();
+  CarEntity vehicle;
   String dropdownValue = 'Carro';
   String dropdownValueC = 'Gasolina';
+
+  @override
+  void initState() {
+    nameInputController = new TextEditingController();
+    consumoInputController = new TextEditingController();
+    vehicle = widget.myCar;
+    dropdownValue = vehicle.tipoCar;
+    dropdownValueC = vehicle.tipoCombustible;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final carController = Get.put(CarController());
@@ -27,7 +46,7 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Crear vehículo',
+          'Editar vehículo',
           style: TextStyle(
             fontFamily: 'pacifico',
             fontSize: 20,
@@ -48,19 +67,15 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Agregar Vehículo",
+                        "Editar vehículo",
                         style: TextStyle(
                           fontFamily: 'Pacifico',
-                          fontSize: 25,
+                          fontSize: 20,
                           color: darkModeController.colorMode(),
                         ),
                       ),
-                      Expanded(
-                        child: Image(
-                          image: AssetImage('assets/images/camioneta.png'),
-                          height: 90,
-                        ),
-                      ),
+                      Icon(Icons.car_repair, size: 90, color: Colors.grey,)
+                      
                     ],
                   ),
                   Align(
@@ -76,8 +91,8 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                   ),
                   SizedBox(height: 10,),
                   TextField(
-                    key: Key("NombreVehículo"),
-                    controller: nameInputController,
+                    key: Key("NombreEditarVehículo"),
+                    controller: nameInputController..text = vehicle.name,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius:
@@ -113,17 +128,11 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     onChanged: (value) => setState(() {
                       dropdownValue = value;
                     }),
-                    items: <String>[
-                      'Carro',
-                      'Camión',
-                      'Motocicleta',
-                      'Bicicleta',
-                      'A pie'
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: tiposVehiculos.map((String item) {
                       return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
+                        value: item,
+                        child: new Text(
+                          item,
                           style: TextStyle(
                             fontSize: 14,
                             color: darkModeController.colorMode(),
@@ -131,7 +140,9 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                         ),
                       );
                     }).toList(),
+
                   ),
+
                   SizedBox(
                     height: 25,
                   ),
@@ -160,16 +171,11 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                     onChanged: (value) => setState(() {
                       dropdownValueC = value;
                     }),
-                    items: <String>[
-                      'Gasolina',
-                      'Gas',
-                      'Diesel',
-                      'Otro',
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: tiposCombustible.map((String item) {
                       return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
+                        value: item,
+                        child: new Text(
+                          item,
                           style: TextStyle(
                             fontSize: 14,
                             color: darkModeController.colorMode(),
@@ -193,9 +199,9 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                   ),
                   SizedBox(height: 10,),
                   TextField(
-                    key: Key("Combustible"),
+                    key: Key("EditarCombustible"),
                     keyboardType: TextInputType.number,
-                    controller: consumoInputController,
+                    controller: consumoInputController..text = vehicle.consumo.toString(),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius:
@@ -209,16 +215,17 @@ class _CrearVehiculoState extends State<CrearVehiculo> {
                   Align(
                     alignment: AlignmentDirectional.topEnd,
                     child: FloatingActionButton(
-                      key: Key("CrearNuevoVehiculo"),
+                      key: Key("EditarVehiculo"),
                       onPressed: () {
-                        carController.createCar(
+                        carController.editCar(
+                            vehicle.id,
                             nameInputController.text,
                             dropdownValue,
                             double.parse(consumoInputController.text),
                             dropdownValueC);
                         Get.to(() => MisVehiculos());
                       },
-                      heroTag: "CrearNuevoVehiculo",
+                      heroTag: "EditarVehiculo",
                       mini: true,
                       backgroundColor: Colors.green,
                       child: FaIcon(
