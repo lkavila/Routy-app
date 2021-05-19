@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:location/location.dart';
 import 'package:routy_app_v102/Data/datasources/Local/device_location.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Users/create_account.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Users/get_user.dart';
@@ -11,6 +10,7 @@ import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Users/login_emai
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Users/login_facebook.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Firebase/Users/login_google.dart';
 import 'package:routy_app_v102/Data/models/user.dart';
+import 'package:routy_app_v102/Domain/entities/my_location.dart';
 import 'package:routy_app_v102/Domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository{
@@ -45,9 +45,9 @@ class UserRepositoryImpl implements UserRepository{
     await _createAccount.createAccount(email, password, name);
   }
 
-  LocationData getCurrentLocation(){
+  MyLocation getCurrentLocation(MyLocation location){
     final DeviceLocation _deviceLocation = DeviceLocation();
-    return _deviceLocation.currentLocation;
+    return _deviceLocation.startUpdates(location);
   }
   
 }

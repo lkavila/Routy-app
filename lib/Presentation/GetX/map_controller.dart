@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:routy_app_v102/Data/datasources/Remote/Apis/networking.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Domain/entities/routeDTO.dart';
@@ -29,9 +28,6 @@ class MapController extends GetxController{
   double lat;
   double lon;
   bool trafficMode = false;
-  Location location = new Location();
-  LocationData currentLocation;
-  StreamController<LocationData> position = StreamController.broadcast();
 
   void actualizarTrafficMode(){
     trafficMode = trafficMode ? false : true;
@@ -295,6 +291,7 @@ class MapController extends GetxController{
     super.onInit();
   }
 
+/*
   Future getCurrentLocation() async{
     //final GetCurrentLocationUseCase _getCurrent = GetCurrentLocation();
     //currentLocation = _getCurrent.call();
@@ -343,6 +340,8 @@ class MapController extends GetxController{
       });
 
   }
+
+  */
 
   limpiar(){
     polyLines = {};

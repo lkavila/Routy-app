@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:routy_app_v102/Presentation/GetX/location_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/loading_widget.dart';
@@ -16,6 +17,7 @@ class MyMap extends StatefulWidget {
 
 class _MyAppState extends State<MyMap> {
   final MapController routeX = Get.find();
+  final _locationController = Get.put(LocationController());
   GoogleMapController mapController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   void _onMapCreated(GoogleMapController controller) {
@@ -24,7 +26,7 @@ class _MyAppState extends State<MyMap> {
 
   @override
   void initState() {
-    routeX.getCurrentLocation();
+    _locationController.requestGPS();
     super.initState();
   }
 

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
+import 'package:routy_app_v102/Domain/entities/my_location.dart';
 import 'package:routy_app_v102/Presentation/GetX/dark_mode_controller.dart';
+import 'package:routy_app_v102/Presentation/GetX/location_controller.dart';
 import 'package:routy_app_v102/utils/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/route.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
@@ -22,6 +23,7 @@ class Ruta extends StatelessWidget {
     final UserController uc = Get.find();
     final DarkModeController _darkMode = Get.find();
     final CarController elegido = Get.find();
+    final LocationController _locationController = Get.find();
     double padd = MediaQuery.of(context).size.width * 0.01;
     print("build of Ruta_Widget");
     return Container(
@@ -150,8 +152,8 @@ class Ruta extends StatelessWidget {
                       Text('Distancia:',style: style(_darkMode),),
                       SizedBox( width: 5,),
 
-                      StreamBuilder<LocationData>(
-                        stream: mc.position.stream,
+                      StreamBuilder<MyLocation>(
+                        stream: _locationController.currentLocationStream.stream,
                         builder: (context, stream){
 
                           if (stream.data==null){
@@ -163,7 +165,7 @@ class Ruta extends StatelessWidget {
                                   ),
                                   );                            
                           }else{
-                            double dis = Geolocator.distanceBetween(stream.data.latitude, stream.data.longitude, mc.puntos.last.latitude, mc.puntos.last.longitude);      
+                            double dis = Geolocator.distanceBetween(stream.data.latitud, stream.data.longitud, mc.puntos.last.latitude, mc.puntos.last.longitude);      
                             return Flexible(
                                 child: Text(
                                   '${ConvertirTD.convertDistancia(dis*1.25)}',

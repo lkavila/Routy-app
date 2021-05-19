@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:location/location.dart';
+import 'package:routy_app_v102/Domain/entities/my_location.dart';
 
 import '../entities/user.dart';
 
@@ -20,6 +20,6 @@ abstract class UserRepository {
   
   Future<UserEntity> getCurrentUser();
 
-  LocationData getCurrentLocation();
+  MyLocation getCurrentLocation(MyLocation location);
 
 }
