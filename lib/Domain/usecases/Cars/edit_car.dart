@@ -6,14 +6,14 @@ import 'package:routy_app_v102/Domain/repositories/car_repository.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 
 mixin EditCarUseCase {
-  Future<void> call(String id, String name, String tipoCar,
-      double consumo, String tipoCombustible);
+  Future<void> call(String id, String name, String tipoCombustible,
+      double consumo, String tipoCar);
 }
 
 class EditCar implements EditCarUseCase {
   @override
-  Future<void> call(String id, String name, String tipoCar,
-      double consumo, String tipoCombustible) async {
+  Future<void> call(String id, String name, String tipoCombustible,
+      double consumo, String tipoCar) async {
     final UserController uc = Get.find();
     String tipoApiCar;
     switch (tipoCar) {

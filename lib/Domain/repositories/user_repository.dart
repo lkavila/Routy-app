@@ -22,4 +22,6 @@ abstract class UserRepository {
 
   MyLocation getCurrentLocation(MyLocation location);
 
+  stopLocationStream();
+
 }

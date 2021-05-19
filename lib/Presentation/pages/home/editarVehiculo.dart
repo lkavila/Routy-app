@@ -26,16 +26,16 @@ class _EditarVehiculoState extends State<EditarVehiculo> {
   var consumoInputController;
   final DarkModeController darkModeController = Get.find();
   CarEntity vehicle;
-  String dropdownValue = 'Carro';
-  String dropdownValueC = 'Gasolina';
+  String tipoVehiculo = 'Carro';
+  String tipoCombustible = 'Gasolina';
 
   @override
   void initState() {
     nameInputController = new TextEditingController();
     consumoInputController = new TextEditingController();
     vehicle = widget.myCar;
-    dropdownValue = vehicle.tipoCar;
-    dropdownValueC = vehicle.tipoCombustible;
+    tipoVehiculo = vehicle.tipoCar;
+    tipoCombustible = vehicle.tipoCombustible;
     super.initState();
   }
 
@@ -114,7 +114,7 @@ class _EditarVehiculoState extends State<EditarVehiculo> {
                     ),
                   ),
                   DropdownButton<String>(
-                    value: dropdownValue,
+                    value: tipoVehiculo,
                     icon: const Icon(Icons.arrow_downward,
                         color: Color.fromRGBO(25, 118, 210, 20)),
                     iconSize: 24,
@@ -126,7 +126,7 @@ class _EditarVehiculoState extends State<EditarVehiculo> {
                       
                     ),
                     onChanged: (value) => setState(() {
-                      dropdownValue = value;
+                      tipoVehiculo = value;
                     }),
                     items: tiposVehiculos.map((String item) {
                       return DropdownMenuItem<String>(
@@ -157,7 +157,7 @@ class _EditarVehiculoState extends State<EditarVehiculo> {
                     ),
                   ),
                   DropdownButton<String>(
-                    value: dropdownValueC,
+                    value: tipoCombustible,
                     icon: const Icon(Icons.arrow_downward,
                         color: Color.fromRGBO(25, 118, 210, 20)),
                     iconSize: 24,
@@ -169,7 +169,7 @@ class _EditarVehiculoState extends State<EditarVehiculo> {
                       
                     ),
                     onChanged: (value) => setState(() {
-                      dropdownValueC = value;
+                      tipoCombustible = value;
                     }),
                     items: tiposCombustible.map((String item) {
                       return DropdownMenuItem<String>(
@@ -220,9 +220,9 @@ class _EditarVehiculoState extends State<EditarVehiculo> {
                         carController.editCar(
                             vehicle.id,
                             nameInputController.text,
-                            dropdownValue,
+                            tipoCombustible,
                             double.parse(consumoInputController.text),
-                            dropdownValueC);
+                            tipoVehiculo);
                         Get.to(() => MisVehiculos());
                       },
                       heroTag: "EditarVehiculo",

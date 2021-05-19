@@ -165,6 +165,7 @@ class Ruta extends StatelessWidget {
                                   ),
                                   );                            
                           }else{
+                            print(stream.data.velocidadPromedio);
                             double dis = Geolocator.distanceBetween(stream.data.latitud, stream.data.longitud, mc.puntos.last.latitude, mc.puntos.last.longitude);      
                             return Flexible(
                                 child: Text(
@@ -193,7 +194,7 @@ class Ruta extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      boton(mc.tipoMenu, mc.ruta, context, mc, uc),
+                      boton(mc.tipoMenu, mc.ruta, context, mc, uc, _locationController),
                       Builder(builder: (_) {
                         if (mc.tipoMenu != 1) {
                           if (mc.ruta.frecuente) {
@@ -297,7 +298,7 @@ class Ruta extends StatelessWidget {
   }
 
   Widget boton(int tipoMenu, RouteEntity ruta, BuildContext context,
-      MapController mc, UserController uc) {
+      MapController mc, UserController uc, LocationController _locationController) {
     print("El tipo de menu es: " + tipoMenu.toString());
     switch (tipoMenu) {
       case 0:
@@ -380,6 +381,7 @@ class Ruta extends StatelessWidget {
                             key: Key("Cancelar ruta"),
                             onPressed: () {
                               mc.actualizarMenu(0);
+                              _locationController.stopLocationStream();
                               Get.back();
                             },
                             child: Text("Si")),
@@ -445,6 +447,7 @@ class Ruta extends StatelessWidget {
                             onPressed: () {
                               mc.actualizarMenu(0);
                               mc.limpiar();
+                              _locationController.stopLocationStream();
                               Get.back();
                             },
                             child: Text("Si")),

@@ -7,6 +7,14 @@ class MyLocation{
   double velocidadPromedio;
   double latitud;
   double longitud;
+  static MyLocation _miLocalizacion;
+
+  static MyLocation getMyLocation(){
+    if(_miLocalizacion==null){
+      _miLocalizacion = new MyLocation._();
+    }
+    return _miLocalizacion;
+  }
 
   get getLatitud => this.latitud;
 
@@ -32,7 +40,14 @@ class MyLocation{
 
  set setVelocidadPromedio( velocidadPromedio) => this.velocidadPromedio = velocidadPromedio;
 
-  MyLocation({tiempo, distancia, velocidad, velocidadPromedio, latitud, longitud});
+  MyLocation._(){
+    this.tiempo = 0;
+    this.velocidad = 0;
+    this.velocidadPromedio = 0;
+    this.distancia = 0;
+    this.latitud = 0;
+    this.longitud = 0;
+  }
 
 
 

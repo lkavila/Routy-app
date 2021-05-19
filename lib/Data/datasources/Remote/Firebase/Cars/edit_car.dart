@@ -6,7 +6,7 @@ class EditCarFirebase {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     users.doc(userId)
         .update({
-          'vehiculos.$carId.uso': name,
+          'vehiculos.$carId.name': name,
           'vehiculos.$carId.tipoCombustible': tipoCombustible,
           'vehiculos.$carId.consumo': consumo,
           'vehiculos.$carId.tipoCar': tipoCar,
