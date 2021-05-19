@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:routy_app_v102/Presentation/GetX/route_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/configuraciones.dart';
-import 'package:routy_app_v102/Presentation/pages/home/logged_in.dart';
+import 'package:routy_app_v102/Presentation/pages/home/loggedIn.dart';
 import 'package:routy_app_v102/Presentation/pages/home/misRutas.dart';
 import 'package:routy_app_v102/Presentation/pages/home/misVehiculos.dart';
 import 'package:routy_app_v102/Presentation/pages/map.dart';

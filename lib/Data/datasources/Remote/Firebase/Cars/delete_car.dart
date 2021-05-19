@@ -9,7 +9,7 @@ class DelteCarFirebase{
     final UserController uc = Get.find();
     users.doc(uc.user.id)
       .update({'vehiculos.$id': FieldValue.delete()})
-      .then((value) => print("car created Updated"))
-      .catchError((error) => print("Failed to update user vehiculo: $error"));
+      .then((value) => print("car deleted succesfully"))
+      .catchError((error) => print("Failed to delete the user vehiculo: $error"));
   }
 }

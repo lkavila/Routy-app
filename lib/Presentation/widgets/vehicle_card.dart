@@ -5,10 +5,12 @@ import 'package:routy_app_v102/Domain/entities/car.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/dark_mode_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
+import 'package:routy_app_v102/Presentation/pages/home/editarVehiculo.dart';
 
 class VehicleCard extends StatelessWidget {
   final CarEntity vehiculo;
-  const VehicleCard(this.vehiculo, {Key key}) : super(key: key);
+  final int numVehiculo;
+  const VehicleCard(this.vehiculo, this.numVehiculo, {Key key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class VehicleCard extends StatelessWidget {
             ),
             clipBehavior: Clip.antiAlias,
             child: Container(
+              padding: EdgeInsets.fromLTRB(7.0, 5.0, 7.0, 0.0),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -49,22 +52,21 @@ class VehicleCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                    child: Text(
-                      "Nombre: ${vehiculo.name}",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child:Text(
+                              "Nombre: ${vehiculo.name}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600),
+                                  overflow: TextOverflow.fade
+                            ),
+                        ),
+                  
 
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(10.0, 10, 5.0, 5.0),
-                        child: GestureDetector(
+                    GestureDetector(
                           child: Image.asset(
                             'assets/images/eliminar.png',
                             width: 20,
@@ -101,134 +103,85 @@ class VehicleCard extends StatelessWidget {
                             
                           },
                         ),
-                      ),
-                  
                   ]
                   ),
                   
                 Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                    child: Text(
-                      'Tipo: ${vehiculo.tipoCar}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.5,
-                      ),
-                    ),
-                  ),
-
-                   Padding(
-                    padding: EdgeInsets.fromLTRB(12.0, 0, 8.0, 5.0),
-                    child:FaIcon(FontAwesomeIcons.carSide, color: Colors.grey[800], size: 13,), 
-                  ),
-
+                  flexibleText('Tipo de vehículo: ${vehiculo.tipoCar}'),
+                  FaIcon(FontAwesomeIcons.carSide, color: Colors.grey[800], size: 13,), 
                   ]),
 
                 Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                    child: Text(
-                      'Km recorridos: ${vehiculo.recorrido}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.5,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 5.0),
-                    child:FaIcon(FontAwesomeIcons.route, color: Colors.grey[800], size: 13,), 
-                  ),
-
+                   flexibleText('Recorrido: ${vehiculo.recorrido}'),
+                   FaIcon(FontAwesomeIcons.route, color: Colors.grey[800], size: 13,), 
                   ]),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                    child: Text(
-                      'Combustible consumido: ${vehiculo.consumido}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.5,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 5.0),
-                    child:FaIcon(FontAwesomeIcons.weight, color: Colors.grey[800], size: 13,), 
-                  )
+                    flexibleText('Combustible consumido: ${vehiculo.consumido}'),
+                    FaIcon(FontAwesomeIcons.weight, color: Colors.grey[800], size: 13,), 
                   ]),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                    child: Text(
-                      'Tipo de Combustible: ${vehiculo.tipoCombustible}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.5,
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 5.0),
-                    child:FaIcon(FontAwesomeIcons.gasPump, color: Colors.grey[800], size: 13,), 
-                  )
+                    flexibleText('Tipo de Combustible: ${vehiculo.tipoCombustible}'),
+                    FaIcon(FontAwesomeIcons.gasPump, color: Colors.grey[800], size: 13,), 
                 ]),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                    child: Text(
-                      'Consumo: ${vehiculo.consumo} Galones/100Km',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.5,
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 0, 13.0, 5.0),
-                    child:FaIcon(FontAwesomeIcons.tint, color: Colors.grey[800], size: 13,), 
-                  )
+                  
+                    flexibleText('Consumo: ${vehiculo.consumo} Galones/100Km'),
+                    FaIcon(FontAwesomeIcons.tint, color: Colors.grey[800], size: 13,), 
                   ]),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
-                    child: Text(
-                      'Uso: ${vehiculo.uso}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.5,
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 5.0),
-                    child:FaIcon(FontAwesomeIcons.clock, color: Colors.grey[800], size: 13,), 
-                  )
-                ],)
+                    flexibleText('Uso del vehículo: ${vehiculo.uso}'),
+                    FaIcon(FontAwesomeIcons.clock, color: Colors.grey[800], size: 13,), 
+                ],),
 
 
+                 Align(
+                    alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            key: Key("editarVehiculo"+numVehiculo.toString()),
+                          onPressed: () {
+                            Get.to(() => EditarVehiculo(vehiculo)); //4 significa que ya no hay que volver a crear la ruta
+                          },
+                          child: Text("Editar vehículo", style: TextStyle(color: Colors.indigo[900], fontSize: 15, fontWeight: FontWeight.w600),
+                            )),
+                          Icon(Icons.settings, color: Colors.grey[800], size: 15,),
+                        ])
+                          ),
                 ],
+
               ),
-            )));
+            )
+            )
+            );
+  }
+Flexible flexibleText(String text){
+    return Flexible(
+      child: Text(
+        '$text',
+        style: TextStyle(
+        color: Colors.white,
+        fontSize: 14.5,
+        ),
+        overflow: TextOverflow.fade
+      ),
+    );
   }
 }

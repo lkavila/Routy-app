@@ -22,7 +22,6 @@ class Wrapper extends StatelessWidget {
               } else if (FirebaseAuth.instance.currentUser!=null) {
                 
                           if(userController.user==null && userController.noRepeat){
-                            print("Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                             userController.getUser();
                             userController.noRepeat=false;
                             return buildLoading();

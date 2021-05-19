@@ -36,52 +36,7 @@ void main() {
       await tester.tap(find.byKey(Key("login_with_google")));
 
       await tester.pumpAndSettle(Duration(seconds: 2));
-
-      expect(find.byType(TabBarView), findsOneWidget);
-
       final Finder locateDrawer = find.byTooltip('Open navigation menu');
-
-      await tester.tap(find.byKey(Key("GoToMpap")));
-      await tester.pumpAndSettle(Duration(seconds: 5));
-
-      expect(find.byKey(Key("Mapa")), findsOneWidget);
-
-      await tester.pumpAndSettle(Duration(seconds: 7));
-      await tester.tap(find.byKey(Key("Mapa")));
-
-      await tester.pumpAndSettle(Duration(seconds: 7));
-      await tester.drag(find.byKey(Key("Mapa")), Offset(-10, 290));
-      await tester.pumpAndSettle(Duration(seconds: 5));
-      await tester.tap(find.byKey(Key("Mapa")));
-
-      await tester.pumpAndSettle(Duration(seconds: 3));
-      await tester.tap(find.byKey(Key("Mapa")));
-
-      await tester.pumpAndSettle(Duration(seconds: 7));
-      await tester.tap(find.byKey(Key("Ver ruta optima")));
-      await tester.pumpAndSettle();
-
-      expect(find.byKey(Key("Not Enough Routes")), findsNothing);
-      
-      await tester.tap(find.text("No"));
-      await tester.pumpAndSettle(Duration(seconds: 10));
-
-      expect(find.byKey(Key("RutaCalculada")), findsOneWidget);
-
-      await tester.pumpAndSettle(Duration(seconds: 2));
-      await tester.tap(find.byIcon(Icons.save));
-
-      await tester.pumpAndSettle(Duration(seconds: 3));
-            // Open the drawer
-      await tester.tap(find.byKey(Key("OpenCustumDrawer")));
-      await tester.pump();
-      
-      expect(find.byType(ListTile), findsNWidgets(6));
-
-      expect(find.byKey(Key("Mis rutas")), findsOneWidget);
-
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(Key("Mis rutas")));
 
       await tester.pumpAndSettle(Duration(seconds: 2));
       expect(find.byType(TabBarView), findsOneWidget);
@@ -108,17 +63,28 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(Key("Inicio")));
       
-      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.pumpAndSettle(Duration(seconds: 7));
       expect(find.byKey(Key("Mapa")), findsOneWidget);
 
+      await tester.pumpAndSettle(Duration(seconds: 4));
+      await tester.tap(find.byKey(Key("Mapa")));
       await tester.pumpAndSettle(Duration(seconds: 7));
-      await tester.drag(find.byKey(Key("Mapa")), Offset(-10, 140));
+     
+      await tester.drag(find.byKey(Key("Mapa")), Offset(-10, 290));
+      await tester.pumpAndSettle(Duration(seconds: 5));
       await tester.tap(find.byKey(Key("Mapa")));
 
-      await tester.pumpAndSettle(Duration(seconds: 3));
-      await tester.tap(find.byKey(Key("Mapa")));
 
       await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.drag(find.byKey(Key("Mapa")), Offset(10, 190));
+      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.tap(find.byKey(Key("Mapa")));
+
+
+      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.tap(find.byKey(Key("Mapa")));
+
+      await tester.pumpAndSettle(Duration(seconds: 7));
       await tester.tap(find.byKey(Key("Ver ruta optima")));
       await tester.pumpAndSettle();
 

@@ -58,7 +58,7 @@ class RouteCard extends StatelessWidget {
                           "${ruta.departamentos}",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 21,
+                              fontSize: 20,
                               fontWeight: FontWeight.w600),
                         ),
                       
@@ -104,8 +104,6 @@ class RouteCard extends StatelessWidget {
                     children: [
                       flexibleText('Origen: ${ruta.origen}'),
                       FaIcon(FontAwesomeIcons.mapMarkedAlt, color: Colors.grey[800], size: 13,), 
-                      
-
                     ]),
 
                   Row(
@@ -113,16 +111,13 @@ class RouteCard extends StatelessWidget {
                     children: [
                       flexibleText('Destino: ${ruta.destino}'),
                       FaIcon(FontAwesomeIcons.mapMarkedAlt, color: Colors.grey[800], size: 13,), 
-                        
                     ]),
-
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       flexibleText('Distancia: ${ConvertirTD.convertDistancia(ruta.distancia)}'),
                       FaIcon(FontAwesomeIcons.route, color: Colors.grey[800], size: 13,), 
-                      
                     ]),
 
 
@@ -144,7 +139,7 @@ class RouteCard extends StatelessWidget {
                             Get.to(() => MyMap()); //4 significa que ya no hay que volver a crear la ruta
                           },
                           child: Text("Ver en mapa", style: TextStyle(color: Colors.indigo[900], fontSize: 15, fontWeight: FontWeight.w600),
-                          )))
+                          ))),
                 ],
               ),
             )
