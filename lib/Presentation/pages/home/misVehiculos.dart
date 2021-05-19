@@ -159,7 +159,7 @@ Widget goToCrearVehiculo(){
             child:Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.20),
           child: Text(
-            "Aún no ha agregado ninguna ruta",
+            "Aún no ha agregado ningun vehículo",
             style:
                 TextStyle(color: darkModeController.colorMode(), fontSize: 18),
             textAlign: TextAlign.center,

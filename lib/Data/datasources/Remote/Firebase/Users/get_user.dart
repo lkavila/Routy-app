@@ -14,7 +14,7 @@ class GetUserFirebase{
             .collection("users")
             .doc(user.uid) 
             .get();
-      
+        print(dc.data().toString());
         UserModel myuser = new UserModel.fromData(dc.data());
         
         final routeX = Get.put(RouteController());

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:routy_app_v102/Presentation/GetX/location_controller.dart';
 import 'package:routy_app_v102/utils/convertir_tiempo_distancia.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
 import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
@@ -20,6 +21,7 @@ class ElegirVehiculo extends StatefulWidget {
 class _ElegirVehiculoState extends State<ElegirVehiculo> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final UserController uc = Get.find();
+  final LocationController _locationController = Get.find();
   String dropdown1Value;
   String dropdown2Value;
   double factorVelocidad1, factorVelocidad2;
@@ -292,6 +294,7 @@ class _ElegirVehiculoState extends State<ElegirVehiculo> {
                         }
                         mc.tipoMenu=1;
                         elegido.actualizar(value1.name);
+                        _locationController.getLocationStream();
                         Get.to(() => MyMap());
                       },
                       style: ButtonStyle(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:routy_app_v102/Presentation/GetX/location_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/map_controller.dart';
 import 'package:routy_app_v102/Presentation/widgets/hidden_drawer_menu.dart';
 import 'package:routy_app_v102/Presentation/widgets/loading_widget.dart';
@@ -16,6 +17,7 @@ class MyMap extends StatefulWidget {
 
 class _MyAppState extends State<MyMap> {
   final MapController routeX = Get.find();
+  final _locationController = Get.put(LocationController());
   GoogleMapController mapController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   void _onMapCreated(GoogleMapController controller) {
@@ -23,8 +25,8 @@ class _MyAppState extends State<MyMap> {
   }
 
   @override
-  void initState() {
-    routeX.getCurrentLocation();
+  void initState(){
+    _locationController.requestGPS();
     super.initState();
   }
 
@@ -175,6 +177,7 @@ class _MyAppState extends State<MyMap> {
                     onPressed: (){
                       routeX.limpiar();
                       routeX.actualizarMenu(0);
+                      _locationController.stopLocationStream();
                     },
                   heroTag: "limpiarPantalla",
                   tooltip: "Limpiar pantalla/Quitar ruta",
@@ -210,7 +213,7 @@ class _MyAppState extends State<MyMap> {
 
   Future<void> _followMe() async {
     CameraPosition _kLake = new CameraPosition(
-      target: LatLng(routeX.lat, routeX.lon),
+      target: LatLng(_locationController.location.latitud, _locationController.location.longitud),
       zoom: 15);
     mapController.animateCamera(CameraUpdate.newCameraPosition(_kLake));
 

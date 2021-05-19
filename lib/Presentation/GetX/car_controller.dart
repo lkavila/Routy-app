@@ -25,9 +25,9 @@ class CarController extends GetxController{
     _updateCar.call(id, recorrido, consumido, uso);
   }
 
-  Future<void> editCar(String id, String name, String tipoCar, double consumo, String tipoCombustible )async{
+  Future<void> editCar(String id, String name, String tipoCombustible, double consumo, String tipoCar)async{
     final EditCarUseCase _editcar = EditCar();
-    _editcar.call(id, name, tipoCar, consumo, tipoCombustible);
+    _editcar.call(id, name, tipoCombustible, consumo, tipoCar);
   }
 
   deleteCar(String id){
