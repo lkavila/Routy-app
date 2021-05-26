@@ -6,6 +6,7 @@ import 'package:routy_app_v102/Presentation/GetX/car_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/dark_mode_controller.dart';
 import 'package:routy_app_v102/Presentation/GetX/user_controller.dart';
 import 'package:routy_app_v102/Presentation/pages/home/editarVehiculo.dart';
+import 'package:routy_app_v102/utils/convertir_tiempo_distancia.dart';
 
 class VehicleCard extends StatelessWidget {
   final CarEntity vehiculo;
@@ -25,11 +26,11 @@ class VehicleCard extends StatelessWidget {
     final DarkModeController _darkModeController = Get.find();
     final List<double> _stops = [0.0, 0.44, 1];
     return Container(
-        width: MediaQuery.of(context).size.width * 0.90,
+        width: MediaQuery.of(context).size.width * 0.94,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
         ),
-        padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 0.0),
+        padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
         child: Card(
             color: Colors.grey,
             elevation: 3.0,
@@ -114,20 +115,6 @@ class VehicleCard extends StatelessWidget {
                   ]),
 
                 Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                   flexibleText('Recorrido: ${vehiculo.recorrido}'),
-                   FaIcon(FontAwesomeIcons.route, color: Colors.grey[800], size: 13,), 
-                  ]),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    flexibleText('Combustible consumido: ${vehiculo.consumido}'),
-                    FaIcon(FontAwesomeIcons.weight, color: Colors.grey[800], size: 13,), 
-                  ]),
-
-                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     flexibleText('Tipo de Combustible: ${vehiculo.tipoCombustible}'),
@@ -137,15 +124,28 @@ class VehicleCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  
                     flexibleText('Consumo: ${vehiculo.consumo} Galones/100Km'),
                     FaIcon(FontAwesomeIcons.tint, color: Colors.grey[800], size: 13,), 
+                  ]),
+
+                  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    flexibleText('Combustible consumido: ${vehiculo.consumido.toStringAsFixed(3)}'),
+                    FaIcon(FontAwesomeIcons.weight, color: Colors.grey[800], size: 13,), 
+                  ]),
+
+                Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                   flexibleText('Recorrido: ${ConvertirTD.convertDistancia(vehiculo.recorrido)}'),
+                   FaIcon(FontAwesomeIcons.route, color: Colors.grey[800], size: 13,), 
                   ]),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    flexibleText('Uso del vehículo: ${vehiculo.uso}'),
+                    flexibleText('Uso del vehículo: ${ConvertirTD.convertirTiempo(vehiculo.uso)}'),
                     FaIcon(FontAwesomeIcons.clock, color: Colors.grey[800], size: 13,), 
                 ],),
 

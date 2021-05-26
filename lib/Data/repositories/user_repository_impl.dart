@@ -56,5 +56,17 @@ class UserRepositoryImpl implements UserRepository{
     final DeviceLocation _deviceLocation = DeviceLocation.getDeviceLocation();
     _deviceLocation.stopUpdates();
   }
+
+  @override
+  sendNotificationFinishRoute(){
+    final DeviceLocation _deviceLocation = DeviceLocation.getDeviceLocation();
+    _deviceLocation.sendNotificationRouteFinish();
+  }
+
+  @override
+  Future getCurrentLatLong() async{
+    final DeviceLocation _deviceLocation = DeviceLocation.getDeviceLocation();
+    await _deviceLocation.getMyCurrentLocation();
+  }
   
 }

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EditCarFirebase {
-  editCar(String userId, String carId, String name, String tipoApiCar,
-      double consumo, String tipoCar, String tipoCombustible) {
+  editCar(String userId, String carId, String name, String tipoCombustible,
+      double consumo, String tipoCar, String tipoApiCar) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     users.doc(userId)
         .update({
