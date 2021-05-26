@@ -24,4 +24,8 @@ abstract class UserRepository {
 
   stopLocationStream();
 
+  sendNotificationFinishRoute();
+
+  Future getCurrentLatLong();
+
 }

@@ -78,7 +78,7 @@ class MapController extends GetxController{
         }
         setPolyLines();
         distancia = data['features'][0]['properties']['summary']["distance"];
-        duracion = data['features'][0]['properties']['summary']["duration"]*1.3;
+        duracion = data['features'][0]['properties']['summary']["duration"]+60*5*markers.length;
       }
     } catch (e) {
       print(e);
@@ -112,7 +112,7 @@ class MapController extends GetxController{
         circular: cir,
         frecuente: false,
         distancia: distancia,
-        duracion: duracion,
+        duracion: duracion*1.05,
         departamentos: departamentos,
         markerPoints: puntos,
         polyPoints: polyPoints,
@@ -291,58 +291,6 @@ class MapController extends GetxController{
     super.onInit();
   }
 
-/*
-  Future getCurrentLocation() async{
-    //final GetCurrentLocationUseCase _getCurrent = GetCurrentLocation();
-    //currentLocation = _getCurrent.call();
-      location.changeSettings(interval: 4000);
-      location.serviceEnabled().then((value) { 
-      if (!value) {location.requestService();}});
-
-    print("Asking for location");
-    location.hasPermission().then((value){ 
-    if (value == PermissionStatus.denied) {
-      location.requestPermission().then((value) { 
-        if (value == PermissionStatus.granted){
-          print("Getting location");
-            location.getLocation().then((value){
-                lat = value.latitude;
-                lon = value.longitude;
-              location.onLocationChanged.listen((LocationData currentLocation) {
-                if (currentLocation.speed>2){
-                  print(currentLocation.speed);
-                  position.add(currentLocation);
-                  this.currentLocation = currentLocation;
-                  lat = currentLocation.latitude;
-                  lon = currentLocation.longitude;
-                }
-              });
-          });
-          }
-      
-        });
-        }else if (value == PermissionStatus.granted) {
-            location.getLocation().then((value){
-                lat = value.latitude;
-                lon = value.longitude;
-              location.onLocationChanged.listen((LocationData currentLocation) {
-                if (currentLocation.speed>2){
-                  position.add(currentLocation);
-                  this.currentLocation = currentLocation;
-                  print(this.currentLocation.latitude);
-                  lat = currentLocation.latitude;
-                  lon = currentLocation.longitude;
-                }
-
-              });
-          });
-        }
-      });
-
-  }
-
-  */
-
   limpiar(){
     polyLines = {};
     polyPoints = [];
@@ -354,8 +302,6 @@ class MapController extends GetxController{
 
 
 }
-
-
 
 //Create a new class to hold the Co-ordinates we've received from the response data
 class LineString {

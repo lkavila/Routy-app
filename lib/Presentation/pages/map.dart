@@ -44,7 +44,7 @@ class _MyAppState extends State<MyMap> {
             myLocationEnabled: true,
             trafficEnabled: routeX.trafficMode,
             initialCameraPosition: CameraPosition(
-              target: const LatLng(10.90352, -74.79463),
+              target: LatLng(_locationController.location.latitud, _locationController.location.longitud),
               zoom: 13,
             ),
             onTap: (data) {
@@ -211,12 +211,12 @@ class _MyAppState extends State<MyMap> {
 
   }
 
-  Future<void> _followMe() async {
+   _followMe()  {
+    
     CameraPosition _kLake = new CameraPosition(
       target: LatLng(_locationController.location.latitud, _locationController.location.longitud),
       zoom: 15);
     mapController.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-
   }
 
 }

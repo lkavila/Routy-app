@@ -10,7 +10,7 @@ class ConvertirTD{
     }else{
       int kil = distancia.floor();
       double metros = (distancia - kil)*1000;
-      return (kil.toString()+" kilometros con "+metros.round().toString()+" mts");
+      return (kil.toString()+" kilometros y "+metros.round().toString()+" mts");
     }
   } 
 
@@ -28,12 +28,38 @@ class ConvertirTD{
         double hours = duracion.floorToDouble();
         double min = (duracion - hours)*60;
         if (hours==1){
-          return (hours.round().toString()+" hora con "+min.round().toString()+" min");
+          return (hours.round().toString()+" hora y "+min.round().toString()+" min");
         }else{
-          return (hours.round().toString()+" horas con "+min.round().toString()+" min");
+          return (hours.round().toString()+" horas y "+min.round().toString()+" min");
         }
       }
 
     }
+  }
+
+  static double asignarFactorVelocidad(String tipoCar) {
+    double factorVelocidad;
+    switch (tipoCar) {
+      case "Carro":
+        factorVelocidad = 1;
+        break;
+      case "Camión":
+        factorVelocidad = 1.45;
+        break;
+      case "Motocicleta":
+        factorVelocidad = 0.7;
+        break;
+      case "Bicicleta":
+        factorVelocidad = 1.5;
+        break;
+      case "A pie":
+        factorVelocidad = 10;
+
+        break;
+      default:
+        factorVelocidad = 1;
+        break;
+    }
+    return factorVelocidad;
   }
 }

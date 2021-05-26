@@ -45,8 +45,8 @@ class MyLocation{
     this.velocidad = 0;
     this.velocidadPromedio = 0;
     this.distancia = 0;
-    this.latitud = 0;
-    this.longitud = 0;
+    this.latitud = 10.980368;
+    this.longitud = -74.800688;//coordenadas, El recreo mitad de barranquilla
   }
 
 

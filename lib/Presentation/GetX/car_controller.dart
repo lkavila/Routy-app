@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:routy_app_v102/Domain/entities/car.dart';
+import 'package:routy_app_v102/Domain/entities/user.dart';
 import 'package:routy_app_v102/Domain/usecases/Cars/create_car.dart';
 import 'package:routy_app_v102/Domain/usecases/Cars/delete_all_cars.dart';
 import 'package:routy_app_v102/Domain/usecases/Cars/delete_car.dart';
@@ -20,9 +21,9 @@ class CarController extends GetxController{
     await _createCar.call(name, tipo, consumo, combustible);
   }
 
-  void updateCar(String id, double recorrido, double consumido, double uso){
+  void updateCar(UserEntity user, double recorrido, double uso){
     final UpdateCarUseCase _updateCar = UpdateCar();
-    _updateCar.call(id, recorrido, consumido, uso);
+    _updateCar.call(user, this.car.id, recorrido, uso);
   }
 
   Future<void> editCar(String id, String name, String tipoCombustible, double consumo, String tipoCar)async{

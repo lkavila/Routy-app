@@ -1,17 +1,13 @@
 import 'dart:async';
 import 'package:background_location/background_location.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:routy_app_v102/Domain/entities/my_location.dart';
 import 'package:routy_app_v102/Presentation/GetX/location_controller.dart';
 
 class DeviceLocation {
  BackgroundLocation location = new BackgroundLocation();
- double distancia;
- double tiempo;
  List<double> veloPromedio;
  List<double> datos;
- double velocidadProm;
  MyLocation _myLocation = MyLocation.getMyLocation();
  LocationController _locationController = Get.find();
  static DeviceLocation _miDeviceLocation;//patron singleton
@@ -24,9 +20,6 @@ class DeviceLocation {
   }
   DeviceLocation._(){//constructor privado
         veloPromedio = [];
-        velocidadProm = 0;
-        distancia = 0;
-        tiempo = 0;
   }
 
 
@@ -38,6 +31,17 @@ class DeviceLocation {
 
   stopUpdates(){
     BackgroundLocation.stopLocationService();
+    _myLocation.velocidad = 0;
+    _myLocation.tiempo = 0;
+    _myLocation.distancia = 0;
+  }
+
+  sendNotificationRouteFinish(){
+    BackgroundLocation.setAndroidNotification(
+	      title: "Ha finalizado la ruta",
+        message: "Ha culminado la ruta exitosamente, gracias por confiar en nosotros",
+        icon: "@mipmap/ic_launcher",
+);
   }
 
   MyLocation startUpdates(MyLocation location){
@@ -46,24 +50,18 @@ class DeviceLocation {
       onGranted: () {
         print("Permisos otorgados");
         BackgroundLocation.startLocationService();
-        
         BackgroundLocation.getLocationUpdates((value){
-            //tiempo = tiempo + 0.5;
-            
-            _myLocation.tiempo = value.time;
+            _myLocation.tiempo = _myLocation.tiempo + 0.5;
             if(value.speed>0){
-
               _myLocation.velocidad = value.speed;
               veloPromedio.add(value.speed);//la velocidad promedio solo se actualiza si la velocidad actual es mayor a 1m/s
               _myLocation.velocidadPromedio = veloPromedio.reduce((value, element) => value+element)/veloPromedio.length;
-              _myLocation.distancia = _myLocation.distancia + value.speed;
+              _myLocation.distancia = _myLocation.distancia + (value.speed/2);
               _myLocation.latitud = value.latitude;
               _myLocation.longitud = value.longitude;
-
             }   
             _locationController.currentLocationStream.add(_myLocation);
         });
-
       },
     );
     return _myLocation;

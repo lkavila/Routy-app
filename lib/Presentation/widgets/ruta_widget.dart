@@ -20,9 +20,9 @@ class Ruta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MapController mc = Get.find();
-    final UserController uc = Get.find();
+    final UserController userController = Get.find();
     final DarkModeController _darkMode = Get.find();
-    final CarController elegido = Get.find();
+    final CarController carController = Get.find();
     final LocationController _locationController = Get.find();
     double padd = MediaQuery.of(context).size.width * 0.01;
     print("build of Ruta_Widget");
@@ -115,11 +115,11 @@ class Ruta extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width: 10,),
+                      SizedBox(width: 7,),
                       FaIcon(FontAwesomeIcons.mapMarkerAlt,color: Colors.orange[900],size: 18,),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 7,),
                       Text('Origen:',style: style(_darkMode),),
-                      SizedBox(width: 5,),
+                      SizedBox(width: 3,),
                       Flexible(
                         child: Text(
                           '${mc.ruta.origen}',style: style2(_darkMode),overflow: TextOverflow.clip,
@@ -130,11 +130,11 @@ class Ruta extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width: 10,),
+                      SizedBox(width: 7,),
                       FaIcon( FontAwesomeIcons.mapMarkerAlt,color: Colors.orange[900],size: 18,),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 7,),
                       Text('Destino:',style: style(_darkMode), ),
-                      SizedBox(width: 5,),
+                      SizedBox(width: 3,),
                       Flexible(
                         child: Text(
                           '${mc.ruta.destino}',style: style2(_darkMode),overflow: TextOverflow.fade,
@@ -146,11 +146,11 @@ class Ruta extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width: 10,),
+                      SizedBox(width: 7,),
                       FaIcon(FontAwesomeIcons.route,color: Colors.orange[900], size: 18,),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 7,),
                       Text('Distancia:',style: style(_darkMode),),
-                      SizedBox( width: 5,),
+                      SizedBox( width: 3,),
 
                       StreamBuilder<MyLocation>(
                         stream: _locationController.currentLocationStream.stream,
@@ -165,36 +165,44 @@ class Ruta extends StatelessWidget {
                                   ),
                                   );                            
                           }else{
-                            print(stream.data.velocidadPromedio);
-                            double dis = Geolocator.distanceBetween(stream.data.latitud, stream.data.longitud, mc.puntos.last.latitude, mc.puntos.last.longitude);      
-                            return Flexible(
+                            if(stream.hasError){
+                              print(stream.error.toString());
+                            }
+                            if(stream.hasData){
+                            double dis = Geolocator.distanceBetween(stream.data.latitud, stream.data.longitud, mc.puntos.last.latitude, mc.puntos.last.longitude); 
+                            if(dis<50 && _locationController.location.distancia>500){
+                              mc.actualizarMenu(0);
+                              
+                              carController.updateCar(userController.user, _locationController.location.distancia, _locationController.location.tiempo);
+                              _locationController.stopLocationStream();
+                              Future.delayed(const Duration(milliseconds: 200), () {
+                                mc.limpiar();
+                              });
+                              
+                            }
+                             return Flexible(
                                 child: Text(
                                   '${ConvertirTD.convertDistancia(dis*1.25)}',
                                     style: style2(_darkMode),
                                     overflow: TextOverflow.fade,
                                   ),
                             );
-                          }
+                            }
+                              return Container();
+                            }     
                       })
                     ],
                   ),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 10,),
-                      FaIcon(FontAwesomeIcons.clock,color: Colors.orange[900],size: 18,),
-                      SizedBox(width: 10,),
-                      texto(mc.tipoMenu, elegido.elegido, _darkMode),
-                      SizedBox(width: 5,),
-                      Text('${ConvertirTD.convertirTiempo(mc.ruta.duracion)}',style: style2(_darkMode)),
-                    ],
-                  ),
+                 
+                  textoTiempo(mc.tipoMenu, carController, mc.ruta, _darkMode),
+                    
+                  
                   
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      boton(mc.tipoMenu, mc.ruta, context, mc, uc, _locationController),
+                      boton(mc.tipoMenu, mc.ruta, context, mc, userController, _locationController, carController),
                       Builder(builder: (_) {
                         if (mc.tipoMenu != 1) {
                           if (mc.ruta.frecuente) {
@@ -268,37 +276,56 @@ class Ruta extends StatelessWidget {
   TextStyle style(DarkModeController _darkMode) {
     return TextStyle(
         color: _darkMode.colorMode(),
-        fontSize: 14,
+        fontSize: 13.5,
         fontWeight: FontWeight.w800);
   }
 
   TextStyle style2(DarkModeController _darkMode) {
     return TextStyle(
         color: _darkMode.colorMode(),
-        fontSize: 14,
+        fontSize: 13.5,
         fontWeight: FontWeight.normal);
   }
 
-  Flexible texto(int tipoMenu, String elegido, DarkModeController _darkMode) {
+  Row textoTiempo(int tipoMenu, CarController carController, RouteEntity ruta, DarkModeController _darkMode) {
     if (tipoMenu == 0 || tipoMenu == 4) {
-      return Flexible(child: 
-      Text(
-        'Tiempo aprox carro:',
-        style: style(_darkMode),
-        overflow: TextOverflow.fade,
-      ));
+      return 
+      Row (
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+        SizedBox(width: 10,),
+        FaIcon(FontAwesomeIcons.clock,color: Colors.orange[900],size: 18,),
+        SizedBox(width: 10,),
+        Flexible(child: 
+            Text(
+              'Tiempo aprox carro:',
+              style: style(_darkMode),
+              overflow: TextOverflow.fade,
+        )),
+        SizedBox(width: 5,),
+        Text('${ConvertirTD.convertirTiempo(ruta.duracion)}',style: style2(_darkMode)),
+        ]);
     } else {
-      return Flexible(child: Text(
-        'Tiempo aprox $elegido:',
+      return
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+      SizedBox(width: 10,),
+       FaIcon(FontAwesomeIcons.clock,color: Colors.orange[900],size: 18,),
+       SizedBox(width: 10,),
+       Flexible(child: Text(
+        'Tiempo aprox ${carController.elegido}:',
         style: style(_darkMode),
         overflow: TextOverflow.fade,
-
-      ));
+      )),
+        SizedBox(width: 5,),
+        Text('${ConvertirTD.convertirTiempo(ruta.duracion*ConvertirTD.asignarFactorVelocidad(carController.car.tipoCar))}',style: style2(_darkMode)),
+      ]);
     }
   }
 
   Widget boton(int tipoMenu, RouteEntity ruta, BuildContext context,
-      MapController mc, UserController uc, LocationController _locationController) {
+      MapController mc, UserController uc, LocationController _locationController, CarController carController) {
     print("El tipo de menu es: " + tipoMenu.toString());
     switch (tipoMenu) {
       case 0:
@@ -447,6 +474,8 @@ class Ruta extends StatelessWidget {
                             onPressed: () {
                               mc.actualizarMenu(0);
                               mc.limpiar();
+                              //_locationController.sendNotificationFinishRoute(); explota
+                              carController.updateCar(uc.user, _locationController.location.distancia, _locationController.location.tiempo);  
                               _locationController.stopLocationStream();
                               Get.back();
                             },

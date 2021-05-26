@@ -14,9 +14,9 @@ class CarRepositoryImpl implements CarRepository{
   }
 
   @override
-  void updateCar(String id, double recorrido, double consumido, double uso){
+  void updateCar(String userId, String carId, double recorrido, double consumido, double uso){
     final UpdateCarFirebase _updateCar = UpdateCarFirebase();
-    _updateCar.updateVehicle(id, recorrido, consumido, uso);
+    _updateCar.updateVehicle(userId, carId, recorrido, consumido, uso);
   }
 
   @override
